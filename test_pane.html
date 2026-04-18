@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foldable Mandatory Pane</title>
+  <style>
+    :root {
+      --bg: #f3f5f9;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #dbe3ef;
+      --card: #ffffff;
+      --accent: #2563eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      line-height: 1.35;
+    }
+
+    h1 { margin: 0 0 6px; font-size: 1.5rem; }
+    .subtitle { margin: 0 0 18px; color: var(--muted); font-size: 0.92rem; }
+
+    .pane {
+      width: min(860px, 100%);
+      height: 620px;
+      background: var(--card);
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      box-shadow: none;
+      overflow: auto;
+      padding: 4px 8px;
+      display: grid;
+      gap: 2px;
+      align-content: start;
+    }
+
+    .semester {
+      border: none;
+      border-bottom: 1px solid #e2e8f0;
+      border-radius: 0;
+      background: transparent;
+      overflow: visible;
+    }
+
+    .semester-summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 8px 2px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: #475569;
+      background: transparent;
+      border-bottom: none;
+    }
+
+    .semester-summary::-webkit-details-marker { display: none; }
+    .semester-summary::after {
+      content: "▾";
+      font-size: 0.72rem;
+      color: #64748b;
+      transition: transform 120ms ease;
+    }
+    .semester:not([open]) .semester-summary::after { transform: rotate(-90deg); }
+
+    .semester-courses {
+      display: grid;
+      gap: 6px;
+      padding: 2px 0 8px;
+    }
+
+    .course {
+      border: none;
+      border-left: 2px solid var(--accent);
+      border-radius: 0;
+      background: transparent;
+      padding: 4px 0 4px 8px;
+      display: grid;
+      gap: 3px;
+    }
+
+    .course-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .code { font-size: 0.79rem; font-weight: 700; }
+    .ects {
+      font-size: 0.7rem;
+      color: #1d4ed8;
+      background: transparent;
+      border-radius: 999px;
+      padding: 0;
+      white-space: nowrap;
+    }
+    .name { font-size: 0.8rem; line-height: 1.25; }
+    .meta { font-size: 0.72rem; color: #475569; }
+
+    .empty {
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 8px;
+      color: #64748b;
+      font-size: 0.76rem;
+      background: #ffffff;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .pane { height: 520px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Mandatory Courses - Foldable List</h1>
+  <p class="subtitle">Simple version: semesters are collapsible, courses are in a clean list. This can be used directly in the app.</p>
+
+  <section class="pane">
+    <details class="semester" open>
+      <summary class="semester-summary">BA1</summary>
+      <div class="semester-courses">
+        <article class="course">
+          <div class="course-top"><span class="code">CS-101</span><span class="ects">7 ECTS</span></div>
+          <div class="name">Advanced information, computation, communication I</div>
+          <div class="meta">Urbanke | Bloc 1 : moyenne du premier semestre</div>
+        </article>
+      </div>
+    </details>
+
+    <details class="semester" open>
+      <summary class="semester-summary">BA2</summary>
+      <div class="semester-courses">
+        <article class="course">
+          <div class="course-top"><span class="code">COM-102</span><span class="ects">7 ECTS</span></div>
+          <div class="name">Advanced information, computation, communication II</div>
+          <div class="meta">Gastpar | Bloc 1 (Propedeutique)</div>
+        </article>
+      </div>
+    </details>
+
+    <details class="semester" open>
+      <summary class="semester-summary">BA3</summary>
+      <div class="semester-courses">
+        <article class="course">
+          <div class="course-top"><span class="code">CS-214</span><span class="ects">8 ECTS</span></div>
+          <div class="name">Software construction</div>
+          <div class="meta">Kuncak | Bloc A</div>
+        </article>
+        <article class="course">
+          <div class="course-top"><span class="code">CS-200</span><span class="ects">8 ECTS</span></div>
+          <div class="name">Computer architecture</div>
+          <div class="meta">Ienne | Bloc B</div>
+        </article>
+      </div>
+    </details>
+
+    <details class="semester" open>
+      <summary class="semester-summary">BA4</summary>
+      <div class="semester-courses">
+        <article class="course">
+          <div class="course-top"><span class="code">CS-250</span><span class="ects">8 ECTS</span></div>
+          <div class="name">Algorithms I</div>
+          <div class="meta">Svensson | Bloc A</div>
+        </article>
+      </div>
+    </details>
+
+    <details class="semester" open>
+      <summary class="semester-summary">BA5</summary>
+      <div class="semester-courses">
+        <article class="course">
+          <div class="course-top"><span class="code">COM-301</span><span class="ects">6 ECTS</span></div>
+          <div class="name">Computer security and privacy</div>
+          <div class="meta">Bourgeat | Bloc C</div>
+        </article>
+      </div>
+    </details>
+
+    <details class="semester" open>
+      <summary class="semester-summary">BA6</summary>
+      <div class="semester-courses">
+        <article class="course">
+          <div class="course-top"><span class="code">CS-300</span><span class="ects">6 ECTS</span></div>
+          <div class="name">Data-intensive systems</div>
+          <div class="meta">Ailamaki | Bloc C</div>
+        </article>
+      </div>
+    </details>
+  </section>
+</body>
+</html>
+

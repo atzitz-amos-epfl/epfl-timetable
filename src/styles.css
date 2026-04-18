@@ -9,6 +9,7 @@
 
 * {
     box-sizing: border-box;
+    user-select: none;
 }
 
 body {
@@ -36,6 +37,569 @@ h1 {
     gap: 12px;
 }
 
+.timetable-topbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.timetable-topbar .timetable-heading {
+    margin-right: auto;
+}
+
+.timetable-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.timetable-controls .study-plan-chips {
+    margin-left: auto;
+}
+
+.semester-selector-row {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.curriculum-section {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.curriculum-panel {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    height: 340px;
+    overflow: hidden;
+}
+
+.curriculum-panel-title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+summary.curriculum-panel-title {
+    list-style: none;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+summary.curriculum-panel-title::-webkit-details-marker {
+    display: none;
+}
+
+summary.curriculum-panel-title::after {
+    content: "▾";
+    font-size: 0.82rem;
+    color: #6b7280;
+    transition: transform 120ms ease;
+}
+
+.curriculum-panel:not([open]) summary.curriculum-panel-title::after {
+    transform: rotate(-90deg);
+}
+
+.curriculum-panel-body {
+    display: grid;
+    gap: 10px;
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+}
+
+.curriculum-placeholder {
+    margin: 0;
+    align-self: center;
+    justify-self: center;
+    color: #6b7280;
+    font-size: 0.86rem;
+    text-align: center;
+}
+
+.mandatory-courses-grid {
+    display: grid;
+    gap: 2px;
+    align-content: start;
+    min-height: auto;
+    max-height: none;
+    overflow: visible;
+    padding: 0 2px;
+}
+
+.mandatory-semester-group {
+    display: grid;
+    gap: 0;
+    border: none;
+    border-bottom: 1px solid #e2e8f0;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+}
+
+.mandatory-semester-title {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #475569;
+    letter-spacing: 0.05em;
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0;
+    padding: 8px 2px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #ffffff;
+}
+
+.mandatory-semester-title::-webkit-details-marker {
+    display: none;
+}
+
+.mandatory-semester-title::after {
+    content: "▾";
+    font-size: 0.7rem;
+    color: #6b7280;
+    transition: transform 120ms ease;
+}
+
+.mandatory-semester-group:not([open]) .mandatory-semester-title::after {
+    transform: rotate(-90deg);
+}
+
+.mandatory-semester-cards {
+    display: grid;
+    gap: 6px;
+    padding: 2px 0 8px;
+}
+
+.mandatory-course-card {
+    display: grid;
+    gap: 3px;
+    border: none;
+    border-left: 2px solid #2563eb;
+    border-radius: 0;
+    padding: 4px 0 4px 8px;
+    background: transparent;
+}
+
+.mandatory-course-card.clickable {
+    cursor: pointer;
+    transition: background-color 100ms ease;
+}
+
+.mandatory-course-card.clickable:hover {
+    background: #f8fafc;
+}
+
+.mandatory-course-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.mandatory-course-abbreviation {
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: #1f2937;
+}
+
+.mandatory-course-credits {
+    font-size: 0.7rem;
+    color: #1d4ed8;
+    background: transparent;
+    border-radius: 999px;
+    padding: 0;
+}
+
+.mandatory-course-name {
+    font-size: 0.8rem;
+    color: #111827;
+    line-height: 1.25;
+}
+
+.mandatory-course-meta {
+    font-size: 0.72rem;
+    color: #475569;
+}
+
+.optional-courses-grid {
+    display: grid;
+    gap: 2px;
+    align-content: start;
+    min-height: auto;
+    max-height: none;
+    overflow: visible;
+    padding: 0 2px;
+}
+
+.optional-group {
+    display: grid;
+    gap: 0;
+    border: none;
+    border-bottom: 1px solid #e2e8f0;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+}
+
+.optional-group-title {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #475569;
+    letter-spacing: 0.04em;
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    border: none;
+    border-radius: 0;
+    padding: 8px 2px;
+    text-transform: none;
+    background-color: transparent;
+}
+
+.optional-group-title-text {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.optional-group-selected-credits {
+    font-size: 0.68rem;
+    color: #475569;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.optional-group-title::-webkit-details-marker {
+    display: none;
+}
+
+.optional-group-title::after {
+    content: "▾";
+    font-size: 0.7rem;
+    color: #6b7280;
+    margin-left: 2px;
+    transition: transform 120ms ease;
+}
+
+.optional-group:not([open]) .optional-group-title::after {
+    transform: rotate(-90deg);
+}
+
+.optional-group-cards {
+    display: grid;
+    gap: 6px;
+    padding: 2px 0 8px;
+}
+
+.optional-course-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    border: none;
+    border-left: 2px solid #94a3b8;
+    border-radius: 0;
+    padding: 4px 0 4px 8px;
+    background: transparent;
+    color: inherit;
+}
+
+.optional-course-card:hover {
+    background: #f8fafc;
+}
+
+.optional-course-card.selected {
+    border-left-color: #2563eb;
+    background: #eff6ff;
+}
+
+.optional-course-toggle {
+    margin-top: 2px;
+}
+
+.optional-course-content {
+    display: grid;
+    gap: 3px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+}
+
+.optional-course-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.optional-course-abbreviation {
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: #1f2937;
+}
+
+.optional-course-credits {
+    font-size: 0.7rem;
+    color: #1d4ed8;
+}
+
+.optional-course-name {
+    font-size: 0.8rem;
+    color: #111827;
+    line-height: 1.25;
+}
+
+.optional-course-meta {
+    font-size: 0.72rem;
+    color: #475569;
+}
+
+.extra-curriculum-content {
+    display: grid;
+    gap: 8px;
+    min-height: 0;
+}
+
+.extra-curriculum-add-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: min-content;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: #ffffff;
+    padding-bottom: 4px;
+}
+
+.extra-curriculum-add-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #475569;
+    white-space: nowrap;
+}
+
+.extra-curriculum-combobox {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+}
+
+.extra-curriculum-dropdown {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    padding: 7px 9px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #111827;
+}
+
+.extra-curriculum-options {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    max-height: 220px;
+    overflow: auto;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15);
+    z-index: 20;
+}
+
+.extra-curriculum-combobox.open .extra-curriculum-options {
+    display: grid;
+}
+
+.extra-curriculum-option-group {
+    padding: 6px 10px 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #64748b;
+    background: #f8fafc;
+}
+
+.extra-curriculum-option {
+    border: none;
+    background: transparent;
+    text-align: left;
+    padding: 7px 10px;
+    font-size: 0.78rem;
+    color: #111827;
+    cursor: pointer;
+}
+
+.extra-curriculum-option:hover,
+.extra-curriculum-option.active {
+    background: #eef2ff;
+}
+
+.extra-curriculum-option-empty {
+    padding: 10px;
+    font-size: 0.76rem;
+    color: #6b7280;
+}
+
+.extra-curriculum-groups {
+    display: grid;
+    gap: 8px;
+    min-height: auto;
+    overflow: visible;
+}
+
+.extra-curriculum-group {
+    display: grid;
+    gap: 4px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 6px;
+}
+
+.extra-curriculum-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.extra-curriculum-group-title {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #475569;
+    letter-spacing: 0.04em;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.extra-curriculum-group-remove {
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    background: #fff1f2;
+    color: #b91c1c;
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.extra-curriculum-courses {
+    display: grid;
+    gap: 5px;
+}
+
+.extra-curriculum-course {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    border: none;
+    border-left: 2px solid #94a3b8;
+    padding: 3px 0 3px 8px;
+    background: transparent;
+    color: inherit;
+}
+
+.extra-curriculum-course:hover {
+    background: #f8fafc;
+}
+
+.extra-curriculum-course.disabled {
+    opacity: 0.55;
+}
+
+.extra-curriculum-course.selected {
+    border-left-color: #2563eb;
+    background: #eff6ff;
+}
+
+.extra-curriculum-course-toggle {
+    margin-top: 2px;
+}
+
+.extra-curriculum-course-content {
+    display: grid;
+    gap: 2px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+}
+
+.extra-curriculum-course-content:disabled {
+    cursor: default;
+}
+
+.extra-curriculum-course-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.extra-curriculum-course-abbreviation {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.extra-curriculum-course-credits {
+    font-size: 0.7rem;
+    color: #1d4ed8;
+}
+
+.extra-curriculum-course-name {
+    font-size: 0.78rem;
+    color: #111827;
+    line-height: 1.2;
+}
+
 .study-plan-selector {
     display: grid;
     gap: 8px;
@@ -43,6 +607,64 @@ h1 {
     border: 1px solid #d1d5db;
     border-radius: 10px;
     background: #ffffff;
+}
+
+.main-study-picker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.main-study-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.main-study-dropdown {
+    min-width: 160px;
+    max-width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #111827;
+}
+
+.semester-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.semester-tab {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 6px 10px;
+    background: #f8fafc;
+    color: #0f172a;
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.semester-tab:hover {
+    background: #eef2ff;
+    border-color: #a5b4fc;
+}
+
+.semester-tab.active {
+    background: #e0e7ff;
+    border-color: #6366f1;
+    color: #312e81;
+}
+
+@media (max-width: 1050px) {
+    .curriculum-section {
+        grid-template-columns: 1fr;
+    }
 }
 
 .study-plan-selector-title {

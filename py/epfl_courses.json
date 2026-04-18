@@ -9,33 +9,37 @@
         "teacher": "Urbanke",
         "credits": 7,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/advanced-information-computation-communication-i-CS-101"
       },
       {
-        "courseName": "Alg\u00e8bre lin\u00e9aire",
+        "courseName": "Algèbre linéaire",
         "courseAbbreviation": "MATH-111(e)",
         "teacher": "Boumal",
         "credits": 6,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/algebre-lineaire-MATH-111-E"
       },
       {
-        "courseName": "Alg\u00e8bre lin\u00e9aire (anglais)",
+        "courseName": "Algèbre linéaire (anglais)",
         "courseAbbreviation": "MATH-111(en)",
         "teacher": "Negut",
         "credits": 6,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/algebre-lineaire-anglais-MATH-111-EN"
       },
       {
-        "courseName": "Alg\u00e8bre lin\u00e9aire (classe invers\u00e9e)",
+        "courseName": "Algèbre linéaire (classe inversée)",
         "courseAbbreviation": "MATH-111(pi)",
         "teacher": "Deparis",
         "credits": 6,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/algebre-lineaire-classe-inversee-MATH-111-PI"
       },
@@ -45,6 +49,7 @@
         "teacher": "Lachowska",
         "credits": 6,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/analyse-i-MATH-101-E"
       },
@@ -54,6 +59,7 @@
         "teacher": "Divers enseignants",
         "credits": 6,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/analyse-i-allemand-MATH-101-DE"
       },
@@ -63,60 +69,67 @@
         "teacher": "Monin",
         "credits": 6,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/analyse-i-anglais-MATH-101-EN"
       },
       {
-        "courseName": "Analyse I (classe invers\u00e9e)",
+        "courseName": "Analyse I (classe inversée)",
         "courseAbbreviation": "MATH-101(pi)",
         "teacher": "Friedli",
         "credits": 6,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/analyse-i-classe-inversee-MATH-101-PI"
       },
       {
-        "courseName": "Physique g\u00e9n\u00e9rale : m\u00e9canique (anglais)",
+        "courseName": "Physique générale : mécanique (anglais)",
         "courseAbbreviation": "PHYS-101(en)",
         "teacher": "Baquero Ruiz",
         "credits": 6,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "Math level required for \"maturité fédérale\", which indicates the level of math appropriate for a good start at EPFL.",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/physique-generale-mecanique-anglais-PHYS-101-EN"
       },
       {
-        "courseName": "Physique g\u00e9n\u00e9rale : m\u00e9canique (classe invers\u00e9e)",
+        "courseName": "Physique générale : mécanique (classe inversée)",
         "courseAbbreviation": "PHYS-101(l)",
-        "teacher": "H\u00e9bert",
+        "teacher": "Hébert",
         "credits": 6,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/physique-generale-mecanique-classe-inversee-PHYS-101-L"
       },
       {
-        "courseName": "Physique g\u00e9n\u00e9rale : m\u00e9canique (classe invers\u00e9e en anglais)",
+        "courseName": "Physique générale : mécanique (classe inversée en anglais)",
         "courseAbbreviation": "PHYS-101(n)",
         "teacher": "Tolley",
         "credits": 6,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "Math level required for \"maturité fédérale\", which indicates the level of math appropriate for a good start at EPFL.",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/physique-generale-mecanique-classe-inversee-en-anglais-PHYS-101-N"
       },
       {
-        "courseName": "Physique g\u00e9n\u00e9rale : m\u00e9canique (IN)",
+        "courseName": "Physique générale : mécanique (IN)",
         "courseAbbreviation": "PHYS-101(c)",
         "teacher": "Galland",
         "credits": 6,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/physique-generale-mecanique-in-PHYS-101-C"
       },
       {
-        "courseName": "Introduction \u00e0 la programmation",
+        "courseName": "Introduction à la programmation",
         "courseAbbreviation": "CS-107",
         "teacher": "Pires",
         "credits": 5,
-        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "group": "Bloc 2 (Propédeutique)",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/introduction-a-la-programmation-CS-107"
       }
@@ -131,7 +144,8 @@
         "courseAbbreviation": "COM-102",
         "teacher": "Gastpar",
         "credits": 7,
-        "group": "Bloc 1 (Prop\u00e9deutique)",
+        "group": "Bloc 1 (Propédeutique)",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "course",
@@ -159,7 +173,8 @@
         "courseAbbreviation": "MATH-106(e)",
         "teacher": "Lachowska",
         "credits": 6,
-        "group": "Bloc 1 (Prop\u00e9deutique)",
+        "group": "Bloc 1 (Propédeutique)",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "course",
@@ -193,7 +208,8 @@
         "courseAbbreviation": "MATH-106(en)",
         "teacher": "Richter",
         "credits": 6,
-        "group": "Bloc 1 (Prop\u00e9deutique)",
+        "group": "Bloc 1 (Propédeutique)",
+        "prerequisites": "Analysis I, Linear Algebra I",
         "lectures": [
           {
             "type": "course",
@@ -221,7 +237,8 @@
         "courseAbbreviation": "CS-173",
         "teacher": "Stojilovic",
         "credits": 7,
-        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "group": "Bloc 2 (Propédeutique)",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "course",
@@ -251,11 +268,12 @@
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/fundamentals-of-digital-systems-CS-173"
       },
       {
-        "courseName": "Pratique de la programmation orient\u00e9e-objet",
+        "courseName": "Pratique de la programmation orientée-objet",
         "courseAbbreviation": "CS-108",
         "teacher": "Schinz",
         "credits": 9,
-        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "group": "Bloc 2 (Propédeutique)",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "lab",
@@ -291,38 +309,42 @@
     "name": "math",
     "courses": [
       {
-        "courseName": "Alg\u00e8bre lin\u00e9aire avanc\u00e9e I - espaces vectoriels",
+        "courseName": "Algèbre linéaire avancée I - espaces vectoriels",
         "courseAbbreviation": "MATH-110(a)",
         "teacher": "Michel",
         "credits": 7,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/algebre-lineaire-avancee-i-espaces-vectoriels-MATH-110-A"
       },
       {
-        "courseName": "Analyse avanc\u00e9e I - analyse r\u00e9elle",
+        "courseName": "Analyse avancée I - analyse réelle",
         "courseAbbreviation": "MATH-100(a)",
         "teacher": "Monod",
         "credits": 8,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/analyse-avancee-i-analyse-reelle-MATH-100-A"
       },
       {
-        "courseName": "Physique g\u00e9n\u00e9rale : m\u00e9canique",
+        "courseName": "Physique générale : mécanique",
         "courseAbbreviation": "PHYS-101(f)",
-        "teacher": "Br\u00e9chet",
+        "teacher": "Bréchet",
         "credits": 6,
         "group": "Bloc 1 : moyenne du premier semestre",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/physique-generale-mecanique-PHYS-101-F"
       },
       {
-        "courseName": "Alg\u00e8bre I - structures fondamentales",
+        "courseName": "Algèbre I - structures fondamentales",
         "courseAbbreviation": "MATH-113",
         "teacher": "Wyss",
         "credits": 4,
-        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "group": "Bloc 2 (Propédeutique)",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/algebre-i-structures-fondamentales-MATH-113"
       },
@@ -331,7 +353,8 @@
         "courseAbbreviation": "CS-119(l)",
         "teacher": "Doeraene",
         "credits": 6,
-        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "group": "Bloc 2 (Propédeutique)",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/information-calcul-communication-CS-119-L"
       }
@@ -342,11 +365,12 @@
     "name": "math",
     "courses": [
       {
-        "courseName": "Alg\u00e8bre lin\u00e9aire avanc\u00e9e II - diagonalisation",
+        "courseName": "Algèbre linéaire avancée II - diagonalisation",
         "courseAbbreviation": "MATH-115(a)",
         "teacher": "Eisenbrand",
         "credits": 7,
-        "group": "Bloc 1 (Prop\u00e9deutique)",
+        "group": "Bloc 1 (Propédeutique)",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "course",
@@ -376,11 +400,12 @@
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/algebre-lineaire-avancee-ii-diagonalisation-MATH-115-A"
       },
       {
-        "courseName": "Analyse avanc\u00e9e II - analyse vectorielle",
+        "courseName": "Analyse avancée II - analyse vectorielle",
         "courseAbbreviation": "MATH-105(a)",
         "teacher": "Nobile",
         "credits": 8,
-        "group": "Bloc 1 (Prop\u00e9deutique)",
+        "group": "Bloc 1 (Propédeutique)",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "course",
@@ -410,11 +435,12 @@
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/analyse-avancee-ii-analyse-vectorielle-MATH-105-A"
       },
       {
-        "courseName": "Physique g\u00e9n\u00e9rale : fluides et \u00e9lectromagn\u00e9tisme",
+        "courseName": "Physique générale : fluides et électromagnétisme",
         "courseAbbreviation": "PHYS-108",
         "teacher": "Theiler",
         "credits": 5,
-        "group": "Bloc 1 (Prop\u00e9deutique)",
+        "group": "Bloc 1 (Propédeutique)",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "exercise",
@@ -438,11 +464,12 @@
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/physique-generale-fluides-et-electromagnetisme-PHYS-108"
       },
       {
-        "courseName": "D\u00e9veloppement logiciel",
+        "courseName": "Développement logiciel",
         "courseAbbreviation": "CS-121",
         "teacher": "Doeraene",
         "credits": 4,
-        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "group": "Bloc 2 (Propédeutique)",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "course",
@@ -464,7 +491,8 @@
         "courseAbbreviation": "MATH-260(a)",
         "teacher": "Viazovska",
         "credits": 4,
-        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "group": "Bloc 2 (Propédeutique)",
+        "prerequisites": "Linear algebra, Analysis",
         "lectures": [
           {
             "type": "course",
@@ -493,6 +521,7 @@
         "teacher": "Antolin Sanchez",
         "credits": 6,
         "group": "Bloc A",
+        "prerequisites": "Analyse I, Analyse II, Algèbre linéaire.",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/analysis-iii-for-ic-MATH-203-D"
       },
@@ -502,6 +531,7 @@
         "teacher": "Kuncak",
         "credits": 8,
         "group": "Bloc A",
+        "prerequisites": "Any previous programming course",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/software-construction-CS-214"
       },
@@ -511,15 +541,17 @@
         "teacher": "Ienne",
         "credits": 8,
         "group": "Bloc B",
+        "prerequisites": "CS-173 Fundamentals of digital systems",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/computer-architecture-CS-200"
       },
       {
-        "courseName": "Probabilit\u00e9s et statistique (pour IC)",
+        "courseName": "Probabilités et statistique (pour IC)",
         "courseAbbreviation": "MATH-232",
         "teacher": "Ott",
         "credits": 6,
         "group": "Bloc B",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/probabilites-et-statistique-pour-ic-MATH-232"
       },
@@ -529,6 +561,7 @@
         "teacher": "Lachowska",
         "credits": 4,
         "group": "Groupe \"Options\"",
+        "prerequisites": "Linear algebra",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/algebra-MATH-310"
       },
@@ -538,6 +571,7 @@
         "teacher": "Sallese",
         "credits": 4,
         "group": "Groupe \"Options\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/electronique-i-EE-202-B"
       },
@@ -547,6 +581,7 @@
         "teacher": "Jakob",
         "credits": 4,
         "group": "Groupe \"Options\"",
+        "prerequisites": "MATH-101 (Analysis I) and MATH-111 (Linear Algebra).",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/numerical-methods-for-visual-computing-and-ml-CS-328"
       },
@@ -556,6 +591,7 @@
         "teacher": "Hardebolle",
         "credits": 5,
         "group": "Groupe \"Options\"",
+        "prerequisites": "Introduction à la programmation (CS-107)",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/responsible-software-CS-290"
       },
@@ -565,24 +601,27 @@
         "teacher": "Ford",
         "credits": 5,
         "group": "Groupe \"Options\"",
+        "prerequisites": "Basic computing and programming skills",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/technologies-for-democratic-society-CS-234"
       },
       {
-        "courseName": "M\u00e9canique analytique (pour SPH)",
+        "courseName": "Mécanique analytique (pour SPH)",
         "courseAbbreviation": "PHYS-202",
         "teacher": "Savona",
         "credits": 5,
         "group": "Groupe \"Physique/Bio\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/mecanique-analytique-pour-sph-PHYS-202"
       },
       {
-        "courseName": "Physique g\u00e9n\u00e9rale : \u00e9lectromagn\u00e9tisme",
+        "courseName": "Physique générale : électromagnétisme",
         "courseAbbreviation": "PHYS-114",
         "teacher": "Avino",
         "credits": 4,
         "group": "Groupe \"Physique/Bio\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/physique-generale-electromagnetisme-PHYS-114"
       }
@@ -598,6 +637,7 @@
         "teacher": "Svensson",
         "credits": 8,
         "group": "Bloc A",
+        "prerequisites": "CS-101 Advanced ICC I",
         "lectures": [
           {
             "type": "exercise",
@@ -626,6 +666,7 @@
         "teacher": "Argyraki",
         "credits": 8,
         "group": "Bloc B",
+        "prerequisites": "CS-107 Introduction à la programmationCS-108 Pratique de la programmation orientée-objetCS-173 Fundamentals of Digital Systems",
         "lectures": [
           {
             "type": "course",
@@ -660,6 +701,7 @@
         "teacher": "Braun",
         "credits": 4,
         "group": "Groupe \"Options\"",
+        "prerequisites": "Linear algebra, Analysis I, Analysis II, Analysis III",
         "lectures": [
           {
             "type": "course",
@@ -682,6 +724,7 @@
         "teacher": "Divers enseignants",
         "credits": 6,
         "group": "Groupe \"Options\"",
+        "prerequisites": "Linear Algebra, Calculus",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/computer-graphics-CS-341"
       },
@@ -691,6 +734,7 @@
         "teacher": "Fua",
         "credits": 6,
         "group": "Groupe \"Options\"",
+        "prerequisites": "Linear Algebra",
         "lectures": [
           {
             "type": "course",
@@ -719,6 +763,7 @@
         "teacher": "Prandoni",
         "credits": 8,
         "group": "Groupe \"Options\"",
+        "prerequisites": "Linear Algebra, Programming (Python), Analysis II",
         "lectures": [
           {
             "type": "lab",
@@ -753,6 +798,7 @@
         "teacher": "Zufferey",
         "credits": 6,
         "group": "Groupe \"Physique/Bio\"",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "course",
@@ -799,15 +845,17 @@
         "teacher": "Bourgeat",
         "credits": 6,
         "group": "Bloc C",
+        "prerequisites": "CS-233 Introduction to Machine Learning (for programmation)CS-202 Computer Systems",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/computer-security-and-privacy-COM-301"
       },
       {
-        "courseName": "Electromagn\u00e9tisme I : lignes et ondes",
+        "courseName": "Electromagnétisme I : lignes et ondes",
         "courseAbbreviation": "EE-200",
         "teacher": "Fleury",
         "credits": 3,
         "group": "Groupe \"Options\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/electromagnetisme-i-lignes-et-ondes-EE-200"
       },
@@ -817,6 +865,7 @@
         "teacher": "Sallese",
         "credits": 4,
         "group": "Groupe \"Options\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/electronique-ii-pour-ic-EE-203-B"
       },
@@ -826,15 +875,17 @@
         "teacher": "Macris",
         "credits": 5,
         "group": "Groupe \"Options\"",
+        "prerequisites": "Linear algebra, basic probability",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/introduction-to-quantum-information-processing-COM-309"
       },
       {
-        "courseName": "Mod\u00e8les stochastiques pour les communications",
+        "courseName": "Modèles stochastiques pour les communications",
         "courseAbbreviation": "COM-300",
         "teacher": "Thiran",
         "credits": 6,
         "group": "Groupe \"Options\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/modeles-stochastiques-pour-les-communications-COM-300"
       },
@@ -844,6 +895,7 @@
         "teacher": "Grossglauser",
         "credits": 6,
         "group": "Groupe \"Options\"",
+        "prerequisites": "CS-233 Introduction to machine learning",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/principles-of-online-decision-making-CS-303"
       },
@@ -853,6 +905,7 @@
         "teacher": "Divers enseignants",
         "credits": 8,
         "group": "Groupe \"Options\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/projet-de-recherche-optionnel-en-informatique-i-CS-304"
       },
@@ -862,6 +915,7 @@
         "teacher": "Manucharyan",
         "credits": 5,
         "group": "Groupe \"Physique/Bio\"",
+        "prerequisites": "Calculus, Linear algebra, Differential equations",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/quantum-mechanics-for-non-physicists-PHYS-344"
       },
@@ -871,6 +925,7 @@
         "teacher": "Koch",
         "credits": 8,
         "group": "Groupe \"Projets\"",
+        "prerequisites": "CS-101 Advanced ICC ICS-173 Fundamentals of digital systems",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/making-intelligent-things-a-CS-358-A"
       },
@@ -880,6 +935,7 @@
         "teacher": "Candea",
         "credits": 8,
         "group": "Groupe \"Projets\"",
+        "prerequisites": "CS-214 Software construction (BA3)CS-202 Computer systems (BA4)",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/the-software-enterprise-from-ideas-to-products-CS-311"
       }
@@ -895,6 +951,7 @@
         "teacher": "Ailamaki",
         "credits": 6,
         "group": "Bloc C",
+        "prerequisites": "CS-202 Computer SystemsCS-302 Parallelism and concurrency in software",
         "lectures": [
           {
             "type": "course",
@@ -923,6 +980,7 @@
         "teacher": "Chiesa",
         "credits": 6,
         "group": "Bloc C",
+        "prerequisites": "CS-101 Advanced information, computation, communication ICS-250 Algorithms I",
         "lectures": [
           {
             "type": "exercise",
@@ -945,6 +1003,7 @@
         "teacher": "Kuncak",
         "credits": 6,
         "group": "Groupe \"Options\"",
+        "prerequisites": "MATH-260(a) Discrete MathematicsCS-251 Theory of ComputationCS-214 Software ConstructionCS-200 Computer Architecture",
         "lectures": [
           {
             "type": "course",
@@ -973,6 +1032,7 @@
         "teacher": "Schmid",
         "credits": 3,
         "group": "Groupe \"Options\"",
+        "prerequisites": "EE-102 Systèmes logiques (introduction to digital logic), orEE-110 Systèmes logiques (Introduction to digital logic)",
         "lectures": [
           {
             "type": "course",
@@ -990,11 +1050,12 @@
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/digital-ic-design-EE-330"
       },
       {
-        "courseName": "Electromagn\u00e9tisme II : calcul des champs",
+        "courseName": "Electromagnétisme II : calcul des champs",
         "courseAbbreviation": "EE-201",
         "teacher": "Fleury",
         "credits": 3,
         "group": "Groupe \"Options\"",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "course",
@@ -1017,6 +1078,7 @@
         "teacher": "Al Hassanieh",
         "credits": 8,
         "group": "Groupe \"Options\"",
+        "prerequisites": "COM-102 Avanced Information, Computation, Communication II (BA2)CS-202 Computer Systems (BA4)COM-202 Signal Processing (BA4)CS-Introduction to Machine Learning (BA4)COM-302 Principles of Digital Communications (BA6) (To be taken concurrently)",
         "lectures": [
           {
             "type": "lab",
@@ -1051,6 +1113,7 @@
         "teacher": "Grossglauser",
         "credits": 6,
         "group": "Groupe \"Options\"",
+        "prerequisites": "COM-300 Modèles stochastiques pour les communications",
         "lectures": [
           {
             "type": "course",
@@ -1079,6 +1142,7 @@
         "teacher": "Vidick",
         "credits": 5,
         "group": "Groupe \"Options\"",
+        "prerequisites": "Linear algebra course and basic probability course",
         "lectures": [
           {
             "type": "course",
@@ -1101,6 +1165,7 @@
         "teacher": "Falsafi",
         "credits": 6,
         "group": "Groupe \"Options\"",
+        "prerequisites": "CS-200 Computer ArchitectureCS-214 Software Construction",
         "lectures": [
           {
             "type": "course",
@@ -1129,6 +1194,7 @@
         "teacher": "Telatar",
         "credits": 6,
         "group": "Groupe \"Options\"",
+        "prerequisites": "Signal processing for communications and Modèles stochastiques pour les communications",
         "lectures": [
           {
             "type": "course",
@@ -1163,6 +1229,7 @@
         "teacher": "Schrimpf",
         "credits": 6,
         "group": "Groupe \"Physique/Bio\"",
+        "prerequisites": "Programming",
         "lectures": [
           {
             "type": "exercise",
@@ -1185,6 +1252,7 @@
         "teacher": "Koch",
         "credits": 8,
         "group": "Groupe \"Projets\"",
+        "prerequisites": "CS-101 Advanced ICC ICS-173 Fundamentals of digital systems",
         "lectures": [
           {
             "type": "lab",
@@ -1219,6 +1287,7 @@
         "teacher": "Negut",
         "credits": 5,
         "group": "Bloc \"Sciences de base\"",
+        "prerequisites": "MATH-110(a) Advanced linear algebra IMATH-115(a) Advanced linear algebra IIMATH-113 Algebraic structures",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/algebra-ii-groups-MATH-211"
       },
@@ -1228,6 +1297,7 @@
         "teacher": "Krieger",
         "credits": 9,
         "group": "Bloc \"Sciences de base\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/analyse-iii-analyse-complexe-champs-vectoriels-MATH-200"
       },
@@ -1237,24 +1307,27 @@
         "teacher": "Moschidis",
         "credits": 5,
         "group": "Bloc \"Sciences de base\"",
+        "prerequisites": "All first year courses in the mathematics (or physics) programme.",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/differential-geometry-i-curves-and-surfaces-MATH-213"
       },
       {
-        "courseName": "Probabilit\u00e9s",
+        "courseName": "Probabilités",
         "courseAbbreviation": "MATH-230",
         "teacher": "Aru",
         "credits": 5,
         "group": "Bloc \"Sciences de base\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/probabilites-MATH-230"
       },
       {
-        "courseName": "Topologie I - topologie g\u00e9n\u00e9rale",
+        "courseName": "Topologie I - topologie générale",
         "courseAbbreviation": "MATH-220",
         "teacher": "Hess Bellwald",
         "credits": 5,
         "group": "Bloc \"Sciences de base\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/topologie-i-topologie-generale-MATH-220"
       }
@@ -1270,6 +1343,7 @@
         "teacher": "Kressner",
         "credits": 5,
         "group": "Bloc \"Sciences de base\"",
+        "prerequisites": "Analysis I and IILinear Algebra",
         "lectures": [
           {
             "type": "exercise",
@@ -1292,6 +1366,7 @@
         "teacher": "Monin",
         "credits": 5,
         "group": "Bloc \"Sciences de base\"",
+        "prerequisites": "Algebraic structuresLinear algebra I and IIGroup theory",
         "lectures": [
           {
             "type": "course",
@@ -1314,6 +1389,7 @@
         "teacher": "Chaintron",
         "credits": 7,
         "group": "Bloc \"Sciences de base\"",
+        "prerequisites": "Analysis I, II, III",
         "lectures": [
           {
             "type": "course",
@@ -1342,6 +1418,7 @@
         "teacher": "Eisenbrand",
         "credits": 5,
         "group": "Bloc \"Sciences de base\"",
+        "prerequisites": "Linear Algebra",
         "lectures": [
           {
             "type": "exercise",
@@ -1364,6 +1441,7 @@
         "teacher": "Panaretos",
         "credits": 5,
         "group": "Bloc \"Sciences de base\"",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "exercise",
@@ -1386,6 +1464,7 @@
         "teacher": "Wyss",
         "credits": 5,
         "group": "Bloc \"Sciences de base\"",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "course",
@@ -1409,11 +1488,12 @@
     "name": "math",
     "courses": [
       {
-        "courseName": "Projet de Math\u00e9matiques (bachelor)",
+        "courseName": "Projet de Mathématiques (bachelor)",
         "courseAbbreviation": "MATH-397",
         "teacher": "Divers enseignants",
         "credits": 12,
         "group": "Groupe \"Branches de semestre\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/projet-de-mathematiques-bachelor-MATH-397"
       },
@@ -1422,7 +1502,8 @@
         "courseAbbreviation": "MATH-351",
         "teacher": "Picasso",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Some background in numerical analysis and proficiency in programming - Matlab/Octave recommended",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/advanced-numerical-analysis-ii-MATH-351"
       },
@@ -1431,7 +1512,8 @@
         "courseAbbreviation": "MATH-311",
         "teacher": "Patakfalvi",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Linear algebra ILinear algebra IIAlgebra II - groupsAlgebra III - rings and fields",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/algebra-iv-rings-and-modules-MATH-311"
       },
@@ -1440,7 +1522,8 @@
         "courseAbbreviation": "MATH-317",
         "teacher": "Zanardini",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "MATH-211MATH-215",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/algebra-v-galois-theory-MATH-317"
       },
@@ -1449,7 +1532,8 @@
         "courseAbbreviation": "MATH-302",
         "teacher": "Buffoni",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/analyse-fonctionnelle-i-MATH-302"
       },
@@ -1458,7 +1542,8 @@
         "courseAbbreviation": "MATH-329",
         "teacher": "Boumal",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Students are expected to be comfortable with linear algebra, analysis and mathematical proofs. Lectures, homework and the final exam are proof heavy.Students are expected to be (or become) comfortable writing code in Matlab. They may be allowed to write some of their work in Python or Julia upon request. Homework requires a substantial amount of coding. We will not teach Matlab but there are a lot of resources online to help you.",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/continuous-optimization-MATH-329"
       },
@@ -1467,7 +1552,8 @@
         "courseAbbreviation": "MATH-322",
         "teacher": "Tsakanikas",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Espaces métriques et topologique, Topologie, Analyse III et IV",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/differential-geometry-ii-smooth-manifolds-MATH-322"
       },
@@ -1476,7 +1562,8 @@
         "courseAbbreviation": "MATH-360",
         "teacher": "Janzer",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/graph-theory-MATH-360"
       },
@@ -1485,7 +1572,8 @@
         "courseAbbreviation": "MATH-305",
         "teacher": "Cao Labora",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Analysis I-IV",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/introduction-to-partial-differential-equations-MATH-305"
       },
@@ -1494,16 +1582,18 @@
         "courseAbbreviation": "MATH-341",
         "teacher": "Panaretos",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Analysis, Linear Algebra, Probability, Statistics",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/linear-models-MATH-341"
       },
       {
-        "courseName": "Logique math\u00e9matique",
+        "courseName": "Logique mathématique",
         "courseAbbreviation": "MATH-381",
         "teacher": "Duparc",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/logique-mathematique-MATH-381"
       },
@@ -1512,7 +1602,8 @@
         "courseAbbreviation": "MATH-303",
         "teacher": "Ackelsberg",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/measure-theory-MATH-303"
       },
@@ -1521,7 +1612,8 @@
         "courseAbbreviation": "MATH-482",
         "teacher": "Michel",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "MATH-215",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/number-theory-i-a-algebraic-number-theory-MATH-482"
       },
@@ -1530,7 +1622,8 @@
         "courseAbbreviation": "MATH-313",
         "teacher": "Constantinescu",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Analyse I, II, IIIAlgèbre Linéaire I, IIAlgèbre I",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/number-theory-i-b-analytic-number-theory-MATH-313"
       },
@@ -1539,7 +1632,8 @@
         "courseAbbreviation": "MATH-337",
         "teacher": "Richter",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "First year math courses",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/number-theory-i-c-combinatorial-number-theory-MATH-337"
       },
@@ -1548,7 +1642,8 @@
         "courseAbbreviation": "MGT-454",
         "teacher": "Kis",
         "credits": 4,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "No prior knowledge of economics is required for this course but a sound knowledge of calculus is recommended.",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/principles-of-microeconomics-MGT-454"
       },
@@ -1557,7 +1652,8 @@
         "courseAbbreviation": "MATH-432",
         "teacher": "Mountford",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "None but it helps to be familiar with measure threory.",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/probability-theory-MATH-432"
       },
@@ -1566,7 +1662,8 @@
         "courseAbbreviation": "MATH-314",
         "teacher": "Lachowska",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Linear algebra",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/representation-theory-i-finite-groups-MATH-314"
       },
@@ -1575,7 +1672,8 @@
         "courseAbbreviation": "MATH-383",
         "teacher": "Mhalla",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Basic courses in probability and statistics (e.g., MATH-230, MATH-240)",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/risk-and-environmental-sustainability-MATH-383"
       },
@@ -1584,7 +1682,8 @@
         "courseAbbreviation": "MATH-327",
         "teacher": "De Faveri",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Analysis I-III (especially basic theory of holomorphic functions)",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/topics-in-complex-analysis-MATH-327"
       }
@@ -1599,7 +1698,8 @@
         "courseAbbreviation": "MATH-328",
         "teacher": "Zanardini",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Algebra IV - Rings and modules",
         "lectures": [
           {
             "type": "exercise",
@@ -1621,7 +1721,8 @@
         "courseAbbreviation": "CS-250",
         "teacher": "Svensson",
         "credits": 8,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "CS-101 Advanced ICC I",
         "lectures": [
           {
             "type": "exercise",
@@ -1649,7 +1750,8 @@
         "courseAbbreviation": "MATH-339",
         "teacher": "Wang",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Introductory courses in statistics and probability are necessary. Knowledge of measure-theoretic probability is beneficial.",
         "lectures": [
           {
             "type": "exercise",
@@ -1671,7 +1773,8 @@
         "courseAbbreviation": "MATH-344",
         "teacher": "Moschidis",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Differential Geometry II - Smooth manifolds, Analysis I-IV.",
         "lectures": [
           {
             "type": "exercise",
@@ -1689,11 +1792,12 @@
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/differential-geometry-iii-riemannian-geometry-MATH-344"
       },
       {
-        "courseName": "Equations aux d\u00e9riv\u00e9es partielles d'\u00e9volution",
+        "courseName": "Equations aux dérivées partielles d'évolution",
         "courseAbbreviation": "MATH-421",
         "teacher": "Buffoni",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "course",
@@ -1711,11 +1815,12 @@
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/equations-aux-derivees-partielles-d-evolution-MATH-421"
       },
       {
-        "courseName": "Equations diff\u00e9rentielles ordinaires",
+        "courseName": "Equations différentielles ordinaires",
         "courseAbbreviation": "MATH-301",
         "teacher": "Divers enseignants",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "",
         "lectures": [],
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/equations-differentielles-ordinaires-MATH-301"
       },
@@ -1724,7 +1829,8 @@
         "courseAbbreviation": "MATH-404",
         "teacher": "Braun",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Analysis I-IV, Linear Algebra I-II, Metric and topological spaces, Functional analysis I.",
         "lectures": [
           {
             "type": "course",
@@ -1746,7 +1852,8 @@
         "courseAbbreviation": "MATH-332",
         "teacher": "Mountford",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Second year probability.",
         "lectures": [
           {
             "type": "exercise",
@@ -1768,7 +1875,8 @@
         "courseAbbreviation": "MATH-330",
         "teacher": "Blanc",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "First and second year courses of the mathematics bachelor program",
         "lectures": [
           {
             "type": "course",
@@ -1790,7 +1898,8 @@
         "courseAbbreviation": "MATH-345",
         "teacher": "Wang",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Number theory I.b - Analytic number theoryNumber theory I.c - Combinatorial number theory",
         "lectures": [
           {
             "type": "course",
@@ -1812,7 +1921,8 @@
         "courseAbbreviation": "MATH-451",
         "teacher": "Antolin Sanchez",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Functional analysis I, Measure and integration, Espaces de Sobolev et équations elliptiques, Advanced numerical analysis, Programming.",
         "lectures": [
           {
             "type": "exercise",
@@ -1830,11 +1940,12 @@
         "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/numerical-approximation-of-pdes-MATH-451"
       },
       {
-        "courseName": "Physique g\u00e9n\u00e9rale : quantique",
+        "courseName": "Physique générale : quantique",
         "courseAbbreviation": "PHYS-207(c)",
         "teacher": "Pasquarello",
         "credits": 4,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "",
         "lectures": [
           {
             "type": "course",
@@ -1856,7 +1967,8 @@
         "courseAbbreviation": "MATH-336",
         "teacher": "Sturma",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "The students are expected to know the basics of statistical theory and probability theory. The courses “probability“ (Math-230), “statistics” (Math-240) and “linear models” (Math-341).",
         "lectures": [
           {
             "type": "exercise",
@@ -1878,7 +1990,8 @@
         "courseAbbreviation": "MATH-429",
         "teacher": "Negut",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "MATH-211 Group theoryMATH-314 Representation theory I - finite groupsMATH-322 Differential geometry II - smooth manifolds",
         "lectures": [
           {
             "type": "course",
@@ -1900,7 +2013,8 @@
         "courseAbbreviation": "MATH-342",
         "teacher": "Olhede",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "Probability and Statistics",
         "lectures": [
           {
             "type": "course",
@@ -1922,7 +2036,8 @@
         "courseAbbreviation": "MATH-338",
         "teacher": "Monod",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "MATH-220, Metric and topological spacesMATH-211, Théorie des groupes",
         "lectures": [
           {
             "type": "course",
@@ -1944,7 +2059,8 @@
         "courseAbbreviation": "MATH-323",
         "teacher": "Monin",
         "credits": 5,
-        "group": "Groupe \"Cours \u00e0 option\"",
+        "group": "Groupe \"Cours à option\"",
+        "prerequisites": "- Metric and topological spaces- Topology",
         "lectures": [
           {
             "type": "course",

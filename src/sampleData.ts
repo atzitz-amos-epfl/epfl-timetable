@@ -26,7 +26,7 @@ type RawStudyPlan = {
 
 const SEMESTER_VALUES: readonly Semester[] = ["BA1", "BA2", "BA3", "BA4", "BA5", "BA6"];
 const LECTURE_TYPE_VALUES: readonly LectureType[] = ["course", "exercise", "lab"];
-const OPTIONAL_GROUP_LABEL = 'Groupe "Options"';
+const OPTIONAL_GROUP_LABELS = new Set(["Groupe \"Options\"", "Groupe \"Physique/Bio\""]);
 
 const normalizeSemester = (value: string): Semester => {
   const upper = value.toUpperCase();
@@ -61,7 +61,7 @@ const mapCourse = (rawCourse: RawCourse): Course => {
     teacher: rawCourse.teacher,
     credits: rawCourse.credits,
     group: rawCourse.group,
-    isOptional: rawCourse.group === OPTIONAL_GROUP_LABEL,
+    isOptional: OPTIONAL_GROUP_LABELS.has(rawCourse.group),
     linkToCourse: rawCourse.linkToCourse,
     lectures: [],
   };
