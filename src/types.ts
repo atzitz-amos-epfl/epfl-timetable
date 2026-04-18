@@ -11,6 +11,7 @@ export interface Course {
   teacher: string;
   credits: number;
   group: string;
+  isOptional: boolean;
   linkToCourse: string;
   lectures: Lecture[];
 }

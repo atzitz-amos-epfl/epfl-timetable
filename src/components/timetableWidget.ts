@@ -29,6 +29,8 @@ export interface TimetableWidgetData {
 }
 
 export class TimetableWidget {
+  private static readonly MODAL_FADE_DURATION_MS = 180;
+
   public constructor(
     private readonly data: TimetableWidgetData,
     private readonly model: TimetableModel,
@@ -129,6 +131,19 @@ export class TimetableWidget {
     lectureBlock.appendChild(type);
     lectureBlock.appendChild(this.createCourseOverlay(plannedLecture, lectureBlock));
 
+    const linkToCourse = lecture.course.linkToCourse.trim();
+    if (linkToCourse.length > 0) {
+      lectureBlock.classList.add("clickable");
+      lectureBlock.addEventListener("click", (event) => {
+        const target = event.target as HTMLElement | null;
+        if (target?.closest(".lecture-course-overlay")) {
+          return;
+        }
+
+        this.openCourseModal(linkToCourse, `${lecture.course.abbreviation} - ${lecture.course.name}`);
+      });
+    }
+
     return lectureBlock;
   }
 
@@ -195,6 +210,7 @@ export class TimetableWidget {
       hideTimer = window.setTimeout(() => {
         clearTimers();
         overlay.classList.remove("visible");
+        lectureBlock.classList.remove("overlay-active");
       }, 220);
     };
 
@@ -221,8 +237,9 @@ export class TimetableWidget {
         overlay.style.setProperty("--overlay-left", `${left}px`);
         overlay.style.setProperty("--overlay-top", `${top}px`);
         overlay.classList.add("visible");
+        lectureBlock.classList.add("overlay-active");
         hoverTimer = null;
-      }, 500);
+      }, 1000);
     };
 
     lectureBlock.addEventListener("mouseenter", showOverlay);
@@ -231,6 +248,70 @@ export class TimetableWidget {
     overlay.addEventListener("mouseleave", scheduleHideOverlay);
 
     return overlay;
+  }
+
+  private openCourseModal(url: string, title: string): void {
+    const existing = document.querySelector(".course-link-modal-backdrop");
+    if (existing) {
+      return;
+    }
+
+    const backdrop = document.createElement("div");
+    backdrop.className = "course-link-modal-backdrop";
+
+    const modal = document.createElement("section");
+    modal.className = "course-link-modal";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-label", title);
+
+    const header = document.createElement("header");
+    header.className = "course-link-modal-header";
+
+    const heading = document.createElement("h3");
+    heading.className = "course-link-modal-title";
+    heading.textContent = title;
+
+    const closeButton = document.createElement("button");
+    closeButton.type = "button";
+    closeButton.className = "course-link-modal-close";
+    closeButton.textContent = "Close";
+
+    const frame = document.createElement("iframe");
+    frame.className = "course-link-modal-frame";
+    frame.src = url;
+    frame.loading = "lazy";
+    frame.referrerPolicy = "no-referrer";
+    frame.title = title;
+
+    header.appendChild(heading);
+    header.appendChild(closeButton);
+    modal.appendChild(header);
+    modal.appendChild(frame);
+    backdrop.appendChild(modal);
+    document.body.appendChild(backdrop);
+
+    const closeModal = (): void => {
+      backdrop.classList.remove("visible");
+      window.removeEventListener("keydown", handleEscape);
+      window.setTimeout(() => backdrop.remove(), TimetableWidget.MODAL_FADE_DURATION_MS);
+    };
+
+    const handleEscape = (event: KeyboardEvent): void => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    closeButton.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", (event) => {
+      if (event.target === backdrop) {
+        closeModal();
+      }
+    });
+
+    window.addEventListener("keydown", handleEscape);
+    window.requestAnimationFrame(() => backdrop.classList.add("visible"));
   }
 
   private createStudyPlanSelector(): HTMLElement {

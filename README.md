@@ -8,6 +8,11 @@ Native TypeScript + Vite app for planning a university curriculum. The first wid
 interface Course {
   abbreviation: string;
   name: string;
+  teacher: string;
+  credits: number;
+  group: string;
+  isOptional: boolean; // true when group === 'Groupe "Options"'
+  linkToCourse: string;
   lectures: Lecture[];
 }
 

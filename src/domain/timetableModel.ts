@@ -29,7 +29,7 @@ export class TimetableModel {
   public constructor(private readonly config: TimetableConfig) {}
 
   public getSchoolHourCount(): number {
-    return Math.floor((this.config.clock.endMinutes - this.config.clock.startMinutes) / this.getCycleMinutes());
+    return Math.ceil((this.config.clock.endMinutes - this.config.clock.startMinutes) / this.getCycleMinutes());
   }
 
   public buildPeriods(): Period[] {

@@ -1,113 +1,87 @@
+import rawStudyPlans from "../py/epfl_courses.json";
 import type { Course, DayIndex, LectureType, SchoolHour, Semester, StudyPlan } from "./types";
 
-type LectureInput = {
-  type: LectureType;
-  day: DayIndex;
-  timeStart: SchoolHour;
-  timeEnd: SchoolHour;
+type RawLecture = {
+  type: string;
+  day: number;
+  timeStart: number;
+  timeEnd: number;
 };
 
-class CourseFactory {
-  public static createCourse(
-    abbreviation: string,
-    name: string,
-    teacher: string,
-    credits: number,
-    group: string,
-    linkToCourse: string,
-    lectureInputs: LectureInput[],
-  ): Course {
-    const course: Course = {
-      abbreviation,
-      name,
-      teacher,
-      credits,
-      group,
-      linkToCourse,
-      lectures: [],
-    };
+type RawCourse = {
+  courseName: string;
+  courseAbbreviation: string;
+  teacher: string;
+  credits: number;
+  group: string;
+  lectures: RawLecture[];
+  linkToCourse: string;
+};
 
-    course.lectures = lectureInputs.map((lectureInput) => ({
-      ...lectureInput,
-      course,
-    }));
+type RawStudyPlan = {
+  semester: string;
+  name: string;
+  courses: RawCourse[];
+};
 
-    return course;
+const SEMESTER_VALUES: readonly Semester[] = ["BA1", "BA2", "BA3", "BA4", "BA5", "BA6"];
+const LECTURE_TYPE_VALUES: readonly LectureType[] = ["course", "exercise", "lab"];
+const OPTIONAL_GROUP_LABEL = 'Groupe "Options"';
+
+const normalizeSemester = (value: string): Semester => {
+  const upper = value.toUpperCase();
+  if (SEMESTER_VALUES.includes(upper as Semester)) {
+    return upper as Semester;
   }
-}
 
-class StudyPlanFactory {
-  public static create(name: string, semester: Semester, courses: Course[]): StudyPlan {
-    return {
-      name,
-      semester,
-      courses,
-    };
+  return "BA1";
+};
+
+const normalizeLectureType = (value: string): LectureType => {
+  if (LECTURE_TYPE_VALUES.includes(value as LectureType)) {
+    return value as LectureType;
   }
-}
 
-class SampleStudyPlansFactory {
-  public static create(): StudyPlan[] {
-    const calculus = CourseFactory.createCourse("MATH101", "Calculus I", "Dr. Newton", 6, "Core", "https://example.edu/courses/math101", [
-      { type: "course", day: 0, timeStart: 0, timeEnd: 2 },
-      { type: "exercise", day: 2, timeStart: 3, timeEnd: 5 },
-    ]);
+  return "course";
+};
 
-    const introProgramming = CourseFactory.createCourse(
-      "CS102",
-      "Programming Fundamentals",
-      "Prof. Ada",
-      7,
-      "Core",
-      "https://example.edu/courses/cs102",
-      [
-      { type: "course", day: 1, timeStart: 1, timeEnd: 3 },
-      { type: "lab", day: 3, timeStart: 6, timeEnd: 9 },
-      ],
-    );
+const normalizeDay = (value: number): DayIndex => {
+  const safe = Math.max(0, Math.min(4, Math.floor(value)));
+  return safe as DayIndex;
+};
 
-    const physics = CourseFactory.createCourse("PHY110", "Physics", "Dr. Faraday", 6, "Core", "https://example.edu/courses/phy110", [
-      { type: "course", day: 0, timeStart: 5, timeEnd: 7 },
-      { type: "exercise", day: 4, timeStart: 2, timeEnd: 4 },
-    ]);
+const normalizeHour = (value: number): SchoolHour => {
+  return Math.max(0, Math.floor(value));
+};
 
-    const history = CourseFactory.createCourse("HIS120", "Modern History", "Prof. Herodotus", 4, "Humanities", "https://example.edu/courses/his120", [
-      { type: "course", day: 2, timeStart: 7, timeEnd: 9 },
-    ]);
+const mapCourse = (rawCourse: RawCourse): Course => {
+  const course: Course = {
+    abbreviation: rawCourse.courseAbbreviation,
+    name: rawCourse.courseName,
+    teacher: rawCourse.teacher,
+    credits: rawCourse.credits,
+    group: rawCourse.group,
+    isOptional: rawCourse.group === OPTIONAL_GROUP_LABEL,
+    linkToCourse: rawCourse.linkToCourse,
+    lectures: [],
+  };
 
-    const dataStructures = CourseFactory.createCourse(
-      "CS201",
-      "Data Structures",
-      "Dr. Knuth",
-      6,
-      "Core",
-      "https://example.edu/courses/cs201",
-      [
-      { type: "course", day: 0, timeStart: 1, timeEnd: 3 },
-      { type: "exercise", day: 3, timeStart: 6, timeEnd: 8 },
-      ],
-    );
+  course.lectures = rawCourse.lectures.map((lecture) => ({
+    course,
+    type: normalizeLectureType(lecture.type),
+    day: normalizeDay(lecture.day),
+    timeStart: normalizeHour(lecture.timeStart),
+    timeEnd: normalizeHour(lecture.timeEnd),
+  }));
 
-    const linearAlgebra = CourseFactory.createCourse(
-      "MATH210",
-      "Linear Algebra",
-      "Prof. Euler",
-      5,
-      "Core",
-      "https://example.edu/courses/math210",
-      [
-      { type: "course", day: 2, timeStart: 0, timeEnd: 1 },
-      { type: "exercise", day: 4, timeStart: 2, timeEnd: 4 },
-      ],
-    );
+  return course;
+};
 
-    return [
-      StudyPlanFactory.create("Computer Science - Year 1", "BA1", [calculus, introProgramming, physics]),
-      StudyPlanFactory.create("History + Math Minor - Year 1", "BA1", [calculus, history]),
-      StudyPlanFactory.create("Computer Science - Year 2", "BA2", [dataStructures, linearAlgebra]),
-    ];
-  }
-}
+const mapStudyPlan = (rawStudyPlan: RawStudyPlan): StudyPlan => ({
+  name: rawStudyPlan.name,
+  semester: normalizeSemester(rawStudyPlan.semester),
+  courses: rawStudyPlan.courses.map(mapCourse),
+});
 
-export const sampleStudyPlans = SampleStudyPlansFactory.create();
+export const sampleStudyPlans: StudyPlan[] = (rawStudyPlans as RawStudyPlan[]).map(mapStudyPlan);
 
