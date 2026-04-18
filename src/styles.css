@@ -265,6 +265,56 @@ h1 {
     font-size: 0.66rem;
 }
 
+.lecture-course-overlay {
+    --overlay-left: 12px;
+    --overlay-top: 12px;
+    position: fixed;
+    left: var(--overlay-left);
+    top: var(--overlay-top);
+    width: min(300px, calc(100vw - 24px));
+    display: grid;
+    gap: 6px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    box-shadow: 0 16px 35px rgba(15, 23, 42, 0.22);
+    color: #111827;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(4px);
+    transition: opacity 120ms ease, transform 120ms ease;
+    z-index: 30;
+}
+
+.lecture-course-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.lecture-course-overlay-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.lecture-course-overlay-row {
+    font-size: 0.76rem;
+    color: #1f2937;
+}
+
+.lecture-course-overlay-link {
+    font-size: 0.76rem;
+    color: #1d4ed8;
+    text-decoration: none;
+}
+
+.lecture-course-overlay-link:hover {
+    text-decoration: underline;
+}
+
 .conflict-slot-overlay {
     margin: 2px;
     border: 2px dashed #ef4444;

@@ -110,8 +110,7 @@ export class TimetableWidget {
     lectureBlock.style.setProperty("--lecture-lane-count", `${Math.max(1, laneCount)}`);
     lectureBlock.style.gridColumn = grid.getGridColumn(lecture.day);
     lectureBlock.style.gridRow = `${grid.getGridRowStart(lecture.timeStart)} / span ${lectureSpan}`;
-    lectureBlock.title = this.buildLectureTitle(plannedLecture);
-    lectureBlock.ariaLabel = lectureBlock.title;
+    lectureBlock.ariaLabel = this.buildLectureTitle(plannedLecture);
 
     const abbreviation = document.createElement("div");
     abbreviation.className = "lecture-abbreviation";
@@ -128,6 +127,7 @@ export class TimetableWidget {
     lectureBlock.appendChild(abbreviation);
     lectureBlock.appendChild(name);
     lectureBlock.appendChild(type);
+    lectureBlock.appendChild(this.createCourseOverlay(plannedLecture, lectureBlock));
 
     return lectureBlock;
   }
@@ -136,6 +136,101 @@ export class TimetableWidget {
     const { lecture, studyPlans } = plannedLecture;
     const plans = studyPlans.map((studyPlan) => `${studyPlan.semester} - ${studyPlan.name}`).join(" | ");
     return `${lecture.course.abbreviation} - ${lecture.course.name} (${lecture.type})${plans ? `\n${plans}` : ""}`;
+  }
+
+  private createCourseOverlay(plannedLecture: PlannedLecture, lectureBlock: HTMLElement): HTMLElement {
+    const { course } = plannedLecture.lecture;
+    const overlay = document.createElement("aside");
+    overlay.className = "lecture-course-overlay";
+
+    const title = document.createElement("div");
+    title.className = "lecture-course-overlay-title";
+    title.textContent = `${course.abbreviation} - ${course.name}`;
+
+    const teacher = document.createElement("div");
+    teacher.className = "lecture-course-overlay-row";
+    teacher.textContent = `Teacher: ${course.teacher}`;
+
+    const credits = document.createElement("div");
+    credits.className = "lecture-course-overlay-row";
+    credits.textContent = `Credits: ${course.credits}`;
+
+    const group = document.createElement("div");
+    group.className = "lecture-course-overlay-row";
+    group.textContent = `Group: ${course.group}`;
+
+    const link = document.createElement("a");
+    link.className = "lecture-course-overlay-link";
+    link.href = course.linkToCourse;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "Course page";
+
+    overlay.appendChild(title);
+    overlay.appendChild(teacher);
+    overlay.appendChild(credits);
+    overlay.appendChild(group);
+    overlay.appendChild(link);
+
+    let hoverTimer: number | null = null;
+    let hideTimer: number | null = null;
+
+    const clearTimers = (): void => {
+      if (hoverTimer !== null) {
+        window.clearTimeout(hoverTimer);
+        hoverTimer = null;
+      }
+
+      if (hideTimer !== null) {
+        window.clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+    };
+
+    const scheduleHideOverlay = (): void => {
+      if (hideTimer !== null) {
+        window.clearTimeout(hideTimer);
+      }
+
+      hideTimer = window.setTimeout(() => {
+        clearTimers();
+        overlay.classList.remove("visible");
+      }, 220);
+    };
+
+    const showOverlay = (): void => {
+      if (hideTimer !== null) {
+        window.clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+
+      if (hoverTimer !== null) {
+        window.clearTimeout(hoverTimer);
+      }
+
+      hoverTimer = window.setTimeout(() => {
+        const offset = 10;
+        const popupWidth = 300;
+        const popupHeight = 170;
+        const rect = lectureBlock.getBoundingClientRect();
+        const maxLeft = Math.max(offset, window.innerWidth - popupWidth - offset);
+        const maxTop = Math.max(offset, window.innerHeight - popupHeight - offset);
+        const left = Math.min(maxLeft, rect.right + offset);
+        const top = Math.min(maxTop, rect.top);
+
+        overlay.style.setProperty("--overlay-left", `${left}px`);
+        overlay.style.setProperty("--overlay-top", `${top}px`);
+        overlay.classList.add("visible");
+        hoverTimer = null;
+      }, 500);
+    };
+
+    lectureBlock.addEventListener("mouseenter", showOverlay);
+    lectureBlock.addEventListener("mouseleave", scheduleHideOverlay);
+    overlay.addEventListener("mouseenter", showOverlay);
+    overlay.addEventListener("mouseleave", scheduleHideOverlay);
+
+    return overlay;
   }
 
   private createStudyPlanSelector(): HTMLElement {

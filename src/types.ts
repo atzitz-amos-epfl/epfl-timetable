@@ -8,6 +8,10 @@ export type SchoolHour = number;
 export interface Course {
   abbreviation: string;
   name: string;
+  teacher: string;
+  credits: number;
+  group: string;
+  linkToCourse: string;
   lectures: Lecture[];
 }
 
