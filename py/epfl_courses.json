@@ -1,0 +1,1966 @@
+[
+  {
+    "semester": "ba1",
+    "name": "info",
+    "courses": [
+      {
+        "courseName": "Advanced information, computation, communication I",
+        "courseAbbreviation": "CS-101",
+        "teacher": "Urbanke",
+        "credits": 7,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/advanced-information-computation-communication-i-CS-101"
+      },
+      {
+        "courseName": "Alg\u00e8bre lin\u00e9aire",
+        "courseAbbreviation": "MATH-111(e)",
+        "teacher": "Boumal",
+        "credits": 6,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/algebre-lineaire-MATH-111-E"
+      },
+      {
+        "courseName": "Alg\u00e8bre lin\u00e9aire (anglais)",
+        "courseAbbreviation": "MATH-111(en)",
+        "teacher": "Negut",
+        "credits": 6,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/algebre-lineaire-anglais-MATH-111-EN"
+      },
+      {
+        "courseName": "Alg\u00e8bre lin\u00e9aire (classe invers\u00e9e)",
+        "courseAbbreviation": "MATH-111(pi)",
+        "teacher": "Deparis",
+        "credits": 6,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/algebre-lineaire-classe-inversee-MATH-111-PI"
+      },
+      {
+        "courseName": "Analyse I",
+        "courseAbbreviation": "MATH-101(e)",
+        "teacher": "Lachowska",
+        "credits": 6,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/analyse-i-MATH-101-E"
+      },
+      {
+        "courseName": "Analyse I (allemand)",
+        "courseAbbreviation": "MATH-101(de)",
+        "teacher": "Divers enseignants",
+        "credits": 6,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/analyse-i-allemand-MATH-101-DE"
+      },
+      {
+        "courseName": "Analyse I (anglais)",
+        "courseAbbreviation": "MATH-101(en)",
+        "teacher": "Monin",
+        "credits": 6,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/analyse-i-anglais-MATH-101-EN"
+      },
+      {
+        "courseName": "Analyse I (classe invers\u00e9e)",
+        "courseAbbreviation": "MATH-101(pi)",
+        "teacher": "Friedli",
+        "credits": 6,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/analyse-i-classe-inversee-MATH-101-PI"
+      },
+      {
+        "courseName": "Physique g\u00e9n\u00e9rale : m\u00e9canique (anglais)",
+        "courseAbbreviation": "PHYS-101(en)",
+        "teacher": "Baquero Ruiz",
+        "credits": 6,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/physique-generale-mecanique-anglais-PHYS-101-EN"
+      },
+      {
+        "courseName": "Physique g\u00e9n\u00e9rale : m\u00e9canique (classe invers\u00e9e)",
+        "courseAbbreviation": "PHYS-101(l)",
+        "teacher": "H\u00e9bert",
+        "credits": 6,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/physique-generale-mecanique-classe-inversee-PHYS-101-L"
+      },
+      {
+        "courseName": "Physique g\u00e9n\u00e9rale : m\u00e9canique (classe invers\u00e9e en anglais)",
+        "courseAbbreviation": "PHYS-101(n)",
+        "teacher": "Tolley",
+        "credits": 6,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/physique-generale-mecanique-classe-inversee-en-anglais-PHYS-101-N"
+      },
+      {
+        "courseName": "Physique g\u00e9n\u00e9rale : m\u00e9canique (IN)",
+        "courseAbbreviation": "PHYS-101(c)",
+        "teacher": "Galland",
+        "credits": 6,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/physique-generale-mecanique-in-PHYS-101-C"
+      },
+      {
+        "courseName": "Introduction \u00e0 la programmation",
+        "courseAbbreviation": "CS-107",
+        "teacher": "Pires",
+        "credits": 5,
+        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/introduction-a-la-programmation-CS-107"
+      }
+    ]
+  },
+  {
+    "semester": "ba2",
+    "name": "info",
+    "courses": [
+      {
+        "courseName": "Advanced information, computation, communication II",
+        "courseAbbreviation": "COM-102",
+        "teacher": "Gastpar",
+        "credits": 7,
+        "group": "Bloc 1 (Prop\u00e9deutique)",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 5,
+            "timeEnd": 7
+          },
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 7,
+            "timeEnd": 9
+          },
+          {
+            "type": "exercise",
+            "day": 2,
+            "timeStart": 7,
+            "timeEnd": 9
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/advanced-information-computation-communication-ii-COM-102"
+      },
+      {
+        "courseName": "Analyse II",
+        "courseAbbreviation": "MATH-106(e)",
+        "teacher": "Lachowska",
+        "credits": 6,
+        "group": "Bloc 1 (Prop\u00e9deutique)",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "exercise",
+            "day": 3,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "course",
+            "day": 3,
+            "timeStart": 4,
+            "timeEnd": 6
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/analyse-ii-MATH-106-E"
+      },
+      {
+        "courseName": "Analyse II (anglais)",
+        "courseAbbreviation": "MATH-106(en)",
+        "teacher": "Richter",
+        "credits": 6,
+        "group": "Bloc 1 (Prop\u00e9deutique)",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 2,
+            "timeEnd": 4
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/analyse-ii-anglais-MATH-106-EN"
+      },
+      {
+        "courseName": "Fundamentals of digital systems",
+        "courseAbbreviation": "CS-173",
+        "teacher": "Stojilovic",
+        "credits": 7,
+        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 5,
+            "timeEnd": 7
+          },
+          {
+            "type": "course",
+            "day": 3,
+            "timeStart": 6,
+            "timeEnd": 7
+          },
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 7,
+            "timeEnd": 9
+          },
+          {
+            "type": "exercise",
+            "day": 3,
+            "timeStart": 7,
+            "timeEnd": 9
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/fundamentals-of-digital-systems-CS-173"
+      },
+      {
+        "courseName": "Pratique de la programmation orient\u00e9e-objet",
+        "courseAbbreviation": "CS-108",
+        "teacher": "Schinz",
+        "credits": 9,
+        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "lectures": [
+          {
+            "type": "lab",
+            "day": 1,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "exercise",
+            "day": 4,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "lab",
+            "day": 4,
+            "timeStart": 5,
+            "timeEnd": 9
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/informatique/coursebook/pratique-de-la-programmation-orientee-objet-CS-108"
+      }
+    ]
+  },
+  {
+    "semester": "ba1",
+    "name": "math",
+    "courses": [
+      {
+        "courseName": "Alg\u00e8bre lin\u00e9aire avanc\u00e9e I - espaces vectoriels",
+        "courseAbbreviation": "MATH-110(a)",
+        "teacher": "Michel",
+        "credits": 7,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/algebre-lineaire-avancee-i-espaces-vectoriels-MATH-110-A"
+      },
+      {
+        "courseName": "Analyse avanc\u00e9e I - analyse r\u00e9elle",
+        "courseAbbreviation": "MATH-100(a)",
+        "teacher": "Monod",
+        "credits": 8,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/analyse-avancee-i-analyse-reelle-MATH-100-A"
+      },
+      {
+        "courseName": "Physique g\u00e9n\u00e9rale : m\u00e9canique",
+        "courseAbbreviation": "PHYS-101(f)",
+        "teacher": "Br\u00e9chet",
+        "credits": 6,
+        "group": "Bloc 1 : moyenne du premier semestre",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/physique-generale-mecanique-PHYS-101-F"
+      },
+      {
+        "courseName": "Alg\u00e8bre I - structures fondamentales",
+        "courseAbbreviation": "MATH-113",
+        "teacher": "Wyss",
+        "credits": 4,
+        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/algebre-i-structures-fondamentales-MATH-113"
+      },
+      {
+        "courseName": "Information, calcul, communication",
+        "courseAbbreviation": "CS-119(l)",
+        "teacher": "Doeraene",
+        "credits": 6,
+        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/information-calcul-communication-CS-119-L"
+      }
+    ]
+  },
+  {
+    "semester": "ba2",
+    "name": "math",
+    "courses": [
+      {
+        "courseName": "Alg\u00e8bre lin\u00e9aire avanc\u00e9e II - diagonalisation",
+        "courseAbbreviation": "MATH-115(a)",
+        "teacher": "Eisenbrand",
+        "credits": 7,
+        "group": "Bloc 1 (Prop\u00e9deutique)",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 5,
+            "timeEnd": 7
+          },
+          {
+            "type": "exercise",
+            "day": 4,
+            "timeStart": 5,
+            "timeEnd": 7
+          },
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 6,
+            "timeEnd": 8
+          },
+          {
+            "type": "exercise",
+            "day": 1,
+            "timeStart": 7,
+            "timeEnd": 8
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/algebre-lineaire-avancee-ii-diagonalisation-MATH-115-A"
+      },
+      {
+        "courseName": "Analyse avanc\u00e9e II - analyse vectorielle",
+        "courseAbbreviation": "MATH-105(a)",
+        "teacher": "Nobile",
+        "credits": 8,
+        "group": "Bloc 1 (Prop\u00e9deutique)",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "exercise",
+            "day": 2,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 5,
+            "timeEnd": 7
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/analyse-avancee-ii-analyse-vectorielle-MATH-105-A"
+      },
+      {
+        "courseName": "Physique g\u00e9n\u00e9rale : fluides et \u00e9lectromagn\u00e9tisme",
+        "courseAbbreviation": "PHYS-108",
+        "teacher": "Theiler",
+        "credits": 5,
+        "group": "Bloc 1 (Prop\u00e9deutique)",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 4,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 8,
+            "timeEnd": 9
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/physique-generale-fluides-et-electromagnetisme-PHYS-108"
+      },
+      {
+        "courseName": "D\u00e9veloppement logiciel",
+        "courseAbbreviation": "CS-121",
+        "teacher": "Doeraene",
+        "credits": 4,
+        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 3,
+            "timeStart": 0,
+            "timeEnd": 1
+          },
+          {
+            "type": "lab",
+            "day": 3,
+            "timeStart": 1,
+            "timeEnd": 3
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/developpement-logiciel-CS-121"
+      },
+      {
+        "courseName": "Discrete mathematics",
+        "courseAbbreviation": "MATH-260(a)",
+        "teacher": "Viazovska",
+        "credits": 4,
+        "group": "Bloc 2 (Prop\u00e9deutique)",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "exercise",
+            "day": 1,
+            "timeStart": 0,
+            "timeEnd": 2
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/propedeutique/mathematiques/coursebook/discrete-mathematics-MATH-260-A"
+      }
+    ]
+  },
+  {
+    "semester": "ba3",
+    "name": "info",
+    "courses": [
+      {
+        "courseName": "Analysis III (for IC)",
+        "courseAbbreviation": "MATH-203(d)",
+        "teacher": "Antolin Sanchez",
+        "credits": 6,
+        "group": "Bloc A",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/analysis-iii-for-ic-MATH-203-D"
+      },
+      {
+        "courseName": "Software construction",
+        "courseAbbreviation": "CS-214",
+        "teacher": "Kuncak",
+        "credits": 8,
+        "group": "Bloc A",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/software-construction-CS-214"
+      },
+      {
+        "courseName": "Computer architecture",
+        "courseAbbreviation": "CS-200",
+        "teacher": "Ienne",
+        "credits": 8,
+        "group": "Bloc B",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/computer-architecture-CS-200"
+      },
+      {
+        "courseName": "Probabilit\u00e9s et statistique (pour IC)",
+        "courseAbbreviation": "MATH-232",
+        "teacher": "Ott",
+        "credits": 6,
+        "group": "Bloc B",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/probabilites-et-statistique-pour-ic-MATH-232"
+      },
+      {
+        "courseName": "Algebra",
+        "courseAbbreviation": "MATH-310",
+        "teacher": "Lachowska",
+        "credits": 4,
+        "group": "Groupe \"Options\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/algebra-MATH-310"
+      },
+      {
+        "courseName": "Electronique I",
+        "courseAbbreviation": "EE-202(b)",
+        "teacher": "Sallese",
+        "credits": 4,
+        "group": "Groupe \"Options\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/electronique-i-EE-202-B"
+      },
+      {
+        "courseName": "Numerical methods for visual computing and ML",
+        "courseAbbreviation": "CS-328",
+        "teacher": "Jakob",
+        "credits": 4,
+        "group": "Groupe \"Options\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/numerical-methods-for-visual-computing-and-ml-CS-328"
+      },
+      {
+        "courseName": "Responsible software",
+        "courseAbbreviation": "CS-290",
+        "teacher": "Hardebolle",
+        "credits": 5,
+        "group": "Groupe \"Options\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/responsible-software-CS-290"
+      },
+      {
+        "courseName": "Technologies for democratic society",
+        "courseAbbreviation": "CS-234",
+        "teacher": "Ford",
+        "credits": 5,
+        "group": "Groupe \"Options\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/technologies-for-democratic-society-CS-234"
+      },
+      {
+        "courseName": "M\u00e9canique analytique (pour SPH)",
+        "courseAbbreviation": "PHYS-202",
+        "teacher": "Savona",
+        "credits": 5,
+        "group": "Groupe \"Physique/Bio\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/mecanique-analytique-pour-sph-PHYS-202"
+      },
+      {
+        "courseName": "Physique g\u00e9n\u00e9rale : \u00e9lectromagn\u00e9tisme",
+        "courseAbbreviation": "PHYS-114",
+        "teacher": "Avino",
+        "credits": 4,
+        "group": "Groupe \"Physique/Bio\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/physique-generale-electromagnetisme-PHYS-114"
+      }
+    ]
+  },
+  {
+    "semester": "ba4",
+    "name": "info",
+    "courses": [
+      {
+        "courseName": "Algorithms I",
+        "courseAbbreviation": "CS-250",
+        "teacher": "Svensson",
+        "credits": 8,
+        "group": "Bloc A",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 4,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 3,
+            "timeEnd": 5
+          },
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 5,
+            "timeEnd": 7
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/algorithms-i-CS-250"
+      },
+      {
+        "courseName": "Computer systems",
+        "courseAbbreviation": "CS-202",
+        "teacher": "Argyraki",
+        "credits": 8,
+        "group": "Bloc B",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 1,
+            "timeEnd": 3
+          },
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 1,
+            "timeEnd": 3
+          },
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 5,
+            "timeEnd": 7
+          },
+          {
+            "type": "lab",
+            "day": 2,
+            "timeStart": 5,
+            "timeEnd": 7
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/computer-systems-CS-202"
+      },
+      {
+        "courseName": "Analysis IV",
+        "courseAbbreviation": "MATH-207(d)",
+        "teacher": "Braun",
+        "credits": 4,
+        "group": "Groupe \"Options\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 3,
+            "timeStart": 7,
+            "timeEnd": 9
+          },
+          {
+            "type": "exercise",
+            "day": 3,
+            "timeStart": 9,
+            "timeEnd": 11
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/analysis-iv-MATH-207-D"
+      },
+      {
+        "courseName": "Computer graphics",
+        "courseAbbreviation": "CS-341",
+        "teacher": "Divers enseignants",
+        "credits": 6,
+        "group": "Groupe \"Options\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/computer-graphics-CS-341"
+      },
+      {
+        "courseName": "Introduction to machine learning",
+        "courseAbbreviation": "CS-233",
+        "teacher": "Fua",
+        "credits": 6,
+        "group": "Groupe \"Options\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "lab",
+            "day": 4,
+            "timeStart": 7,
+            "timeEnd": 9
+          },
+          {
+            "type": "exercise",
+            "day": 1,
+            "timeStart": 9,
+            "timeEnd": 11
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/introduction-to-machine-learning-CS-233"
+      },
+      {
+        "courseName": "Signal processing",
+        "courseAbbreviation": "COM-202",
+        "teacher": "Prandoni",
+        "credits": 8,
+        "group": "Groupe \"Options\"",
+        "lectures": [
+          {
+            "type": "lab",
+            "day": 4,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 7,
+            "timeEnd": 9
+          },
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 9,
+            "timeEnd": 11
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/signal-processing-COM-202"
+      },
+      {
+        "courseName": "Introduction aux sciences du vivant (pour IC)",
+        "courseAbbreviation": "BIO-109",
+        "teacher": "Zufferey",
+        "credits": 6,
+        "group": "Groupe \"Physique/Bio\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 3,
+            "timeStart": 2,
+            "timeEnd": 3
+          },
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 3,
+            "timeEnd": 5
+          },
+          {
+            "type": "exercise",
+            "day": 3,
+            "timeStart": 3,
+            "timeEnd": 4
+          },
+          {
+            "type": "course",
+            "day": 4,
+            "timeStart": 5,
+            "timeEnd": 6
+          },
+          {
+            "type": "exercise",
+            "day": 4,
+            "timeStart": 6,
+            "timeEnd": 7
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/introduction-aux-sciences-du-vivant-pour-ic-BIO-109"
+      }
+    ]
+  },
+  {
+    "semester": "ba5",
+    "name": "info",
+    "courses": [
+      {
+        "courseName": "Computer security and privacy",
+        "courseAbbreviation": "COM-301",
+        "teacher": "Bourgeat",
+        "credits": 6,
+        "group": "Bloc C",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/computer-security-and-privacy-COM-301"
+      },
+      {
+        "courseName": "Electromagn\u00e9tisme I : lignes et ondes",
+        "courseAbbreviation": "EE-200",
+        "teacher": "Fleury",
+        "credits": 3,
+        "group": "Groupe \"Options\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/electromagnetisme-i-lignes-et-ondes-EE-200"
+      },
+      {
+        "courseName": "Electronique II (pour IC)",
+        "courseAbbreviation": "EE-203(b)",
+        "teacher": "Sallese",
+        "credits": 4,
+        "group": "Groupe \"Options\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/electronique-ii-pour-ic-EE-203-B"
+      },
+      {
+        "courseName": "Introduction to quantum information processing",
+        "courseAbbreviation": "COM-309",
+        "teacher": "Macris",
+        "credits": 5,
+        "group": "Groupe \"Options\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/introduction-to-quantum-information-processing-COM-309"
+      },
+      {
+        "courseName": "Mod\u00e8les stochastiques pour les communications",
+        "courseAbbreviation": "COM-300",
+        "teacher": "Thiran",
+        "credits": 6,
+        "group": "Groupe \"Options\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/modeles-stochastiques-pour-les-communications-COM-300"
+      },
+      {
+        "courseName": "Principles of online decision-making",
+        "courseAbbreviation": "CS-303",
+        "teacher": "Grossglauser",
+        "credits": 6,
+        "group": "Groupe \"Options\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/principles-of-online-decision-making-CS-303"
+      },
+      {
+        "courseName": "Projet de recherche optionnel en Informatique I",
+        "courseAbbreviation": "CS-304",
+        "teacher": "Divers enseignants",
+        "credits": 8,
+        "group": "Groupe \"Options\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/projet-de-recherche-optionnel-en-informatique-i-CS-304"
+      },
+      {
+        "courseName": "Quantum mechanics for non-physicists",
+        "courseAbbreviation": "PHYS-344",
+        "teacher": "Manucharyan",
+        "credits": 5,
+        "group": "Groupe \"Physique/Bio\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/quantum-mechanics-for-non-physicists-PHYS-344"
+      },
+      {
+        "courseName": "Making intelligent things A",
+        "courseAbbreviation": "CS-358(a)",
+        "teacher": "Koch",
+        "credits": 8,
+        "group": "Groupe \"Projets\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/making-intelligent-things-a-CS-358-A"
+      },
+      {
+        "courseName": "The software enterprise - from ideas to products",
+        "courseAbbreviation": "CS-311",
+        "teacher": "Candea",
+        "credits": 8,
+        "group": "Groupe \"Projets\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/the-software-enterprise-from-ideas-to-products-CS-311"
+      }
+    ]
+  },
+  {
+    "semester": "ba6",
+    "name": "info",
+    "courses": [
+      {
+        "courseName": "Data-intensive systems",
+        "courseAbbreviation": "CS-300",
+        "teacher": "Ailamaki",
+        "credits": 6,
+        "group": "Bloc C",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 3,
+            "timeEnd": 5
+          },
+          {
+            "type": "exercise",
+            "day": 2,
+            "timeStart": 8,
+            "timeEnd": 9
+          },
+          {
+            "type": "lab",
+            "day": 2,
+            "timeStart": 9,
+            "timeEnd": 11
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/data-intensive-systems-CS-300"
+      },
+      {
+        "courseName": "Theory of computation",
+        "courseAbbreviation": "CS-251",
+        "teacher": "Chiesa",
+        "credits": 6,
+        "group": "Bloc C",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 5,
+            "timeEnd": 7
+          },
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 7,
+            "timeEnd": 9
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/theory-of-computation-CS-251"
+      },
+      {
+        "courseName": "Computer language processing",
+        "courseAbbreviation": "CS-320",
+        "teacher": "Kuncak",
+        "credits": 6,
+        "group": "Groupe \"Options\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 5,
+            "timeEnd": 7
+          },
+          {
+            "type": "exercise",
+            "day": 4,
+            "timeStart": 5,
+            "timeEnd": 7
+          },
+          {
+            "type": "lab",
+            "day": 4,
+            "timeStart": 7,
+            "timeEnd": 9
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/computer-language-processing-CS-320"
+      },
+      {
+        "courseName": "Digital IC design",
+        "courseAbbreviation": "EE-330",
+        "teacher": "Schmid",
+        "credits": 3,
+        "group": "Groupe \"Options\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 6,
+            "timeEnd": 8
+          },
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 8,
+            "timeEnd": 9
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/digital-ic-design-EE-330"
+      },
+      {
+        "courseName": "Electromagn\u00e9tisme II : calcul des champs",
+        "courseAbbreviation": "EE-201",
+        "teacher": "Fleury",
+        "credits": 3,
+        "group": "Groupe \"Options\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 7,
+            "timeEnd": 9
+          },
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 9,
+            "timeEnd": 10
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/electromagnetisme-ii-calcul-des-champs-EE-201"
+      },
+      {
+        "courseName": "Intelligent systems: communications & AI",
+        "courseAbbreviation": "COM-304",
+        "teacher": "Al Hassanieh",
+        "credits": 8,
+        "group": "Groupe \"Options\"",
+        "lectures": [
+          {
+            "type": "lab",
+            "day": 3,
+            "timeStart": 0,
+            "timeEnd": 5
+          },
+          {
+            "type": "lab",
+            "day": 4,
+            "timeStart": 0,
+            "timeEnd": 5
+          },
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 7,
+            "timeEnd": 9
+          },
+          {
+            "type": "lab",
+            "day": 1,
+            "timeStart": 9,
+            "timeEnd": 10
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/intelligent-systems-communications-ai-COM-304"
+      },
+      {
+        "courseName": "Internet analytics",
+        "courseAbbreviation": "COM-308",
+        "teacher": "Grossglauser",
+        "credits": 6,
+        "group": "Groupe \"Options\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 7,
+            "timeEnd": 9
+          },
+          {
+            "type": "lab",
+            "day": 3,
+            "timeStart": 8,
+            "timeEnd": 10
+          },
+          {
+            "type": "exercise",
+            "day": 3,
+            "timeStart": 10,
+            "timeEnd": 11
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/internet-analytics-COM-308"
+      },
+      {
+        "courseName": "Introduction to quantum computation",
+        "courseAbbreviation": "CS-308",
+        "teacher": "Vidick",
+        "credits": 5,
+        "group": "Groupe \"Options\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 1,
+            "timeEnd": 4
+          },
+          {
+            "type": "exercise",
+            "day": 2,
+            "timeStart": 4,
+            "timeEnd": 5
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/introduction-to-quantum-computation-CS-308"
+      },
+      {
+        "courseName": "Parallelism and concurrency in software",
+        "courseAbbreviation": "CS-302",
+        "teacher": "Falsafi",
+        "credits": 6,
+        "group": "Groupe \"Options\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "course",
+            "day": 3,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "exercise",
+            "day": 4,
+            "timeStart": 2,
+            "timeEnd": 4
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/parallelism-and-concurrency-in-software-CS-302"
+      },
+      {
+        "courseName": "Principles of digital communications",
+        "courseAbbreviation": "COM-302",
+        "teacher": "Telatar",
+        "credits": 6,
+        "group": "Groupe \"Options\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 5,
+            "timeEnd": 8
+          },
+          {
+            "type": "course",
+            "day": 4,
+            "timeStart": 5,
+            "timeEnd": 6
+          },
+          {
+            "type": "exercise",
+            "day": 4,
+            "timeStart": 6,
+            "timeEnd": 7
+          },
+          {
+            "type": "lab",
+            "day": 4,
+            "timeStart": 7,
+            "timeEnd": 8
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/principles-of-digital-communications-COM-302"
+      },
+      {
+        "courseName": "Neuroscience foundations for engineers",
+        "courseAbbreviation": "BIOENG-310",
+        "teacher": "Schrimpf",
+        "credits": 6,
+        "group": "Groupe \"Physique/Bio\"",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 0,
+            "timeEnd": 3
+          },
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 1,
+            "timeEnd": 4
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/neuroscience-foundations-for-engineers-BIOENG-310"
+      },
+      {
+        "courseName": "Making intelligent things B",
+        "courseAbbreviation": "CS-358(b)",
+        "teacher": "Koch",
+        "credits": 8,
+        "group": "Groupe \"Projets\"",
+        "lectures": [
+          {
+            "type": "lab",
+            "day": 3,
+            "timeStart": 1,
+            "timeEnd": 2
+          },
+          {
+            "type": "lab",
+            "day": 3,
+            "timeStart": 5,
+            "timeEnd": 8
+          },
+          {
+            "type": "lab",
+            "day": 1,
+            "timeStart": 9,
+            "timeEnd": 11
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/informatique/coursebook/making-intelligent-things-b-CS-358-B"
+      }
+    ]
+  },
+  {
+    "semester": "ba3",
+    "name": "math",
+    "courses": [
+      {
+        "courseName": "Algebra II - groups",
+        "courseAbbreviation": "MATH-211",
+        "teacher": "Negut",
+        "credits": 5,
+        "group": "Bloc \"Sciences de base\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/algebra-ii-groups-MATH-211"
+      },
+      {
+        "courseName": "Analyse III - analyse complexe, champs vectoriels",
+        "courseAbbreviation": "MATH-200",
+        "teacher": "Krieger",
+        "credits": 9,
+        "group": "Bloc \"Sciences de base\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/analyse-iii-analyse-complexe-champs-vectoriels-MATH-200"
+      },
+      {
+        "courseName": "Differential geometry I - curves and surfaces",
+        "courseAbbreviation": "MATH-213",
+        "teacher": "Moschidis",
+        "credits": 5,
+        "group": "Bloc \"Sciences de base\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/differential-geometry-i-curves-and-surfaces-MATH-213"
+      },
+      {
+        "courseName": "Probabilit\u00e9s",
+        "courseAbbreviation": "MATH-230",
+        "teacher": "Aru",
+        "credits": 5,
+        "group": "Bloc \"Sciences de base\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/probabilites-MATH-230"
+      },
+      {
+        "courseName": "Topologie I - topologie g\u00e9n\u00e9rale",
+        "courseAbbreviation": "MATH-220",
+        "teacher": "Hess Bellwald",
+        "credits": 5,
+        "group": "Bloc \"Sciences de base\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/topologie-i-topologie-generale-MATH-220"
+      }
+    ]
+  },
+  {
+    "semester": "ba4",
+    "name": "math",
+    "courses": [
+      {
+        "courseName": "Advanced numerical analysis I",
+        "courseAbbreviation": "MATH-250",
+        "teacher": "Kressner",
+        "credits": 5,
+        "group": "Bloc \"Sciences de base\"",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 4,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "course",
+            "day": 3,
+            "timeStart": 6,
+            "timeEnd": 8
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/advanced-numerical-analysis-i-MATH-250"
+      },
+      {
+        "courseName": "Algebra III - rings and fields",
+        "courseAbbreviation": "MATH-215",
+        "teacher": "Monin",
+        "credits": 5,
+        "group": "Bloc \"Sciences de base\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 5,
+            "timeEnd": 7
+          },
+          {
+            "type": "exercise",
+            "day": 2,
+            "timeStart": 7,
+            "timeEnd": 9
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/algebra-iii-rings-and-fields-MATH-215"
+      },
+      {
+        "courseName": "Analysis IV - Lebesgue measure, Fourier analysis",
+        "courseAbbreviation": "MATH-205",
+        "teacher": "Chaintron",
+        "credits": 7,
+        "group": "Bloc \"Sciences de base\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 3,
+            "timeStart": 2,
+            "timeEnd": 3
+          },
+          {
+            "type": "exercise",
+            "day": 3,
+            "timeStart": 3,
+            "timeEnd": 5
+          },
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 5,
+            "timeEnd": 7
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/analysis-iv-lebesgue-measure-fourier-analysis-MATH-205"
+      },
+      {
+        "courseName": "Discrete optimization",
+        "courseAbbreviation": "MATH-261",
+        "teacher": "Eisenbrand",
+        "credits": 5,
+        "group": "Bloc \"Sciences de base\"",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 1,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 2,
+            "timeEnd": 4
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/discrete-optimization-MATH-261"
+      },
+      {
+        "courseName": "Statistique",
+        "courseAbbreviation": "MATH-240",
+        "teacher": "Panaretos",
+        "credits": 5,
+        "group": "Bloc \"Sciences de base\"",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 5,
+            "timeEnd": 7
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/statistique-MATH-240"
+      },
+      {
+        "courseName": "Topologie II - groupes fondamentaux",
+        "courseAbbreviation": "MATH-225",
+        "teacher": "Wyss",
+        "credits": 5,
+        "group": "Bloc \"Sciences de base\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 7,
+            "timeEnd": 9
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/topologie-ii-groupes-fondamentaux-MATH-225"
+      }
+    ]
+  },
+  {
+    "semester": "ba5",
+    "name": "math",
+    "courses": [
+      {
+        "courseName": "Projet de Math\u00e9matiques (bachelor)",
+        "courseAbbreviation": "MATH-397",
+        "teacher": "Divers enseignants",
+        "credits": 12,
+        "group": "Groupe \"Branches de semestre\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/projet-de-mathematiques-bachelor-MATH-397"
+      },
+      {
+        "courseName": "Advanced numerical analysis II",
+        "courseAbbreviation": "MATH-351",
+        "teacher": "Picasso",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/advanced-numerical-analysis-ii-MATH-351"
+      },
+      {
+        "courseName": "Algebra IV - rings and modules",
+        "courseAbbreviation": "MATH-311",
+        "teacher": "Patakfalvi",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/algebra-iv-rings-and-modules-MATH-311"
+      },
+      {
+        "courseName": "Algebra V - Galois theory",
+        "courseAbbreviation": "MATH-317",
+        "teacher": "Zanardini",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/algebra-v-galois-theory-MATH-317"
+      },
+      {
+        "courseName": "Analyse fonctionnelle I",
+        "courseAbbreviation": "MATH-302",
+        "teacher": "Buffoni",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/analyse-fonctionnelle-i-MATH-302"
+      },
+      {
+        "courseName": "Continuous optimization",
+        "courseAbbreviation": "MATH-329",
+        "teacher": "Boumal",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/continuous-optimization-MATH-329"
+      },
+      {
+        "courseName": "Differential geometry II - smooth manifolds",
+        "courseAbbreviation": "MATH-322",
+        "teacher": "Tsakanikas",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/differential-geometry-ii-smooth-manifolds-MATH-322"
+      },
+      {
+        "courseName": "Graph theory",
+        "courseAbbreviation": "MATH-360",
+        "teacher": "Janzer",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/graph-theory-MATH-360"
+      },
+      {
+        "courseName": "Introduction to partial differential equations",
+        "courseAbbreviation": "MATH-305",
+        "teacher": "Cao Labora",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/introduction-to-partial-differential-equations-MATH-305"
+      },
+      {
+        "courseName": "Linear models",
+        "courseAbbreviation": "MATH-341",
+        "teacher": "Panaretos",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/linear-models-MATH-341"
+      },
+      {
+        "courseName": "Logique math\u00e9matique",
+        "courseAbbreviation": "MATH-381",
+        "teacher": "Duparc",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/logique-mathematique-MATH-381"
+      },
+      {
+        "courseName": "Measure theory",
+        "courseAbbreviation": "MATH-303",
+        "teacher": "Ackelsberg",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/measure-theory-MATH-303"
+      },
+      {
+        "courseName": "Number theory I.a - Algebraic number theory",
+        "courseAbbreviation": "MATH-482",
+        "teacher": "Michel",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/number-theory-i-a-algebraic-number-theory-MATH-482"
+      },
+      {
+        "courseName": "Number theory I.b - Analytic number theory",
+        "courseAbbreviation": "MATH-313",
+        "teacher": "Constantinescu",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/number-theory-i-b-analytic-number-theory-MATH-313"
+      },
+      {
+        "courseName": "Number theory I.c - Combinatorial number theory",
+        "courseAbbreviation": "MATH-337",
+        "teacher": "Richter",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/number-theory-i-c-combinatorial-number-theory-MATH-337"
+      },
+      {
+        "courseName": "Principles of microeconomics",
+        "courseAbbreviation": "MGT-454",
+        "teacher": "Kis",
+        "credits": 4,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/principles-of-microeconomics-MGT-454"
+      },
+      {
+        "courseName": "Probability theory",
+        "courseAbbreviation": "MATH-432",
+        "teacher": "Mountford",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/probability-theory-MATH-432"
+      },
+      {
+        "courseName": "Representation theory I - finite groups",
+        "courseAbbreviation": "MATH-314",
+        "teacher": "Lachowska",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/representation-theory-i-finite-groups-MATH-314"
+      },
+      {
+        "courseName": "Risk and environmental sustainability",
+        "courseAbbreviation": "MATH-383",
+        "teacher": "Mhalla",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/risk-and-environmental-sustainability-MATH-383"
+      },
+      {
+        "courseName": "Topics in complex analysis",
+        "courseAbbreviation": "MATH-327",
+        "teacher": "De Faveri",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/topics-in-complex-analysis-MATH-327"
+      }
+    ]
+  },
+  {
+    "semester": "ba6",
+    "name": "math",
+    "courses": [
+      {
+        "courseName": "Algebraic geometry I - Curves",
+        "courseAbbreviation": "MATH-328",
+        "teacher": "Zanardini",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 2,
+            "timeStart": 6,
+            "timeEnd": 8
+          },
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 7,
+            "timeEnd": 9
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/algebraic-geometry-i-curves-MATH-328"
+      },
+      {
+        "courseName": "Algorithms I",
+        "courseAbbreviation": "CS-250",
+        "teacher": "Svensson",
+        "credits": 8,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 4,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 3,
+            "timeEnd": 5
+          },
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 5,
+            "timeEnd": 7
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/algorithms-i-CS-250"
+      },
+      {
+        "courseName": "Bayesian statistics",
+        "courseAbbreviation": "MATH-339",
+        "teacher": "Wang",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 2,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 2,
+            "timeEnd": 4
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/bayesian-statistics-MATH-339"
+      },
+      {
+        "courseName": "Differential geometry III - Riemannian geometry",
+        "courseAbbreviation": "MATH-344",
+        "teacher": "Moschidis",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 4,
+            "timeStart": 4,
+            "timeEnd": 6
+          },
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 8,
+            "timeEnd": 10
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/differential-geometry-iii-riemannian-geometry-MATH-344"
+      },
+      {
+        "courseName": "Equations aux d\u00e9riv\u00e9es partielles d'\u00e9volution",
+        "courseAbbreviation": "MATH-421",
+        "teacher": "Buffoni",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "exercise",
+            "day": 1,
+            "timeStart": 2,
+            "timeEnd": 4
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/equations-aux-derivees-partielles-d-evolution-MATH-421"
+      },
+      {
+        "courseName": "Equations diff\u00e9rentielles ordinaires",
+        "courseAbbreviation": "MATH-301",
+        "teacher": "Divers enseignants",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/equations-differentielles-ordinaires-MATH-301"
+      },
+      {
+        "courseName": "Functional analysis II",
+        "courseAbbreviation": "MATH-404",
+        "teacher": "Braun",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 5,
+            "timeEnd": 7
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/functional-analysis-ii-MATH-404"
+      },
+      {
+        "courseName": "Markov chains",
+        "courseAbbreviation": "MATH-332",
+        "teacher": "Mountford",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 2,
+            "timeStart": 2,
+            "timeEnd": 4
+          },
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 5,
+            "timeEnd": 7
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/markov-chains-MATH-332"
+      },
+      {
+        "courseName": "Martingales and Brownian motion",
+        "courseAbbreviation": "MATH-330",
+        "teacher": "Blanc",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "exercise",
+            "day": 1,
+            "timeStart": 2,
+            "timeEnd": 4
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/martingales-and-brownian-motion-MATH-330"
+      },
+      {
+        "courseName": "Number theory II.a - The circle method",
+        "courseAbbreviation": "MATH-345",
+        "teacher": "Wang",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 1,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "exercise",
+            "day": 1,
+            "timeStart": 2,
+            "timeEnd": 4
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/number-theory-ii-a-the-circle-method-MATH-345"
+      },
+      {
+        "courseName": "Numerical approximation of PDEs",
+        "courseAbbreviation": "MATH-451",
+        "teacher": "Antolin Sanchez",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 3,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "course",
+            "day": 4,
+            "timeStart": 0,
+            "timeEnd": 2
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/numerical-approximation-of-pdes-MATH-451"
+      },
+      {
+        "courseName": "Physique g\u00e9n\u00e9rale : quantique",
+        "courseAbbreviation": "PHYS-207(c)",
+        "teacher": "Pasquarello",
+        "credits": 4,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 6,
+            "timeEnd": 8
+          },
+          {
+            "type": "exercise",
+            "day": 3,
+            "timeStart": 6,
+            "timeEnd": 8
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/physique-generale-quantique-PHYS-207-C"
+      },
+      {
+        "courseName": "Randomization and causation",
+        "courseAbbreviation": "MATH-336",
+        "teacher": "Sturma",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 2,
+            "timeEnd": 4
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/randomization-and-causation-MATH-336"
+      },
+      {
+        "courseName": "Representation theory II - Lie algebras",
+        "courseAbbreviation": "MATH-429",
+        "teacher": "Negut",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "exercise",
+            "day": 2,
+            "timeStart": 2,
+            "timeEnd": 4
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/representation-theory-ii-lie-algebras-MATH-429"
+      },
+      {
+        "courseName": "Time series",
+        "courseAbbreviation": "MATH-342",
+        "teacher": "Olhede",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 2,
+            "timeStart": 6,
+            "timeEnd": 8
+          },
+          {
+            "type": "exercise",
+            "day": 3,
+            "timeStart": 8,
+            "timeEnd": 10
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/time-series-MATH-342"
+      },
+      {
+        "courseName": "Topological groups",
+        "courseAbbreviation": "MATH-338",
+        "teacher": "Monod",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 3,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "exercise",
+            "day": 3,
+            "timeStart": 2,
+            "timeEnd": 4
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/topological-groups-MATH-338"
+      },
+      {
+        "courseName": "Topology III - Homology",
+        "courseAbbreviation": "MATH-323",
+        "teacher": "Monin",
+        "credits": 5,
+        "group": "Groupe \"Cours \u00e0 option\"",
+        "lectures": [
+          {
+            "type": "course",
+            "day": 0,
+            "timeStart": 0,
+            "timeEnd": 2
+          },
+          {
+            "type": "exercise",
+            "day": 0,
+            "timeStart": 2,
+            "timeEnd": 4
+          }
+        ],
+        "linkToCourse": "https://edu.epfl.ch/studyplan/fr/bachelor/mathematiques/coursebook/topology-iii-homology-MATH-323"
+      }
+    ]
+  }
+]
