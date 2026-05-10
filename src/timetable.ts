@@ -1,7 +1,15 @@
 import { timetableConfig, type TimetableConfig } from "./config/timetableConfig";
 import { TimetableWidget, type TimetableWidgetData } from "./components/timetableWidget";
 import { TimetableModel } from "./domain/timetableModel";
-import type { PlannedLecture, Semester, StudyPlan } from "./types";
+import {
+  epflAddOptions,
+  epflCourseById,
+  epflLabelByKey,
+  epflPlanByKey,
+  epflRoomLecturesByRoom,
+  epflTimetableAddOptions,
+} from "./epflCourseCatalog";
+import type { AppTab, PlannedLecture, Semester, StudyPlan } from "./types";
 
 interface SelectedStudyPlan {
   studyPlan: StudyPlan;
@@ -26,6 +34,173 @@ const isSemesterCompatible = (candidate: Semester, active: Semester): boolean =>
   return semesterNumber(candidate) % 2 === semesterNumber(active) % 2;
 };
 
+const buildPlanKey = (studyPlan: StudyPlan): string => `${studyPlan.semester}:${studyPlan.name}`;
+const buildCourseSelectionId = (studyPlan: StudyPlan, course: StudyPlan["courses"][number]): string => {
+  return `${buildPlanKey(studyPlan)}|${course.abbreviation}|${course.name}`;
+};
+const buildLectureKey = (lecture: PlannedLecture["lecture"]): string => {
+  return [
+    lecture.course.abbreviation,
+    lecture.course.name,
+    lecture.type,
+    lecture.day,
+    lecture.timeStart,
+    lecture.timeEnd,
+  ].join("|");
+};
+
+const buildPlannedLectures = (
+  studyPlans: StudyPlan[],
+  mainStudyName: string,
+  selectedOptionalIds: Set<string>,
+  selectedExtraIds: Set<string>,
+): PlannedLecture[] => {
+  const mergedLectures = new Map<string, PlannedLecture>();
+
+  studyPlans.forEach((studyPlan) => {
+    const isMainPlan = studyPlan.name === mainStudyName;
+    studyPlan.courses.forEach((course) => {
+      const courseSelectionId = buildCourseSelectionId(studyPlan, course);
+      if (isMainPlan) {
+        if (course.isOptional && !selectedOptionalIds.has(courseSelectionId)) {
+          return;
+        }
+      } else if (!selectedExtraIds.has(courseSelectionId)) {
+        return;
+      }
+
+      course.lectures.forEach((lecture) => {
+        const lectureKey = buildLectureKey(lecture);
+        const existing = mergedLectures.get(lectureKey);
+
+        if (!existing) {
+          mergedLectures.set(lectureKey, {
+            id: lectureKey,
+            lecture,
+            studyPlans: [studyPlan],
+            isMandatory: isMainPlan && !course.isOptional,
+          });
+          return;
+        }
+
+        existing.studyPlans.push(studyPlan);
+        existing.isMandatory = existing.isMandatory || (isMainPlan && !course.isOptional);
+      });
+    });
+  });
+
+  return Array.from(mergedLectures.values());
+};
+
+const buildPlannedLecturesFromPlans = (studyPlans: StudyPlan[]): PlannedLecture[] => {
+  const mergedLectures = new Map<string, PlannedLecture>();
+
+  studyPlans.forEach((studyPlan) => {
+    studyPlan.courses.forEach((course) => {
+      course.lectures.forEach((lecture) => {
+        const lectureKey = buildLectureKey(lecture);
+        const existing = mergedLectures.get(lectureKey);
+
+        if (!existing) {
+          mergedLectures.set(lectureKey, {
+            id: lectureKey,
+            lecture,
+            studyPlans: [studyPlan],
+            isMandatory: false,
+          });
+          return;
+        }
+
+        existing.studyPlans.push(studyPlan);
+      });
+    });
+  });
+
+  return Array.from(mergedLectures.values());
+};
+
+const buildPlannedLecturesFromRooms = (
+  roomKeys: Set<string>,
+  existingLectures: PlannedLecture[],
+): PlannedLecture[] => {
+  const mergedLectures = new Map(existingLectures.map((lecture) => [lecture.id, lecture]));
+
+  roomKeys.forEach((room) => {
+    const entries = epflRoomLecturesByRoom.get(room) ?? [];
+    entries.forEach(({ lecture, studyPlan }) => {
+      const lectureKey = buildLectureKey(lecture);
+      const existing = mergedLectures.get(lectureKey);
+      if (!existing) {
+        mergedLectures.set(lectureKey, {
+          id: lectureKey,
+          lecture,
+          studyPlans: [studyPlan],
+          isMandatory: false,
+        });
+        return;
+      }
+
+      if (!existing.studyPlans.some((plan) => buildPlanKey(plan) === buildPlanKey(studyPlan))) {
+        existing.studyPlans.push(studyPlan);
+      }
+    });
+  });
+
+  return Array.from(mergedLectures.values());
+};
+
+const buildPlanColorByKeyFromPlans = (studyPlans: StudyPlan[]): Record<string, string> => {
+  return Object.fromEntries(
+    studyPlans.map((studyPlan, index) => [buildPlanKey(studyPlan), PLAN_COLORS[index % PLAN_COLORS.length]]),
+  );
+};
+
+const buildTimetableTabStudyPlans = (
+  selectedPlanKeys: Set<string>,
+  selectedCourseIds: Set<string>,
+): StudyPlan[] => {
+  const plans: StudyPlan[] = [];
+  const partialCoursesByPlan = new Map<string, StudyPlan["courses"]>();
+
+  selectedPlanKeys.forEach((planKey) => {
+    const plan = epflPlanByKey.get(planKey);
+    if (plan) {
+      plans.push(plan);
+    }
+  });
+
+  selectedCourseIds.forEach((courseId) => {
+    const planKey = courseId.split("|")[0] ?? "";
+    if (selectedPlanKeys.has(planKey)) {
+      return;
+    }
+
+    const course = epflCourseById.get(courseId);
+    if (!course) {
+      return;
+    }
+
+    const bucket = partialCoursesByPlan.get(planKey) ?? [];
+    bucket.push(course);
+    partialCoursesByPlan.set(planKey, bucket);
+  });
+
+  partialCoursesByPlan.forEach((courses, planKey) => {
+    const plan = epflPlanByKey.get(planKey);
+    if (!plan) {
+      return;
+    }
+
+    plans.push({
+      name: plan.name,
+      semester: plan.semester,
+      courses,
+    });
+  });
+
+  return plans;
+};
+
 export class Timetable {
   private readonly model: TimetableModel;
   private readonly studyPlans: StudyPlan[];
@@ -35,8 +210,12 @@ export class Timetable {
   private readonly openedMandatoryGroups: Set<string>;
   private readonly openedOptionalGroups: Set<string>;
   private readonly curriculumPaneScrollTop: Record<string, number>;
+  private readonly timetableTabSelectedPlanKeys: Set<string>;
+  private readonly timetableTabSelectedCourseIds: Set<string>;
+  private readonly timetableTabSelectedRoomKeys: Set<string>;
   private activeMainStudy: string;
   private activeSemester: Semester;
+  private activeTab: AppTab;
   private container: HTMLElement | null = null;
 
   public constructor(
@@ -55,8 +234,12 @@ export class Timetable {
       optional: 0,
       extra: 0,
     };
+    this.timetableTabSelectedPlanKeys = new Set();
+    this.timetableTabSelectedCourseIds = new Set();
+    this.timetableTabSelectedRoomKeys = new Set();
     this.activeMainStudy = this.getMainStudyOptions()[0] ?? "";
     this.activeSemester = TAB_SEMESTERS[0];
+    this.activeTab = "planner";
   }
 
   public attach(container: HTMLElement): void {
@@ -78,17 +261,37 @@ export class Timetable {
     this.syncMandatoryGroupOpenState(mandatoryCourseGroups);
     const optionalCourseGroups = this.getOptionalCourseGroups();
     this.syncOptionalGroupOpenState(optionalCourseGroups);
-    const plannedLectures = this.getPlannedLectures(visibleStudyPlans, this.selectedOptionalCourseIds, this.selectedExtraCourseIds);
+    const plannerPlannedLectures = this.getPlannedLectures(visibleStudyPlans, this.selectedOptionalCourseIds, this.selectedExtraCourseIds);
+    const timetableTabStudyPlans = buildTimetableTabStudyPlans(this.timetableTabSelectedPlanKeys, this.timetableTabSelectedCourseIds);
+    const timetableTabLectures = buildPlannedLecturesFromRooms(
+      this.timetableTabSelectedRoomKeys,
+      buildPlannedLecturesFromPlans(timetableTabStudyPlans),
+    );
+    const plannedLectures = this.activeTab === "planner" ? plannerPlannedLectures : timetableTabLectures;
     const conflictSlotBlocks = this.model.buildConflictSlotBlocks(plannedLectures);
+    const planColorByKey = this.activeTab === "planner"
+      ? this.getPlanColorByKey(selectedStudyPlans)
+      : buildPlanColorByKeyFromPlans(timetableTabStudyPlans);
+
+    const timetableTabSelectedItems = [
+      ...Array.from(this.timetableTabSelectedPlanKeys).map((planKey) => `plan:${planKey}`),
+      ...Array.from(this.timetableTabSelectedCourseIds).map((courseId) => `course:${courseId}`),
+      ...Array.from(this.timetableTabSelectedRoomKeys).map((room) => `room:${room}`),
+    ]
+      .map((key) => ({ key, label: epflLabelByKey.get(key) ?? key }))
+      .sort((a, b) => a.label.localeCompare(b.label));
 
     const data: TimetableWidgetData = {
       mainStudyOptions: this.getMainStudyOptions(),
       activeMainStudy: this.activeMainStudy,
       semesters: TAB_SEMESTERS,
       activeSemester: this.activeSemester,
+      activeTab: this.activeTab,
       selectedStudyPlans,
       availableStudyPlans: this.getAvailableStudyPlans(this.activeSemester),
       extraCurriculumAddOptions: this.getExtraCurriculumAddOptions(this.activeSemester),
+      timetableTabAddOptions: epflTimetableAddOptions,
+      timetableTabSelectedItems,
       mandatoryCourseGroups,
       openedMandatoryGroupKeys: Array.from(this.openedMandatoryGroups),
       optionalCourseGroups,
@@ -98,11 +301,14 @@ export class Timetable {
       curriculumPaneScrollTop: this.curriculumPaneScrollTop,
       plannedLectures,
       conflictSlotBlocks,
-      planColorByKey: this.getPlanColorByKey(selectedStudyPlans),
+      planColorByKey,
       onChangeMainStudy: (mainStudyName: string) => this.changeMainStudy(mainStudyName),
       onChangeSemester: (semester: Semester) => this.changeSemester(semester),
+      onChangeTab: (tab: AppTab) => this.changeTab(tab),
       onAddStudyPlan: (planKey: string) => this.addStudyPlan(planKey),
       onAddExtraCurriculumItem: (itemKey: string) => this.addExtraCurriculumItem(itemKey),
+      onAddTimetableTabItem: (itemKey: string) => this.addTimetableTabItem(itemKey),
+      onRemoveTimetableTabItem: (itemKey: string) => this.removeTimetableTabItem(itemKey),
       onToggleStudyPlanEnabled: (planKey: string) => this.toggleStudyPlanEnabled(planKey),
       onRemoveStudyPlan: (planKey: string) => this.removeStudyPlan(planKey),
       onToggleOptionalCourse: (courseId: string) => this.toggleOptionalCourse(courseId),
@@ -153,6 +359,70 @@ export class Timetable {
       }
 
       this.selectedExtraCourseIds.add(courseId);
+      this.renderIntoContainer();
+    }
+  }
+
+  private addTimetableTabItem(itemKey: string): void {
+    if (itemKey.startsWith("plan:")) {
+      const planKey = itemKey.slice("plan:".length);
+      this.timetableTabSelectedPlanKeys.add(planKey);
+
+      this.timetableTabSelectedCourseIds.forEach((courseId) => {
+        if (courseId.startsWith(`${planKey}|`)) {
+          this.timetableTabSelectedCourseIds.delete(courseId);
+        }
+      });
+
+      this.renderIntoContainer();
+      return;
+    }
+
+    if (itemKey.startsWith("course:")) {
+      const courseId = itemKey.slice("course:".length);
+      const planKey = courseId.split("|")[0] ?? "";
+      if (!this.timetableTabSelectedPlanKeys.has(planKey)) {
+        this.timetableTabSelectedCourseIds.add(courseId);
+      }
+
+      this.renderIntoContainer();
+      return;
+    }
+
+    if (itemKey.startsWith("room:")) {
+      const roomKey = itemKey.slice("room:".length);
+      if (roomKey) {
+        this.timetableTabSelectedRoomKeys.add(roomKey);
+      }
+
+      this.renderIntoContainer();
+    }
+  }
+
+  private removeTimetableTabItem(itemKey: string): void {
+    if (itemKey.startsWith("plan:")) {
+      const planKey = itemKey.slice("plan:".length);
+      this.timetableTabSelectedPlanKeys.delete(planKey);
+      this.timetableTabSelectedCourseIds.forEach((courseId) => {
+        if (courseId.startsWith(`${planKey}|`)) {
+          this.timetableTabSelectedCourseIds.delete(courseId);
+        }
+      });
+
+      this.renderIntoContainer();
+      return;
+    }
+
+    if (itemKey.startsWith("course:")) {
+      const courseId = itemKey.slice("course:".length);
+      this.timetableTabSelectedCourseIds.delete(courseId);
+      this.renderIntoContainer();
+      return;
+    }
+
+    if (itemKey.startsWith("room:")) {
+      const roomKey = itemKey.slice("room:".length);
+      this.timetableTabSelectedRoomKeys.delete(roomKey);
       this.renderIntoContainer();
     }
   }
@@ -235,6 +505,12 @@ export class Timetable {
 
   private changeSemester(semester: Semester): void {
     this.activeSemester = semester;
+
+    this.renderIntoContainer();
+  }
+
+  private changeTab(tab: AppTab): void {
+    this.activeTab = tab;
 
     this.renderIntoContainer();
   }
@@ -362,45 +638,12 @@ export class Timetable {
     return Array.from(new Set(this.studyPlans.map((studyPlan) => studyPlan.name))).sort((a, b) => a.localeCompare(b));
   }
 
-
   private getPlannedLectures(
     studyPlans: StudyPlan[],
     selectedOptionalIds: Set<string>,
     selectedExtraIds: Set<string>,
   ): PlannedLecture[] {
-    const mergedLectures = new Map<string, PlannedLecture>();
-
-    studyPlans.forEach((studyPlan) => {
-      const isMainPlan = studyPlan.name === this.activeMainStudy;
-      studyPlan.courses.forEach((course) => {
-        const courseSelectionId = this.toCourseSelectionId(studyPlan, course);
-        if (isMainPlan) {
-          if (course.isOptional && !selectedOptionalIds.has(courseSelectionId)) {
-            return;
-          }
-        } else if (!selectedExtraIds.has(courseSelectionId)) {
-          return;
-        }
-
-        course.lectures.forEach((lecture) => {
-          const lectureKey = this.toLectureKey(lecture);
-          const existing = mergedLectures.get(lectureKey);
-
-          if (!existing) {
-            mergedLectures.set(lectureKey, {
-              id: lectureKey,
-              lecture,
-              studyPlans: [studyPlan],
-            });
-            return;
-          }
-
-          existing.studyPlans.push(studyPlan);
-        });
-      });
-    });
-
-    return Array.from(mergedLectures.values());
+    return buildPlannedLectures(studyPlans, this.activeMainStudy, selectedOptionalIds, selectedExtraIds);
   }
 
   private getMandatoryCourseGroups(): TimetableWidgetData["mandatoryCourseGroups"] {
@@ -504,22 +747,15 @@ export class Timetable {
   }
 
   private toPlanKey(studyPlan: StudyPlan): string {
-    return `${studyPlan.semester}:${studyPlan.name}`;
+    return buildPlanKey(studyPlan);
   }
 
   private toCourseSelectionId(studyPlan: StudyPlan, course: StudyPlan["courses"][number]): string {
-    return `${this.toPlanKey(studyPlan)}|${course.abbreviation}|${course.name}`;
+    return buildCourseSelectionId(studyPlan, course);
   }
 
   private toLectureKey(lecture: PlannedLecture["lecture"]): string {
-    return [
-      lecture.course.abbreviation,
-      lecture.course.name,
-      lecture.type,
-      lecture.day,
-      lecture.timeStart,
-      lecture.timeEnd,
-    ].join("|");
+    return buildLectureKey(lecture);
   }
 }
 

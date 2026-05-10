@@ -1,9 +1,10 @@
-import requests
-from bs4 import BeautifulSoup
 import json
+import random
 import re
 import time
-import random
+
+import requests
+from bs4 import BeautifulSoup
 
 BASE_URL = "https://edu.epfl.ch"
 
@@ -19,17 +20,43 @@ DOMAIN_SEMESTERS = {
     "propedeutique": ["BA1", "BA2"],
     "bachelor": ["BA3", "BA4", "BA5", "BA6"],
 }
-
 TARGETS = [
     ("propedeutique", "informatique"),
     ("propedeutique", "mathematiques"),
+    ("propedeutique", "chimie-et-genie-chimique"),
+    ("propedeutique", "genie-civil"),
+    ("propedeutique", "genie-mecanique"),
+    ("propedeutique", "genie-electrique-et-electronique"),
+    ("propedeutique", "ingenierie-des-sciences-du-vivant"),
+    ("propedeutique", "microtechnique"),
+    ("propedeutique", "physique"),
+    ("propedeutique", "science-et-genie-des-materiaux"),
+    ("propedeutique", "systemes-de-communication"),
     ("bachelor", "informatique"),
     ("bachelor", "mathematiques"),
+    ("bachelor", "chimie-et-genie-chimique"),
+    ("bachelor", "genie-civil"),
+    ("bachelor", "genie-mecanique"),
+    ("bachelor", "genie-electrique-et-electronique"),
+    ("bachelor", "ingenierie-des-sciences-du-vivant"),
+    ("bachelor", "microtechnique"),
+    ("bachelor", "physique"),
+    ("bachelor", "science-et-genie-des-materiaux"),
+    ("bachelor", "systemes-de-communication"),
 ]
 
 SHORT_NAME = {
     "informatique": "info",
     "mathematiques": "math",
+    "chimie-et-genie-chimique": "chimie",
+    "genie-civil": "GC",
+    "genie-mecanique": "GM",
+    "genie-electrique-et-electronique": "GE",
+    "ingenierie-des-sciences-du-vivant": "SV",
+    "microtechnique": "MT",
+    "physique": "phys",
+    "science-et-genie-des-materiaux": "SGM",
+    "systemes-de-communication": "syscom",
 }
 
 CLASS_TO_TYPE = {
@@ -41,7 +68,6 @@ CLASS_TO_TYPE = {
 
 def cooldown():
     time.sleep(random.uniform(1.0, 2.5))
-
 
 def scrape_course_page(url: str) -> tuple[list, str]:
     """Fetch a coursebook page and return (lectures, prerequisites)."""
@@ -76,11 +102,13 @@ def scrape_course_page(url: str) -> tuple[list, str]:
                         lecture_type = CLASS_TO_TYPE[cls]
                         break
                 if lecture_type:
+                    rooms = [a.get_text(strip=True) for a in td.find_all("a")]  # <-- new
                     lectures.append({
                         "type": lecture_type,
                         "day": day,
                         "timeStart": row_idx,
                         "timeEnd": row_idx + rowspan,
+                        "rooms": rooms,  # <-- new
                     })
                 col_idx += 1
 
@@ -89,15 +117,13 @@ def scrape_course_page(url: str) -> tuple[list, str]:
     for div in soup.find_all("div", class_="mt-5"):
         h2 = div.find("h2")
         if h2 and "Learning Prerequisites" in h2.get_text():
-            # Grab all paragraph text under the required courses h2
             req_h2 = div.find("h2", class_="h6")
             if req_h2:
-                # Get the next sibling paragraph(s)
                 texts = []
                 for sib in req_h2.next_siblings:
                     if hasattr(sib, "name"):
                         if sib.name == "h2":
-                            break  # stop at next section
+                            break
                         t = sib.get_text(strip=True)
                         if t:
                             texts.append(t)
@@ -184,9 +210,11 @@ if __name__ == "__main__":
     # Load existing data and build a lookup: (semester, abbreviation) -> old lectures
     output_file = "epfl_courses.json"
     old_lectures: dict = {}
+    existing_entries = []
     try:
         with open(output_file, "r", encoding="utf-8") as f:
             existing = json.load(f)
+        existing_entries = existing
         for entry in existing:
             for course in entry.get("courses", []):
                 key = (entry["semester"], course.get("courseAbbreviation", ""))
@@ -195,22 +223,52 @@ if __name__ == "__main__":
     except FileNotFoundError:
         print("📂 No existing data found, starting fresh")
 
+    # Index existing entries by (semester, name)
+    entry_index: dict = {}
+    for entry in existing_entries:
+        key = (entry.get("semester"), entry.get("name"))
+        entry_index[key] = entry
+
     for domain, name in TARGETS:
         print(f"\nScraping {domain}/{name}...")
         try:
             courses_by_semester = scrape_page(domain, name)
             for semester, courses in courses_by_semester.items():
-                output.append({
-                    "semester": semester.lower(),
-                    "name": SHORT_NAME[name],
-                    "courses": courses,
-                })
-                print(f"  {semester}: {len(courses)} courses")
+                entry_key = (semester.lower(), SHORT_NAME[name])
+                entry = entry_index.get(entry_key)
+                if entry is None:
+                    entry = {
+                        "semester": semester.lower(),
+                        "name": SHORT_NAME[name],
+                        "courses": [],
+                    }
+                    existing_entries.append(entry)
+                    entry_index[entry_key] = entry
+
+                # Merge scraped courses into existing entry, keep non-scraped courses
+                existing_courses = entry.get("courses", [])
+                existing_by_abbr = {}
+                for idx, course in enumerate(existing_courses):
+                    abbr = course.get("courseAbbreviation", "")
+                    if abbr:
+                        existing_by_abbr[abbr] = idx
+
+                for course in courses:
+                    abbr = course.get("courseAbbreviation", "")
+                    if abbr and abbr in existing_by_abbr:
+                        existing_courses[existing_by_abbr[abbr]] = course
+                    else:
+                        existing_courses.append(course)
+
+                entry["courses"] = existing_courses
+                print(f"  {semester}: {len(courses)} scraped (entry now {len(existing_courses)})")
         except Exception as e:
             print(f"  ❌ Failed: {e}")
+
+    output = existing_entries
 
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
 
-    total = sum(len(e["courses"]) for e in output)
+    total = sum(len(e.get("courses", [])) for e in output)
     print(f"\n✅ Scraped {total} courses across {len(output)} semester/program entries → {output_file}")

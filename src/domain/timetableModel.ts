@@ -218,7 +218,15 @@ export class TimetableModel {
           return leftLecture.timeStart - rightLecture.timeStart;
         }
 
-        return leftLecture.timeEnd - rightLecture.timeEnd;
+        if (left.isMandatory !== right.isMandatory) {
+          return left.isMandatory ? -1 : 1;
+        }
+
+        if (leftLecture.timeEnd !== rightLecture.timeEnd) {
+          return leftLecture.timeEnd - rightLecture.timeEnd;
+        }
+
+        return left.id.localeCompare(right.id);
       });
 
       const groups: PlannedLecture[][] = [];
@@ -261,7 +269,13 @@ export class TimetableModel {
           laneByLectureId.set(plannedLecture.id, laneIndex);
         });
 
-        const laneCount = Math.max(1, laneEndByIndex.length);
+        this.prioritizeMandatoryLanes(group, laneByLectureId);
+
+        const laneCount =
+          Math.max(
+            ...Array.from(laneByLectureId.values()).map((laneIndex) => laneIndex + 1),
+            1,
+          );
 
         group.forEach((plannedLecture) => {
           layouts.set(plannedLecture.id, {
@@ -277,6 +291,132 @@ export class TimetableModel {
 
   private getCycleMinutes(): number {
     return this.config.clock.lectureDurationMinutes + this.config.clock.breakDurationMinutes;
+  }
+
+  private prioritizeMandatoryLanes(group: PlannedLecture[], laneByLectureId: Map<string, number>): void {
+    const clampedLectureById = new Map(group.map((plannedLecture) => [plannedLecture.id, this.clampLecture(plannedLecture.lecture)]));
+    const mandatoryLectures = group
+      .filter((plannedLecture) => plannedLecture.isMandatory)
+      .sort((left, right) => {
+        const leftLecture = clampedLectureById.get(left.id);
+        const rightLecture = clampedLectureById.get(right.id);
+
+        if (!leftLecture || !rightLecture) {
+          return left.id.localeCompare(right.id);
+        }
+
+        if (leftLecture.timeStart !== rightLecture.timeStart) {
+          return leftLecture.timeStart - rightLecture.timeStart;
+        }
+
+        if (leftLecture.timeEnd !== rightLecture.timeEnd) {
+          return leftLecture.timeEnd - rightLecture.timeEnd;
+        }
+
+        return left.id.localeCompare(right.id);
+      });
+
+    mandatoryLectures.forEach((mandatoryLecture) => {
+      let movedLeft = true;
+
+      while (movedLeft) {
+        movedLeft = false;
+        const currentLane = laneByLectureId.get(mandatoryLecture.id) ?? 0;
+        const lecture = clampedLectureById.get(mandatoryLecture.id);
+
+        if (!lecture) {
+          break;
+        }
+
+        for (let candidateLane = 0; candidateLane < currentLane; candidateLane += 1) {
+          const overlappingOnCandidateLane = group.filter((plannedLecture) => {
+            if ((laneByLectureId.get(plannedLecture.id) ?? 0) !== candidateLane) {
+              return false;
+            }
+
+            const candidateLecture = clampedLectureById.get(plannedLecture.id);
+            if (!candidateLecture) {
+              return false;
+            }
+
+            return this.lecturesOverlap(lecture, candidateLecture);
+          });
+
+          if (overlappingOnCandidateLane.length === 0) {
+            laneByLectureId.set(mandatoryLecture.id, candidateLane);
+            movedLeft = true;
+            break;
+          }
+
+          if (overlappingOnCandidateLane.some((plannedLecture) => plannedLecture.isMandatory)) {
+            continue;
+          }
+
+          const canSwap = overlappingOnCandidateLane.every((plannedLecture) =>
+            this.canPlaceLectureInLane(
+              plannedLecture,
+              currentLane,
+              group,
+              laneByLectureId,
+              clampedLectureById,
+              [mandatoryLecture.id],
+            ),
+          );
+
+          if (!canSwap) {
+            continue;
+          }
+
+          overlappingOnCandidateLane.forEach((plannedLecture) => {
+            laneByLectureId.set(plannedLecture.id, currentLane);
+          });
+          laneByLectureId.set(mandatoryLecture.id, candidateLane);
+          movedLeft = true;
+          break;
+        }
+      }
+    });
+  }
+
+  private canPlaceLectureInLane(
+    lectureToPlace: PlannedLecture,
+    laneIndex: number,
+    group: PlannedLecture[],
+    laneByLectureId: Map<string, number>,
+    clampedLectureById: Map<string, Lecture>,
+    ignoredLectureIds: readonly string[] = [],
+  ): boolean {
+    const lecture = clampedLectureById.get(lectureToPlace.id);
+    if (!lecture) {
+      return false;
+    }
+
+    const ignored = new Set(ignoredLectureIds);
+
+    return !group.some((plannedLecture) => {
+      if (plannedLecture.id === lectureToPlace.id || ignored.has(plannedLecture.id)) {
+        return false;
+      }
+
+      if ((laneByLectureId.get(plannedLecture.id) ?? 0) !== laneIndex) {
+        return false;
+      }
+
+      const candidateLecture = clampedLectureById.get(plannedLecture.id);
+      if (!candidateLecture) {
+        return false;
+      }
+
+      return this.lecturesOverlap(lecture, candidateLecture);
+    });
+  }
+
+  private lecturesOverlap(left: Lecture, right: Lecture): boolean {
+    if (left.day !== right.day) {
+      return false;
+    }
+
+    return left.timeStart < right.timeEnd && right.timeStart < left.timeEnd;
   }
 
   private addConflictRange(

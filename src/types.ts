@@ -1,6 +1,7 @@
 export type LectureType = "exercise" | "course" | "lab";
 export type DayIndex = 0 | 1 | 2 | 3 | 4;
 export type Semester = "BA1" | "BA2" | "BA3" | "BA4" | "BA5" | "BA6";
+export type AppTab = "planner" | "timetable";
 
 // SchoolHour is a timetable slot index, where 0 is 08:15-09:00.
 export type SchoolHour = number;
@@ -12,6 +13,7 @@ export interface Course {
   credits: number;
   group: string;
   isOptional: boolean;
+  prerequisite: string[];
   linkToCourse: string;
   lectures: Lecture[];
 }
@@ -22,6 +24,7 @@ export interface Lecture {
   day: DayIndex;
   timeStart: SchoolHour;
   timeEnd: SchoolHour;
+  room?: string[];
 }
 
 export interface StudyPlan {
@@ -34,5 +37,5 @@ export interface PlannedLecture {
   id: string;
   lecture: Lecture;
   studyPlans: StudyPlan[];
+  isMandatory: boolean;
 }
-

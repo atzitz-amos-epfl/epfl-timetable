@@ -1,7 +1,7 @@
 import { timetableConfig, type TimetableConfig } from "../config/timetableConfig";
 import type { ConflictSlotBlock } from "../domain/timetableModel";
 import { TimetableModel } from "../domain/timetableModel";
-import type { Course, PlannedLecture, Semester, StudyPlan } from "../types";
+import type { AppTab, Course, PlannedLecture, Semester, StudyPlan } from "../types";
 import { Heading } from "./heading";
 import { TimetableGrid } from "./timetableGrid";
 
@@ -43,9 +43,12 @@ export interface TimetableWidgetData {
   activeMainStudy: string;
   semesters: Semester[];
   activeSemester: Semester;
+  activeTab: AppTab;
   selectedStudyPlans: SelectedStudyPlanChip[];
   availableStudyPlans: StudyPlanOption[];
   extraCurriculumAddOptions: ExtraCurriculumAddOption[];
+  timetableTabAddOptions: ExtraCurriculumAddOption[];
+  timetableTabSelectedItems: Array<{ key: string; label: string }>;
   mandatoryCourseGroups: CurriculumCourseGroup[];
   openedMandatoryGroupKeys: string[];
   optionalCourseGroups: OptionalCourseGroup[];
@@ -58,8 +61,11 @@ export interface TimetableWidgetData {
   planColorByKey: Record<string, string>;
   onChangeMainStudy: (mainStudyName: string) => void;
   onChangeSemester: (semester: Semester) => void;
+  onChangeTab: (tab: AppTab) => void;
   onAddStudyPlan: (planKey: string) => void;
   onAddExtraCurriculumItem: (itemKey: string) => void;
+  onAddTimetableTabItem: (itemKey: string) => void;
+  onRemoveTimetableTabItem: (itemKey: string) => void;
   onToggleStudyPlanEnabled: (planKey: string) => void;
   onRemoveStudyPlan: (planKey: string) => void;
   onToggleOptionalCourse: (courseId: string) => void;
@@ -79,6 +85,67 @@ export class TimetableWidget {
       .toLowerCase();
   }
 
+  private static fuzzyScore(candidate: string, query: string): number {
+    const cleanQuery = TimetableWidget.normalizeSearchValue(query.trim());
+    if (!cleanQuery) {
+      return 0;
+    }
+
+    const cleanCandidate = TimetableWidget.normalizeSearchValue(candidate);
+    if (cleanCandidate === cleanQuery) {
+      return 1000;
+    }
+
+    if (cleanCandidate.startsWith(cleanQuery)) {
+      return 800 - cleanCandidate.length;
+    }
+
+    if (cleanCandidate.includes(cleanQuery)) {
+      return 600 - cleanCandidate.length;
+    }
+
+    const queryTokens = cleanQuery.split(/\s+/).filter(Boolean);
+    const candidateTokens = cleanCandidate.split(/\s+/).filter(Boolean);
+    let tokenMatches = 0;
+    queryTokens.forEach((token) => {
+      if (candidateTokens.some((candidateToken) => candidateToken.startsWith(token))) {
+        tokenMatches += 1;
+      }
+    });
+    if (tokenMatches > 0) {
+      return 500 + tokenMatches * 10 - candidateTokens.length;
+    }
+
+    let streak = 0;
+    let candidateIndex = 0;
+    for (let index = 0; index < cleanQuery.length; index += 1) {
+      const char = cleanQuery[index];
+      const foundIndex = cleanCandidate.indexOf(char, candidateIndex);
+      if (foundIndex === -1) {
+        return -1;
+      }
+      if (foundIndex === candidateIndex) {
+        streak += 1;
+      }
+      candidateIndex = foundIndex + 1;
+    }
+
+    return 300 + Math.min(20, streak * 4) - cleanCandidate.length;
+  }
+
+  private static filterOptions<T extends { label: string }>(options: T[], query: string): T[] {
+    const cleanQuery = TimetableWidget.normalizeSearchValue(query.trim());
+    if (!cleanQuery) {
+      return [...options];
+    }
+
+    return options
+      .map((option) => ({ option, score: TimetableWidget.fuzzyScore(option.label, cleanQuery) }))
+      .filter((entry) => entry.score >= 0)
+      .sort((a, b) => b.score - a.score || a.option.label.localeCompare(b.option.label))
+      .map((entry) => entry.option);
+  }
+
   private static semesterRank(semester: Semester): number {
     return Number.parseInt(semester.replace("BA", ""), 10);
   }
@@ -91,6 +158,14 @@ export class TimetableWidget {
 
   public render(): HTMLElement {
     const periods = this.model.buildPeriods();
+
+    const shell = document.createElement("div");
+    shell.className = "app-shell";
+
+    const sidebar = this.createSidebar();
+
+    const content = document.createElement("div");
+    content.className = "app-content";
 
     const widget = document.createElement("section");
     widget.className = "timetable-widget";
@@ -106,7 +181,9 @@ export class TimetableWidget {
     const topBar = document.createElement("div");
     topBar.className = "timetable-topbar";
     topBar.appendChild(heading);
-    topBar.appendChild(this.createMainStudyPicker());
+    if (this.data.activeTab === "planner") {
+      topBar.appendChild(this.createMainStudyPicker());
+    }
 
     const curriculumSection = this.createCurriculumSection();
     const semesterSelectorRow = document.createElement("div");
@@ -134,11 +211,260 @@ export class TimetableWidget {
     });
 
     widget.appendChild(topBar);
-    widget.appendChild(curriculumSection);
-    widget.appendChild(semesterSelectorRow);
+
+    if (this.data.activeTab === "planner") {
+      widget.appendChild(curriculumSection);
+      widget.appendChild(semesterSelectorRow);
+    } else {
+      widget.appendChild(this.createTimetableTabPanel());
+    }
+
     widget.appendChild(gridElement);
 
-    return widget;
+    content.appendChild(widget);
+    shell.appendChild(sidebar);
+    shell.appendChild(content);
+
+    return shell;
+  }
+
+  private createSidebar(): HTMLElement {
+    const sidebar = document.createElement("aside");
+    sidebar.className = "app-sidebar";
+
+    const nav = document.createElement("div");
+    nav.className = "app-sidebar-nav";
+
+    const options: Array<{ tab: AppTab; label: string; iconClass: string }> = [
+      { tab: "planner", label: "Study planner", iconClass: "fa-graduation-cap" },
+      { tab: "timetable", label: "Timetable", iconClass: "fa-calendar-days" },
+    ];
+
+    options.forEach((option) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "sidebar-tab";
+      button.setAttribute("aria-pressed", `${this.data.activeTab === option.tab}`);
+
+      if (this.data.activeTab === option.tab) {
+        button.classList.add("active");
+      }
+
+      const icon = document.createElement("i");
+      icon.className = `fa-solid ${option.iconClass}`;
+      icon.setAttribute("aria-hidden", "true");
+
+      const label = document.createElement("span");
+      label.className = "sidebar-tab-label";
+      label.textContent = option.label;
+
+      button.appendChild(icon);
+      button.appendChild(label);
+
+      button.addEventListener("click", () => {
+        if (this.data.activeTab !== option.tab) {
+          this.data.onChangeTab(option.tab);
+        }
+      });
+
+      nav.appendChild(button);
+    });
+
+    sidebar.appendChild(nav);
+    return sidebar;
+  }
+
+  private createTimetableTabPanel(): HTMLElement {
+    const panel = document.createElement("section");
+    panel.className = "timetable-tab-panel";
+
+    const heading = document.createElement("h3");
+    heading.className = "timetable-tab-title";
+    heading.textContent = "Timetable catalog";
+
+    const addRow = document.createElement("div");
+    addRow.className = "extra-curriculum-add-row";
+
+    const addLabel = document.createElement("label");
+    addLabel.className = "extra-curriculum-add-label";
+    addLabel.setAttribute("for", "timetable-tab-dropdown");
+    addLabel.textContent = "Add from catalog:";
+
+    const combo = document.createElement("div");
+    combo.className = "extra-curriculum-combobox";
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.className = "extra-curriculum-dropdown";
+    input.id = "timetable-tab-dropdown";
+    input.placeholder = "Search plan, course, or room...";
+    input.autocomplete = "off";
+    input.setAttribute("role", "combobox");
+    input.setAttribute("aria-autocomplete", "list");
+    input.setAttribute("aria-expanded", "false");
+
+    const optionsList = document.createElement("div");
+    optionsList.className = "extra-curriculum-options";
+    optionsList.setAttribute("role", "listbox");
+
+    let isOpen = false;
+    let activeIndex = -1;
+    let filtered = [...this.data.timetableTabAddOptions];
+
+    const renderOptions = (): void => {
+      optionsList.replaceChildren();
+
+      if (filtered.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "extra-curriculum-option-empty";
+        empty.textContent = "No matching course or plan";
+        optionsList.appendChild(empty);
+        return;
+      }
+
+      let lastPrefix = "";
+      filtered.forEach((option, index) => {
+        let prefix = "Courses";
+        if (option.label.startsWith("Plan:")) {
+          prefix = "Plans";
+        } else if (option.label.startsWith("Room:")) {
+          prefix = "Rooms";
+        }
+        if (prefix !== lastPrefix) {
+          const header = document.createElement("div");
+          header.className = "extra-curriculum-option-group";
+          header.textContent = prefix;
+          optionsList.appendChild(header);
+          lastPrefix = prefix;
+        }
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "extra-curriculum-option";
+        if (index === activeIndex) {
+          button.classList.add("active");
+        }
+        button.textContent = option.label;
+
+        button.addEventListener("pointerdown", (event) => event.preventDefault());
+        button.addEventListener("click", () => {
+          input.value = "";
+          this.data.onAddTimetableTabItem(option.key);
+        });
+
+        optionsList.appendChild(button);
+      });
+    };
+
+    const openOptions = (): void => {
+      isOpen = true;
+      combo.classList.add("open");
+      input.setAttribute("aria-expanded", "true");
+      renderOptions();
+    };
+
+    const closeOptions = (): void => {
+      isOpen = false;
+      combo.classList.remove("open");
+      input.setAttribute("aria-expanded", "false");
+      activeIndex = -1;
+    };
+
+    const updateFilter = (): void => {
+      filtered = TimetableWidget.filterOptions(this.data.timetableTabAddOptions, input.value);
+      activeIndex = filtered.length > 0 ? 0 : -1;
+      if (isOpen) {
+        renderOptions();
+      }
+    };
+
+    input.addEventListener("focus", () => {
+      updateFilter();
+      openOptions();
+    });
+
+    input.addEventListener("input", () => {
+      updateFilter();
+      openOptions();
+    });
+
+    input.addEventListener("keydown", (event) => {
+      if (!isOpen && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
+        updateFilter();
+        openOptions();
+      }
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        if (filtered.length > 0) {
+          activeIndex = (activeIndex + 1 + filtered.length) % filtered.length;
+          renderOptions();
+        }
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        if (filtered.length > 0) {
+          activeIndex = (activeIndex - 1 + filtered.length) % filtered.length;
+          renderOptions();
+        }
+      } else if (event.key === "Enter") {
+        if (isOpen && activeIndex >= 0 && filtered[activeIndex]) {
+          event.preventDefault();
+          input.value = "";
+          this.data.onAddTimetableTabItem(filtered[activeIndex].key);
+        }
+      } else if (event.key === "Escape") {
+        closeOptions();
+      }
+    });
+
+    combo.addEventListener("focusout", () => {
+      window.setTimeout(() => {
+        if (!combo.contains(document.activeElement)) {
+          closeOptions();
+        }
+      }, 0);
+    });
+
+    combo.appendChild(input);
+    combo.appendChild(optionsList);
+
+    addRow.appendChild(addLabel);
+    addRow.appendChild(combo);
+
+    const selection = document.createElement("div");
+    selection.className = "timetable-tab-selection";
+
+    if (this.data.timetableTabSelectedItems.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "timetable-tab-empty";
+      empty.textContent = "No study plans or courses selected.";
+      selection.appendChild(empty);
+    } else {
+      this.data.timetableTabSelectedItems.forEach((item) => {
+        const row = document.createElement("div");
+        row.className = "timetable-tab-selection-row";
+
+        const label = document.createElement("span");
+        label.className = "timetable-tab-selection-label";
+        label.textContent = item.label;
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "timetable-tab-selection-remove";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", () => this.data.onRemoveTimetableTabItem(item.key));
+
+        row.appendChild(label);
+        row.appendChild(remove);
+        selection.appendChild(row);
+      });
+    }
+
+    panel.appendChild(heading);
+    panel.appendChild(addRow);
+    panel.appendChild(selection);
+
+    return panel;
   }
 
   private createLectureBlock(
@@ -436,7 +762,6 @@ export class TimetableWidget {
 
     return tabs;
   }
-
 
   private createStudyPlanChips(): HTMLElement {
     const chips = document.createElement("div");
@@ -795,10 +1120,7 @@ export class TimetableWidget {
     };
 
     const updateFilter = (): void => {
-      const query = TimetableWidget.normalizeSearchValue(input.value.trim());
-      filtered = this.data.extraCurriculumAddOptions.filter((option) => {
-        return TimetableWidget.normalizeSearchValue(option.label).includes(query);
-      });
+      filtered = TimetableWidget.filterOptions(this.data.extraCurriculumAddOptions, input.value);
       activeIndex = filtered.length > 0 ? 0 : -1;
       if (isOpen) {
         renderOptions();
