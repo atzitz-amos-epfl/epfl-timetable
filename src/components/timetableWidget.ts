@@ -162,7 +162,22 @@ export class TimetableWidget {
     const shell = document.createElement("div");
     shell.className = "app-shell";
 
-    const sidebar = this.createSidebar();
+    let sidebarToggle: HTMLButtonElement | null = null;
+    const setSidebarOpen = (open: boolean): void => {
+      shell.classList.toggle("sidebar-open", open);
+      if (sidebarToggle) {
+        sidebarToggle.setAttribute("aria-expanded", `${open}`);
+      }
+    };
+
+    const sidebar = this.createSidebar(() => setSidebarOpen(false));
+    sidebar.id = "app-sidebar";
+
+    const sidebarBackdrop = document.createElement("button");
+    sidebarBackdrop.type = "button";
+    sidebarBackdrop.className = "app-sidebar-backdrop";
+    sidebarBackdrop.setAttribute("aria-label", "Close menu");
+    sidebarBackdrop.addEventListener("click", () => setSidebarOpen(false));
 
     const content = document.createElement("div");
     content.className = "app-content";
@@ -174,21 +189,100 @@ export class TimetableWidget {
       this.data.plannedLectures.map((plannedLecture) => plannedLecture.lecture.course.abbreviation),
     ).size;
 
+    const headingIcon = this.data.activeTab === "planner" ? "fa-graduation-cap" : "fa-calendar-days";
     const heading = new Heading(
       this.config.title,
       this.config.subtitleTemplate(visibleCourseCount),
+      headingIcon,
     ).render();
     const topBar = document.createElement("div");
     topBar.className = "timetable-topbar";
+
+    sidebarToggle = document.createElement("button");
+    sidebarToggle.type = "button";
+    sidebarToggle.className = "sidebar-toggle";
+    sidebarToggle.setAttribute("aria-label", "Toggle menu");
+    sidebarToggle.setAttribute("aria-controls", "app-sidebar");
+    sidebarToggle.setAttribute("aria-expanded", "false");
+    sidebarToggle.addEventListener("click", () => {
+      setSidebarOpen(!shell.classList.contains("sidebar-open"));
+    });
+
+    const toggleIcon = document.createElement("i");
+    toggleIcon.className = "fa-solid fa-bars";
+    toggleIcon.setAttribute("aria-hidden", "true");
+
+    const toggleLabel = document.createElement("span");
+    toggleLabel.className = "sidebar-toggle-label";
+    toggleLabel.textContent = "Menu";
+
+    sidebarToggle.appendChild(toggleIcon);
+    sidebarToggle.appendChild(toggleLabel);
+
+    topBar.appendChild(sidebarToggle);
     topBar.appendChild(heading);
     if (this.data.activeTab === "planner") {
       topBar.appendChild(this.createMainStudyPicker());
     }
 
-    const curriculumSection = this.createCurriculumSection();
+    const panelsContainer = document.createElement("div");
+    panelsContainer.className = "app-panels";
+
+    if (this.data.activeTab === "planner") {
+      panelsContainer.appendChild(this.createCurriculumSection());
+    } else {
+      panelsContainer.appendChild(this.createTimetableTabPanel());
+    }
+
+    const panelsAnchor = document.createElement("div");
+    panelsAnchor.className = "app-panels-anchor";
+
+    const curriculumPanels = panelsContainer.querySelectorAll<HTMLDetailsElement>(".curriculum-panel");
+
     const semesterSelectorRow = document.createElement("div");
     semesterSelectorRow.className = "semester-selector-row";
     semesterSelectorRow.appendChild(this.createSemesterTabs());
+
+    const syncPanelsLocation = (isCompact: boolean): void => {
+      if (isCompact) {
+        if (panelsAnchor.contains(panelsContainer)) {
+          panelsAnchor.removeChild(panelsContainer);
+        }
+        if (!sidebar.contains(panelsContainer)) {
+          sidebar.appendChild(panelsContainer);
+        }
+        panelsContainer.classList.add("in-sidebar");
+        curriculumPanels.forEach((panel) => {
+          panel.classList.add("is-collapsible");
+          panel.classList.remove("is-static");
+          panel.open = true;
+        });
+      } else {
+        if (sidebar.contains(panelsContainer)) {
+          sidebar.removeChild(panelsContainer);
+        }
+        if (!panelsAnchor.contains(panelsContainer)) {
+          panelsAnchor.appendChild(panelsContainer);
+        }
+        panelsContainer.classList.remove("in-sidebar");
+        curriculumPanels.forEach((panel) => {
+          panel.classList.add("is-static");
+          panel.classList.remove("is-collapsible");
+          panel.open = true;
+        });
+      }
+    };
+
+    const sidebarMedia = window.matchMedia("(max-width: 960px)");
+    syncPanelsLocation(sidebarMedia.matches);
+    sidebarMedia.addEventListener("change", (event) => syncPanelsLocation(event.matches));
+
+    widget.appendChild(topBar);
+    widget.appendChild(panelsAnchor);
+
+    if (this.data.activeTab === "planner") {
+      widget.appendChild(semesterSelectorRow);
+    }
 
     const grid = new TimetableGrid(this.config.days, periods, this.config.layout);
     const gridElement = grid.render();
@@ -210,25 +304,21 @@ export class TimetableWidget {
       );
     });
 
-    widget.appendChild(topBar);
+    const gridContainer = document.createElement("div");
+    gridContainer.className = "timetable-scroll";
+    gridContainer.appendChild(gridElement);
 
-    if (this.data.activeTab === "planner") {
-      widget.appendChild(curriculumSection);
-      widget.appendChild(semesterSelectorRow);
-    } else {
-      widget.appendChild(this.createTimetableTabPanel());
-    }
-
-    widget.appendChild(gridElement);
+    widget.appendChild(gridContainer);
 
     content.appendChild(widget);
     shell.appendChild(sidebar);
+    shell.appendChild(sidebarBackdrop);
     shell.appendChild(content);
 
     return shell;
   }
 
-  private createSidebar(): HTMLElement {
+  private createSidebar(onNavigate?: () => void): HTMLElement {
     const sidebar = document.createElement("aside");
     sidebar.className = "app-sidebar";
 
@@ -265,6 +355,7 @@ export class TimetableWidget {
         if (this.data.activeTab !== option.tab) {
           this.data.onChangeTab(option.tab);
         }
+        onNavigate?.();
       });
 
       nav.appendChild(button);
@@ -280,7 +371,16 @@ export class TimetableWidget {
 
     const heading = document.createElement("h3");
     heading.className = "timetable-tab-title";
-    heading.textContent = "Timetable catalog";
+
+    const headingIcon = document.createElement("i");
+    headingIcon.className = "fa-solid fa-layer-group panel-title-icon";
+    headingIcon.setAttribute("aria-hidden", "true");
+
+    const headingText = document.createElement("span");
+    headingText.textContent = "Timetable catalog";
+
+    heading.appendChild(headingIcon);
+    heading.appendChild(headingText);
 
     const addRow = document.createElement("div");
     addRow.className = "extra-curriculum-add-row";
@@ -288,7 +388,16 @@ export class TimetableWidget {
     const addLabel = document.createElement("label");
     addLabel.className = "extra-curriculum-add-label";
     addLabel.setAttribute("for", "timetable-tab-dropdown");
-    addLabel.textContent = "Add from catalog:";
+
+    const addLabelIcon = document.createElement("i");
+    addLabelIcon.className = "fa-solid fa-circle-plus";
+    addLabelIcon.setAttribute("aria-hidden", "true");
+
+    const addLabelText = document.createElement("span");
+    addLabelText.textContent = "Add from catalog:";
+
+    addLabel.appendChild(addLabelIcon);
+    addLabel.appendChild(addLabelText);
 
     const combo = document.createElement("div");
     combo.className = "extra-curriculum-combobox";
@@ -310,6 +419,44 @@ export class TimetableWidget {
     let isOpen = false;
     let activeIndex = -1;
     let filtered = [...this.data.timetableTabAddOptions];
+    let isPositioned = false;
+
+    const ensureOptionsMounted = (): void => {
+      if (!document.body.contains(optionsList)) {
+        document.body.appendChild(optionsList);
+      }
+    };
+
+    const detachOptions = (): void => {
+      if (document.body.contains(optionsList)) {
+        optionsList.remove();
+      }
+    };
+
+    const updateOptionsPosition = (): void => {
+      const rect = input.getBoundingClientRect();
+      optionsList.style.left = `${rect.left}px`;
+      optionsList.style.top = `${rect.bottom + 4}px`;
+      optionsList.style.width = `${rect.width}px`;
+    };
+
+    const bindFloatingListeners = (): void => {
+      if (isPositioned) {
+        return;
+      }
+      isPositioned = true;
+      window.addEventListener("resize", updateOptionsPosition);
+      window.addEventListener("scroll", updateOptionsPosition, true);
+    };
+
+    const unbindFloatingListeners = (): void => {
+      if (!isPositioned) {
+        return;
+      }
+      isPositioned = false;
+      window.removeEventListener("resize", updateOptionsPosition);
+      window.removeEventListener("scroll", updateOptionsPosition, true);
+    };
 
     const renderOptions = (): void => {
       optionsList.replaceChildren();
@@ -359,15 +506,22 @@ export class TimetableWidget {
     const openOptions = (): void => {
       isOpen = true;
       combo.classList.add("open");
+      optionsList.classList.add("open");
       input.setAttribute("aria-expanded", "true");
+      ensureOptionsMounted();
+      updateOptionsPosition();
+      bindFloatingListeners();
       renderOptions();
     };
 
     const closeOptions = (): void => {
       isOpen = false;
       combo.classList.remove("open");
+      optionsList.classList.remove("open");
       input.setAttribute("aria-expanded", "false");
       activeIndex = -1;
+      unbindFloatingListeners();
+      detachOptions();
     };
 
     const updateFilter = (): void => {
@@ -419,7 +573,7 @@ export class TimetableWidget {
 
     combo.addEventListener("focusout", () => {
       window.setTimeout(() => {
-        if (!combo.contains(document.activeElement)) {
+        if (!combo.contains(document.activeElement) && !optionsList.contains(document.activeElement)) {
           closeOptions();
         }
       }, 0);
@@ -803,9 +957,33 @@ export class TimetableWidget {
     const section = document.createElement("section");
     section.className = "curriculum-section";
 
-    section.appendChild(this.createCurriculumPanel("mandatory", "Mandatory Courses", this.createMandatoryCoursesContent(), false));
-    section.appendChild(this.createCurriculumPanel("optional", "Optional Courses", this.createOptionalCoursesContent(), false));
-    section.appendChild(this.createCurriculumPanel("extra", "Extra-Curriculum Courses", this.createExtraCurriculumContent(), false));
+    section.appendChild(
+      this.createCurriculumPanel(
+        "mandatory",
+        "Mandatory Courses",
+        this.createMandatoryCoursesContent(),
+        false,
+        "fa-book-open",
+      ),
+    );
+    section.appendChild(
+      this.createCurriculumPanel(
+        "optional",
+        "Optional Courses",
+        this.createOptionalCoursesContent(),
+        false,
+        "fa-layer-group",
+      ),
+    );
+    section.appendChild(
+      this.createCurriculumPanel(
+        "extra",
+        "Extra-Curriculum Courses",
+        this.createExtraCurriculumContent(),
+        false,
+        "fa-star",
+      ),
+    );
 
     return section;
   }
@@ -815,13 +993,25 @@ export class TimetableWidget {
     titleText: string,
     content: HTMLElement,
     collapsible: boolean,
+    iconClass: string,
   ): HTMLElement {
-    const panel = collapsible ? document.createElement("details") : document.createElement("article");
+    const panel = document.createElement("details");
     panel.className = "curriculum-panel";
+    panel.classList.add(collapsible ? "is-collapsible" : "is-static");
+    panel.open = !collapsible;
 
-    const title = document.createElement(collapsible ? "summary" : "h3");
+    const title = document.createElement("summary");
     title.className = "curriculum-panel-title";
-    title.textContent = titleText;
+
+    const icon = document.createElement("i");
+    icon.className = `fa-solid ${iconClass} panel-title-icon`;
+    icon.setAttribute("aria-hidden", "true");
+
+    const titleLabel = document.createElement("span");
+    titleLabel.textContent = titleText;
+
+    title.appendChild(icon);
+    title.appendChild(titleLabel);
 
     const body = document.createElement("div");
     body.className = "curriculum-panel-body";
@@ -1064,6 +1254,44 @@ export class TimetableWidget {
     let isOpen = false;
     let activeIndex = -1;
     let filtered = [...this.data.extraCurriculumAddOptions];
+    let isPositioned = false;
+
+    const ensureOptionsMounted = (): void => {
+      if (!document.body.contains(optionsList)) {
+        document.body.appendChild(optionsList);
+      }
+    };
+
+    const detachOptions = (): void => {
+      if (document.body.contains(optionsList)) {
+        optionsList.remove();
+      }
+    };
+
+    const updateOptionsPosition = (): void => {
+      const rect = input.getBoundingClientRect();
+      optionsList.style.left = `${rect.left}px`;
+      optionsList.style.top = `${rect.bottom + 4}px`;
+      optionsList.style.width = `${rect.width}px`;
+    };
+
+    const bindFloatingListeners = (): void => {
+      if (isPositioned) {
+        return;
+      }
+      isPositioned = true;
+      window.addEventListener("resize", updateOptionsPosition);
+      window.addEventListener("scroll", updateOptionsPosition, true);
+    };
+
+    const unbindFloatingListeners = (): void => {
+      if (!isPositioned) {
+        return;
+      }
+      isPositioned = false;
+      window.removeEventListener("resize", updateOptionsPosition);
+      window.removeEventListener("scroll", updateOptionsPosition, true);
+    };
 
     const renderOptions = (): void => {
       optionsList.replaceChildren();
@@ -1108,15 +1336,22 @@ export class TimetableWidget {
     const openOptions = (): void => {
       isOpen = true;
       combo.classList.add("open");
+      optionsList.classList.add("open");
       input.setAttribute("aria-expanded", "true");
+      ensureOptionsMounted();
+      updateOptionsPosition();
+      bindFloatingListeners();
       renderOptions();
     };
 
     const closeOptions = (): void => {
       isOpen = false;
       combo.classList.remove("open");
+      optionsList.classList.remove("open");
       input.setAttribute("aria-expanded", "false");
       activeIndex = -1;
+      unbindFloatingListeners();
+      detachOptions();
     };
 
     const updateFilter = (): void => {
@@ -1168,7 +1403,7 @@ export class TimetableWidget {
 
     combo.addEventListener("focusout", () => {
       window.setTimeout(() => {
-        if (!combo.contains(document.activeElement)) {
+        if (!combo.contains(document.activeElement) && !optionsList.contains(document.activeElement)) {
           closeOptions();
         }
       }, 0);
@@ -1359,4 +1594,12 @@ export class TimetableWidget {
     return `${studyPlan.semester}:${studyPlan.name}`;
   }
 }
+
+
+
+
+
+
+
+
 

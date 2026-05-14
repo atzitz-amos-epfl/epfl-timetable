@@ -17,7 +17,7 @@ body {
 }
 
 #app {
-    max-width: 1200px;
+    max-width: 1320px;
     margin: 0 auto;
     padding: 24px;
 }
@@ -42,41 +42,45 @@ body {
     box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
 }
 
-.app-sidebar-nav {
-    display: grid;
-    gap: 8px;
-}
-
-.sidebar-tab {
-    display: grid;
-    grid-template-columns: 20px 1fr;
+.sidebar-toggle {
+    display: none;
     align-items: center;
-    gap: 10px;
-    border: 1px solid transparent;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
     border-radius: 10px;
-    padding: 10px 12px;
-    background: #f8fafc;
+    background: #ffffff;
     color: #0f172a;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    text-align: left;
-    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
 }
 
-.sidebar-tab i {
+.sidebar-toggle i {
     font-size: 1rem;
 }
 
-.sidebar-tab:hover {
-    background: #eef2ff;
-    border-color: #a5b4fc;
+.sidebar-toggle-label {
+    line-height: 1;
 }
 
-.sidebar-tab.active {
-    background: #e0e7ff;
-    border-color: #6366f1;
-    color: #312e81;
+.app-sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: rgba(15, 23, 42, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 160ms ease;
+    z-index: 900;
+}
+
+.app-shell.sidebar-open .app-sidebar-backdrop {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .app-content {
@@ -169,13 +173,13 @@ h1 {
 
 .curriculum-section {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 12px;
 }
 
 .curriculum-panel {
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
     gap: 10px;
     padding: 12px;
     border: 1px solid #cbd5e1;
@@ -191,8 +195,6 @@ h1 {
     font-size: 0.95rem;
     font-weight: 700;
     color: #0f172a;
-    display: flex;
-    align-items: center;
     justify-content: flex-start;
     padding-bottom: 8px;
     border-bottom: 1px solid #e2e8f0;
@@ -223,6 +225,7 @@ summary.curriculum-panel-title::after {
     display: grid;
     gap: 10px;
     min-height: 0;
+    height: 100%;
     overflow: auto;
     overscroll-behavior: contain;
 }
@@ -493,6 +496,76 @@ summary.curriculum-panel-title::after {
     color: #475569;
 }
 
+.app-sidebar-nav {
+    display: grid;
+    gap: 8px;
+}
+
+.sidebar-tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #0f172a;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.sidebar-tab:hover {
+    background: #eef2ff;
+    border-color: #c7d2fe;
+}
+
+.sidebar-tab.active {
+    background: #e0e7ff;
+    border-color: #6366f1;
+    color: #312e81;
+}
+
+.sidebar-tab-label {
+    line-height: 1.1;
+}
+
+.app-panels {
+    display: grid;
+    gap: 12px;
+}
+
+.app-panels.in-sidebar {
+    margin-top: 12px;
+    max-height: calc(100vh - 160px);
+    overflow: auto;
+    padding-right: 4px;
+}
+
+.timetable-heading-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.timetable-heading-icon {
+    font-size: 1.3rem;
+    color: #4f46e5;
+}
+
+.timetable-tab-title,
+.curriculum-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.panel-title-icon {
+    color: #6366f1;
+    font-size: 0.95rem;
+}
+
 .extra-curriculum-content {
     display: grid;
     gap: 8px;
@@ -512,6 +585,9 @@ summary.curriculum-panel-title::after {
 }
 
 .extra-curriculum-add-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 0.78rem;
     font-weight: 600;
     color: #475569;
@@ -522,6 +598,7 @@ summary.curriculum-panel-title::after {
     position: relative;
     flex: 1;
     min-width: 0;
+    overflow: visible;
 }
 
 .extra-curriculum-dropdown {
@@ -538,20 +615,20 @@ summary.curriculum-panel-title::after {
 
 .extra-curriculum-options {
     display: none;
-    position: absolute;
+    position: fixed;
     top: calc(100% + 4px);
     left: 0;
-    right: 0;
+    right: auto;
     max-height: 220px;
     overflow: auto;
     border: 1px solid #d1d5db;
     border-radius: 10px;
     background: #ffffff;
     box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15);
-    z-index: 20;
+    z-index: 1400;
 }
 
-.extra-curriculum-combobox.open .extra-curriculum-options {
+.extra-curriculum-options.open {
     display: grid;
 }
 
@@ -711,7 +788,7 @@ summary.curriculum-panel-title::after {
     display: grid;
     gap: 8px;
     padding: 12px;
-    border: 1px solid #d1d5db;
+    border: 1px solid #d5d5db;
     border-radius: 10px;
     background: #ffffff;
 }
@@ -768,23 +845,71 @@ summary.curriculum-panel-title::after {
     color: #312e81;
 }
 
-@media (max-width: 1050px) {
-    .curriculum-section {
-        grid-template-columns: 1fr;
+@media (max-width: 960px) {
+    #app {
+        padding: 16px;
     }
 
     .app-shell {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .app-sidebar {
-        position: static;
-        width: 100%;
+        position: fixed;
+        top: 16px;
+        bottom: 16px;
+        left: 16px;
+        width: min(280px, 86vw);
+        transform: translateX(calc(-100% - 24px));
+        transition: transform 160ms ease;
+        z-index: 1000;
+        overflow: auto;
     }
 
-    .sidebar-tab {
-        grid-template-columns: 20px 1fr;
+    .app-shell.sidebar-open .app-sidebar {
+        transform: translateX(0);
     }
+
+    .sidebar-toggle {
+        display: inline-flex;
+    }
+
+    .timetable-topbar {
+        align-items: center;
+    }
+}
+
+@media (max-width: 720px) {
+    .curriculum-panel {
+        height: auto;
+        min-height: 240px;
+    }
+}
+
+@media (max-width: 900px) {
+    .timetable {
+        --time-column-width: 80px;
+        --day-column-min-width: 120px;
+        --header-row-height: 42px;
+        --period-row-height: 64px;
+    }
+}
+
+@media (max-width: 640px) {
+    .timetable {
+        --time-column-width: 70px;
+        --day-column-min-width: 105px;
+        --header-row-height: 40px;
+        --period-row-height: 58px;
+    }
+}
+
+.timetable-scroll {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
 }
 
 .timetable {
@@ -799,6 +924,8 @@ summary.curriculum-panel-title::after {
     overflow: hidden;
     background: #ffffff;
     box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+    width: 100%;
+    min-width: 0;
 }
 
 .cell {

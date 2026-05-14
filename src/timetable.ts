@@ -11,6 +11,62 @@ import {
 } from "./epflCourseCatalog";
 import type { AppTab, PlannedLecture, Semester, StudyPlan } from "./types";
 
+const STORAGE_KEY = "studies-planner-state-v1";
+
+type StoredState = {
+  version: 1;
+  activeMainStudy?: string;
+  activeSemester?: Semester;
+  activeTab?: AppTab;
+  selectedPlans?: Array<{ key: string; enabled: boolean }>;
+  selectedOptionalCourseIds?: string[];
+  selectedExtraCourseIds?: string[];
+  openedMandatoryGroups?: string[];
+  openedOptionalGroups?: string[];
+  timetableTabSelectedPlanKeys?: string[];
+  timetableTabSelectedCourseIds?: string[];
+  timetableTabSelectedRoomKeys?: string[];
+};
+
+const filterStringArray = (value: unknown): string[] => {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  return value.filter((item): item is string => typeof item === "string");
+};
+
+const loadStoredState = (): StoredState | null => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      return null;
+    }
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object" || parsed.version !== 1) {
+      return null;
+    }
+    return parsed as StoredState;
+  } catch {
+    return null;
+  }
+};
+
+const saveStoredState = (state: StoredState): void => {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // Ignore storage write errors (private mode, quota issues, etc.).
+  }
+};
+
 interface SelectedStudyPlan {
   studyPlan: StudyPlan;
   enabled: boolean;
@@ -209,6 +265,8 @@ export class Timetable {
   private readonly selectedExtraCourseIds: Set<string>;
   private readonly openedMandatoryGroups: Set<string>;
   private readonly openedOptionalGroups: Set<string>;
+  private hasStoredMandatoryGroupState = false;
+  private hasStoredOptionalGroupState = false;
   private readonly curriculumPaneScrollTop: Record<string, number>;
   private readonly timetableTabSelectedPlanKeys: Set<string>;
   private readonly timetableTabSelectedCourseIds: Set<string>;
@@ -240,6 +298,11 @@ export class Timetable {
     this.activeMainStudy = this.getMainStudyOptions()[0] ?? "";
     this.activeSemester = TAB_SEMESTERS[0];
     this.activeTab = "planner";
+
+    const storedState = loadStoredState();
+    if (storedState) {
+      this.applyStoredState(storedState);
+    }
   }
 
   public attach(container: HTMLElement): void {
@@ -468,19 +531,23 @@ export class Timetable {
   }
 
   private toggleMandatoryGroupOpen(groupKey: string, open: boolean): void {
+    this.hasStoredMandatoryGroupState = true;
     if (open) {
       this.openedMandatoryGroups.add(groupKey);
     } else {
       this.openedMandatoryGroups.delete(groupKey);
     }
+    this.saveState();
   }
 
   private toggleOptionalGroupOpen(groupName: string, open: boolean): void {
+    this.hasStoredOptionalGroupState = true;
     if (open) {
       this.openedOptionalGroups.add(groupName);
     } else {
       this.openedOptionalGroups.delete(groupName);
     }
+    this.saveState();
   }
 
   private updateCurriculumPaneScroll(paneKey: string, scrollTop: number): void {
@@ -493,6 +560,8 @@ export class Timetable {
     this.selectedExtraCourseIds.clear();
     this.openedMandatoryGroups.clear();
     this.openedOptionalGroups.clear();
+    this.hasStoredMandatoryGroupState = false;
+    this.hasStoredOptionalGroupState = false;
     Array.from(this.selectedPlans.keys()).forEach((planKey) => {
       const plan = this.selectedPlans.get(planKey);
       if (plan?.studyPlan.name === mainStudyName) {
@@ -524,6 +593,7 @@ export class Timetable {
     const nextRoot = this.render();
     this.container.replaceChildren(nextRoot);
     this.restoreCurriculumPaneScrollToDom(nextRoot);
+    this.saveState();
   }
 
   private captureCurriculumPaneScrollFromDom(root: ParentNode): void {
@@ -723,6 +793,10 @@ export class Timetable {
       }
     });
 
+    if (this.hasStoredOptionalGroupState) {
+      return;
+    }
+
     groups.forEach((group) => {
       if (!this.openedOptionalGroups.has(group.groupName)) {
         this.openedOptionalGroups.add(group.groupName);
@@ -738,6 +812,10 @@ export class Timetable {
         this.openedMandatoryGroups.delete(key);
       }
     });
+
+    if (this.hasStoredMandatoryGroupState) {
+      return;
+    }
 
     groups.forEach((group) => {
       if (!this.openedMandatoryGroups.has(group.semester)) {
@@ -757,5 +835,134 @@ export class Timetable {
   private toLectureKey(lecture: PlannedLecture["lecture"]): string {
     return buildLectureKey(lecture);
   }
-}
 
+  private applyStoredState(state: StoredState): void {
+    const mainStudyOptions = this.getMainStudyOptions();
+    if (typeof state.activeMainStudy === "string" && mainStudyOptions.includes(state.activeMainStudy)) {
+      this.activeMainStudy = state.activeMainStudy;
+    }
+    if (state.activeSemester && TAB_SEMESTERS.includes(state.activeSemester)) {
+      this.activeSemester = state.activeSemester;
+    }
+    if (state.activeTab === "planner" || state.activeTab === "timetable") {
+      this.activeTab = state.activeTab;
+    }
+
+    const planByKey = new Map(this.studyPlans.map((studyPlan) => [this.toPlanKey(studyPlan), studyPlan]));
+    if (Array.isArray(state.selectedPlans)) {
+      this.selectedPlans.clear();
+      state.selectedPlans.forEach((entry) => {
+        if (!entry || typeof entry !== "object") {
+          return;
+        }
+        const key = (entry as { key?: unknown }).key;
+        const enabled = (entry as { enabled?: unknown }).enabled;
+        if (typeof key !== "string") {
+          return;
+        }
+        const plan = planByKey.get(key);
+        if (!plan || plan.name === this.activeMainStudy) {
+          return;
+        }
+        this.selectedPlans.set(key, { studyPlan: plan, enabled: typeof enabled === "boolean" ? enabled : true });
+      });
+    }
+
+    const allCourseIds = new Set<string>();
+    this.studyPlans.forEach((studyPlan) => {
+      studyPlan.courses.forEach((course) => {
+        allCourseIds.add(this.toCourseSelectionId(studyPlan, course));
+      });
+    });
+
+    const optionalCourseIds = new Set<string>();
+    this.studyPlans
+      .filter((studyPlan) => studyPlan.name === this.activeMainStudy)
+      .forEach((studyPlan) => {
+        studyPlan.courses.forEach((course) => {
+          if (course.isOptional) {
+            optionalCourseIds.add(this.toCourseSelectionId(studyPlan, course));
+          }
+        });
+      });
+
+    this.selectedOptionalCourseIds.clear();
+    filterStringArray(state.selectedOptionalCourseIds).forEach((id) => {
+      if (optionalCourseIds.has(id)) {
+        this.selectedOptionalCourseIds.add(id);
+      }
+    });
+
+    this.selectedExtraCourseIds.clear();
+    filterStringArray(state.selectedExtraCourseIds).forEach((id) => {
+      if (allCourseIds.has(id)) {
+        this.selectedExtraCourseIds.add(id);
+      }
+    });
+
+    this.openedMandatoryGroups.clear();
+    filterStringArray(state.openedMandatoryGroups).forEach((key) => this.openedMandatoryGroups.add(key));
+    this.hasStoredMandatoryGroupState = state.openedMandatoryGroups !== undefined;
+
+    this.openedOptionalGroups.clear();
+    filterStringArray(state.openedOptionalGroups).forEach((key) => this.openedOptionalGroups.add(key));
+    this.hasStoredOptionalGroupState = state.openedOptionalGroups !== undefined;
+
+    this.timetableTabSelectedPlanKeys.clear();
+    filterStringArray(state.timetableTabSelectedPlanKeys).forEach((key) => {
+      if (epflPlanByKey.has(key)) {
+        this.timetableTabSelectedPlanKeys.add(key);
+      }
+    });
+
+    this.timetableTabSelectedCourseIds.clear();
+    filterStringArray(state.timetableTabSelectedCourseIds).forEach((id) => {
+      if (epflCourseById.has(id)) {
+        this.timetableTabSelectedCourseIds.add(id);
+      }
+    });
+
+    this.timetableTabSelectedRoomKeys.clear();
+    filterStringArray(state.timetableTabSelectedRoomKeys).forEach((key) => {
+      if (epflRoomLecturesByRoom.has(key)) {
+        this.timetableTabSelectedRoomKeys.add(key);
+      }
+    });
+  }
+
+  private saveState(): void {
+    const payload: StoredState = {
+      version: 1,
+      activeMainStudy: this.activeMainStudy,
+      activeSemester: this.activeSemester,
+      activeTab: this.activeTab,
+    };
+
+    if (this.selectedPlans.size > 0) {
+      payload.selectedPlans = Array.from(this.selectedPlans.entries()).map(([key, { enabled }]) => ({ key, enabled }));
+    }
+    if (this.selectedOptionalCourseIds.size > 0) {
+      payload.selectedOptionalCourseIds = Array.from(this.selectedOptionalCourseIds);
+    }
+    if (this.selectedExtraCourseIds.size > 0) {
+      payload.selectedExtraCourseIds = Array.from(this.selectedExtraCourseIds);
+    }
+    if (this.hasStoredMandatoryGroupState) {
+      payload.openedMandatoryGroups = Array.from(this.openedMandatoryGroups);
+    }
+    if (this.hasStoredOptionalGroupState) {
+      payload.openedOptionalGroups = Array.from(this.openedOptionalGroups);
+    }
+    if (this.timetableTabSelectedPlanKeys.size > 0) {
+      payload.timetableTabSelectedPlanKeys = Array.from(this.timetableTabSelectedPlanKeys);
+    }
+    if (this.timetableTabSelectedCourseIds.size > 0) {
+      payload.timetableTabSelectedCourseIds = Array.from(this.timetableTabSelectedCourseIds);
+    }
+    if (this.timetableTabSelectedRoomKeys.size > 0) {
+      payload.timetableTabSelectedRoomKeys = Array.from(this.timetableTabSelectedRoomKeys);
+    }
+
+    saveStoredState(payload);
+  }
+}
