@@ -20,6 +20,9 @@ DOMAIN_SEMESTERS = {
     "propedeutique": ["BA1", "BA2"],
     "bachelor": ["BA3", "BA4", "BA5", "BA6"],
 }
+
+ODD_SEMESTERS = {"BA1", "BA3", "BA5"}
+
 TARGETS = [
     ("propedeutique", "informatique"),
     ("propedeutique", "mathematiques"),
@@ -182,6 +185,9 @@ def scrape_page(domain: str, name: str) -> dict:
                     break
 
             if semester is None:
+                continue
+
+            if semester not in ODD_SEMESTERS:
                 continue
 
             # Timetable + prerequisites
