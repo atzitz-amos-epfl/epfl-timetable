@@ -31,6 +31,8 @@ import {
 } from "../domain/agenda";
 import { CYCLE_SEMESTERS, baseCourseCode, cycleOf, describeLectureMix, getPlacementSemesters } from "../domain/courseGroups";
 import { ALL_SEMESTERS, type AppTab, type Course, type CourseKind, type Cycle, type PlannedLecture, type Semester, type StudyPlan } from "../types";
+import type { CloudSync } from "../sync/cloudSync";
+import { createSyncPanel } from "../sync/syncUi";
 import { Heading } from "./heading";
 import { TimetableGrid, formatHours } from "./timetableGrid";
 
@@ -128,6 +130,8 @@ export interface TimetableWidgetData {
   onOpenSemesterSchedule: (semester: Semester) => void;
   // Back from the schedule to the study plan, scrolled to the semester (and a course in it, if given).
   onShowInPlan: (semester: Semester) => void;
+  // Account sync, when Supabase is set up (null otherwise).
+  cloudSync: CloudSync | null;
   // The semester shown in the Agenda tab, and the current one (for My studies).
   agenda: AgendaData;
   currentAgenda: AgendaData;
@@ -1000,11 +1004,14 @@ export class TimetableWidget {
 
     sidebar.appendChild(nav);
     sidebar.appendChild(this.createStudySettings());
-
-    const note = document.createElement("p");
-    note.className = "sidebar-note";
-    note.textContent = "Your selections are saved in this browser.";
-    sidebar.appendChild(note);
+    if (this.data.cloudSync) {
+      sidebar.appendChild(createSyncPanel(this.data.cloudSync));
+    } else {
+      const note = document.createElement("p");
+      note.className = "sidebar-note";
+      note.textContent = "Your selections are saved in this browser.";
+      sidebar.appendChild(note);
+    }
 
     return sidebar;
   }

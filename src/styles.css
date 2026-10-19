@@ -4448,6 +4448,128 @@ body.course-dragging .plan-box.drop-valid .plan-box-drop-hint {
 }
 
 /* ==========================================================================
+   Account sync (sidebar panel and dialogs)
+   ========================================================================== */
+
+.sync-panel {
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.sync-panel[hidden] {
+    display: none;
+}
+
+.sync-text {
+    margin: 0;
+    color: var(--side-ink);
+    font-size: 0.74rem;
+    line-height: 1.45;
+}
+
+.sync-account {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+    margin: 0;
+    color: var(--side-ink-strong);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.sync-account span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sync-account i {
+    color: var(--side-ink);
+}
+
+.sync-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    color: var(--side-ink);
+    font-size: 0.74rem;
+    font-weight: 600;
+}
+
+.sync-status.synced i {
+    color: #4ade80;
+}
+
+.sync-status.offline i {
+    color: #fbbf24;
+}
+
+.sync-status.error {
+    color: #fca5a5;
+}
+
+.sync-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.sync-button {
+    padding: 7px 8px;
+    border: 1px solid var(--side-line);
+    border-radius: var(--radius-sm);
+    background: var(--side-active);
+    color: var(--side-ink-strong);
+    font-size: 0.76rem;
+    font-weight: 600;
+    transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.sync-button:hover:not(:disabled) {
+    border-color: var(--side-ink);
+}
+
+.sync-button:disabled {
+    opacity: 0.5;
+}
+
+.sync-button.primary {
+    border-color: var(--accent);
+    background: var(--accent);
+}
+
+.sync-button.primary:hover {
+    background: var(--accent-ink);
+}
+
+.sync-modal {
+    width: min(440px, calc(100vw - 32px));
+}
+
+.sync-info {
+    margin: 0;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-size: 0.78rem;
+    line-height: 1.4;
+}
+
+.sync-info:empty {
+    display: none;
+}
+
+.sync-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+/* ==========================================================================
    Phones (keep in sync with COMPACT_SCREEN_QUERY in timetableWidget.ts)
    ========================================================================== */
 

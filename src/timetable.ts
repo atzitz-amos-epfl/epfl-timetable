@@ -2,6 +2,7 @@ import { timetableConfig, type TimetableConfig } from "./config/timetableConfig"
 import { COMPACT_SCREEN_QUERY, TimetableWidget, type OptionalCourseGroup, type PlannerCourse, type TimetableWidgetData } from "./components/timetableWidget";
 import { academicYearOf, studyPosition } from "./domain/academicCalendar";
 import { EPFL_CALENDAR } from "./data/epflCalendar";
+import type { CloudSync } from "./sync/cloudSync";
 import { AgendaStore, currentSemesterKey, parseSemesterKey, semesterLayout, shiftSemesterKey, type AgendaChange, type AgendaItem } from "./domain/agenda";
 import { CYCLE_SEMESTERS, baseCourseCode, cycleOf, getPlacementSemesters } from "./domain/courseGroups";
 import { nonMainStudyPlanIds } from "./data/epflData";
@@ -328,6 +329,8 @@ export class Timetable {
   private activeTab: AppTab;
   private startYear: number;
   private container: HTMLElement | null = null;
+  // Account sync (Supabase), when set up: told about every save.
+  private cloudSync: CloudSync | null = null;
 
   public constructor(
     studyPlans: StudyPlan[],
@@ -403,6 +406,10 @@ export class Timetable {
         this.activeSemester = position.semester;
       }
     }
+  }
+
+  public setCloudSync(sync: CloudSync): void {
+    this.cloudSync = sync;
   }
 
   public attach(container: HTMLElement): void {
@@ -501,6 +508,7 @@ export class Timetable {
       },
       onRemoveStudyPlan: (planKey: string) => this.removeStudyPlan(planKey),
       onOpenSemesterSchedule: (semester: Semester) => this.openSemesterSchedule(semester),
+      cloudSync: this.cloudSync,
       agenda: this.buildAgendaData(this.agendaSemester),
       currentAgenda: this.buildAgendaData(currentSemesterKey()),
       onAgendaAdd: (items: Array<Omit<AgendaItem, "id">>) => {
@@ -971,6 +979,7 @@ export class Timetable {
     this.restoreCurriculumPaneScrollToDom(nextRoot);
     TimetableWidget.restoreScrollAnchor(nextRoot);
     this.saveState();
+    this.cloudSync?.notifyLocalChange();
   }
 
   private captureCurriculumPaneScrollFromDom(root: ParentNode): void {
