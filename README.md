@@ -1,13 +1,13 @@
-# EPFL Studies Planner
+# My Studies
 
-A simple planner for building an EPFL study path and visualizing it in a weekly timetable.
+Plan your EPFL studies semester by semester and see your weekly schedule.
 
 ## Main features
 
-- Study planner that lets you explore mandatory courses, optional tracks, and extra-curriculum choices.
-- Add or remove plans and courses to compare alternatives quickly.
-- Timetable view that merges overlaps and highlights conflicts at a glance.
-- Search the timetable catalog by course, study plan, or room (including room timetables).
+- **My studies**: your current semester at a glance (today's classes, courses, credits, progress), based on the year you started.
+- **Planner**: your bachelor and master by semester; move courses between semesters, pick sections and SHS courses, load courses from other plans, and see the weekly schedule with conflicts.
+- **Explore**: search any study plan, course or room and see its timetable.
+- Correct outdated course data by hand; everything is saved in your browser.
 
 ## Access
 

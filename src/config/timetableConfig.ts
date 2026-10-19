@@ -21,7 +21,7 @@ export interface TimetableConfig {
 }
 
 export const timetableConfig: TimetableConfig = {
-  title: "University Timetable",
+  title: "Timetable",
   subtitleTemplate: (totalCourses) =>
     `${totalCourses} courses loaded. Slots run from 08:15 to 19:00 in 45+15 minute cycles.`,
   days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],

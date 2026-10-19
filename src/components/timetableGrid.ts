@@ -1,6 +1,9 @@
 import type { TimetableLayoutConfig } from "../config/timetableConfig";
 import type { Period } from "../domain/timetableModel";
 
+/** Formats a duration in hours without trailing zeros (e.g. 4.5, 12, 2.25). */
+export const formatHours = (hours: number): string => `${Number(hours.toFixed(2))}`;
+
 export class TimetableGrid {
   private static readonly GRID_OFFSETS = {
     dayColumnStart: 2,
@@ -10,9 +13,10 @@ export class TimetableGrid {
   private gridElement: HTMLElement | null = null;
 
   public constructor(
-    private readonly days: readonly string[],
-    private readonly periods: Period[],
-    private readonly layout: TimetableLayoutConfig,
+      private readonly days: readonly string[],
+      private readonly periods: Period[],
+      private readonly layout: TimetableLayoutConfig,
+      private readonly dayLoadsHours: readonly number[] = [],
   ) {}
 
   public render(): HTMLElement {
@@ -29,10 +33,23 @@ export class TimetableGrid {
 
     this.days.forEach((day, dayIndex) => {
       const dayHeader = document.createElement("div");
-      dayHeader.className = "cell header";
+      dayHeader.className = "cell header day-header";
       dayHeader.style.gridColumn = this.getGridColumn(dayIndex);
       dayHeader.style.gridRow = "1";
-      dayHeader.textContent = day;
+
+      const dayName = document.createElement("span");
+      dayName.className = "day-name";
+      dayName.textContent = day;
+      dayHeader.appendChild(dayName);
+
+      const load = this.dayLoadsHours[dayIndex] ?? 0;
+      if (load > 0) {
+        const dayLoad = document.createElement("span");
+        dayLoad.className = "day-load";
+        dayLoad.textContent = `${formatHours(load)} h`;
+        dayHeader.appendChild(dayLoad);
+      }
+
       grid.appendChild(dayHeader);
     });
 
@@ -42,7 +59,17 @@ export class TimetableGrid {
       timeLabel.className = "cell time-cell";
       timeLabel.style.gridColumn = "1";
       timeLabel.style.gridRow = `${rowIndex}`;
-      timeLabel.textContent = `${period.startLabel}-${period.endLabel}`;
+
+      const start = document.createElement("span");
+      start.className = "time-start";
+      start.textContent = period.startLabel;
+
+      const end = document.createElement("span");
+      end.className = "time-end";
+      end.textContent = period.endLabel;
+
+      timeLabel.appendChild(start);
+      timeLabel.appendChild(end);
       grid.appendChild(timeLabel);
 
       this.days.forEach((_, dayIndex) => {
@@ -87,4 +114,3 @@ export class TimetableGrid {
     grid.style.setProperty("--period-row-height", `${this.layout.periodRowHeightPx}px`);
   }
 }
-

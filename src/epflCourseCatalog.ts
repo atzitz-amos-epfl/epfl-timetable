@@ -1,99 +1,7 @@
-import epflCoursesRaw from "../py/epfl_courses.json";
-import type { Course, Lecture, Semester, StudyPlan } from "./types";
+import { buildStudyPlans } from "./data/epflData";
+import type { Course, Lecture, StudyPlan } from "./types";
 
-interface RawLecture {
-  type: Lecture["type"];
-  day: Lecture["day"];
-  timeStart: Lecture["timeStart"];
-  timeEnd: Lecture["timeEnd"];
-  rooms?: string[];
-}
-
-interface RawCourse {
-  courseName: string;
-  courseAbbreviation: string;
-  teacher: string;
-  credits: number;
-  group: string;
-  prerequisites: string;
-  lectures: RawLecture[];
-  linkToCourse: string;
-}
-
-interface RawStudyPlan {
-  semester: string;
-  name: string;
-  courses: RawCourse[];
-}
-
-const normalizeSemester = (value: string): Semester | null => {
-  const normalized = value.toUpperCase();
-  if (normalized === "BA1" || normalized === "BA2" || normalized === "BA3" || normalized === "BA4" || normalized === "BA5" || normalized === "BA6") {
-    return normalized;
-  }
-
-  return null;
-};
-
-const normalizePrerequisites = (value: string): string[] => {
-  return value
-    .split(/[,;]+/)
-    .map((entry) => entry.trim())
-    .filter(Boolean);
-};
-
-const normalizeRoomList = (value?: string[]): string[] => {
-  if (!value) {
-    return [];
-  }
-
-  const cleaned = value.map((entry) => entry.trim()).filter(Boolean);
-  return Array.from(new Set(cleaned));
-};
-
-const rawPlans = epflCoursesRaw as RawStudyPlan[];
-
-export const epflStudyPlans: StudyPlan[] = rawPlans
-  .map((plan) => {
-    const semester = normalizeSemester(plan.semester);
-    if (!semester) {
-      return null;
-    }
-
-    const mappedCourses: Course[] = plan.courses.map((course) => {
-      const mappedCourse: Course = {
-        abbreviation: course.courseAbbreviation,
-        name: course.courseName,
-        teacher: course.teacher,
-        credits: course.credits,
-        group: course.group,
-        isOptional: false,
-        prerequisite: normalizePrerequisites(course.prerequisites),
-        linkToCourse: course.linkToCourse,
-        lectures: course.lectures.map((lecture) => ({
-          course: {} as Course,
-          type: lecture.type,
-          day: lecture.day,
-          timeStart: lecture.timeStart,
-          timeEnd: lecture.timeEnd,
-          room: normalizeRoomList(lecture.rooms),
-        })),
-      };
-
-      mappedCourse.lectures.forEach((lecture) => {
-        lecture.course = mappedCourse;
-      });
-
-      return mappedCourse;
-    });
-
-    return {
-      name: plan.name,
-      semester,
-      courses: mappedCourses,
-    } satisfies StudyPlan;
-  })
-  .filter((plan): plan is StudyPlan => plan !== null);
+export const epflStudyPlans: StudyPlan[] = buildStudyPlans({ expandChoices: false });
 
 export const buildEpflPlanKey = (plan: StudyPlan): string => `${plan.semester}:${plan.name}`;
 export const buildEpflCourseId = (plan: StudyPlan, course: Course): string => {
@@ -155,3 +63,25 @@ sortedRooms.forEach((room) => {
 
 export const epflTimetableAddOptions = [...epflAddOptions, ...epflRoomAddOptions];
 
+/** Re-files a course's lectures under their rooms after its slots were edited (see CourseEditStore). */
+export const reindexCourseRooms = (courseId: string, course: Course): void => {
+  const studyPlan = epflPlanByKey.get(courseId.split("|")[0] ?? "");
+  if (!studyPlan) {
+    return;
+  }
+
+  epflRoomLecturesByRoom.forEach((entries, room) => {
+    const kept = entries.filter((entry) => entry.lecture.course !== course);
+    if (kept.length !== entries.length) {
+      epflRoomLecturesByRoom.set(room, kept);
+    }
+  });
+
+  course.lectures.forEach((lecture) => {
+    (lecture.room ?? []).forEach((room) => {
+      const bucket = epflRoomLecturesByRoom.get(room) ?? [];
+      bucket.push({ lecture, studyPlan });
+      epflRoomLecturesByRoom.set(room, bucket);
+    });
+  });
+};

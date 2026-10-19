@@ -1,10 +1,73 @@
+/* ==========================================================================
+   Studies planner: dashboard stylesheet
+   Tokens first, then layout shell, then components.
+   ========================================================================== */
+
 :root {
     color-scheme: light;
-    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-    line-height: 1.35;
+
+    --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    /* Surfaces */
+    --bg: #f3f4f7;
+    --surface: #ffffff;
+    --surface-muted: #f8f9fb;
+    --line: #e4e7ed;
+    --line-strong: #d3d8e1;
+
+    /* Text */
+    --ink: #151b26;
+    --ink-2: #444d5e;
+    --ink-3: #7a8396;
+
+    /* Accent (interaction + selection) */
+    --accent: #3d4fd6;
+    --accent-ink: #2b39a8;
+    --accent-soft: #eceefc;
+
+    /* Sidebar */
+    --side-bg: #151b26;
+    --side-line: #252d3d;
+    --side-ink: #aeb7c8;
+    --side-ink-strong: #ffffff;
+    --side-active: #232c3f;
+
+    /* Lecture types */
+    --type-course: #e7edfb;
+    --type-exercise: #e2f3e8;
+    --type-lab: #fbecd2;
+
+    /* Conflict */
+    --danger: #d23b3b;
+    --danger-soft: #fdecec;
+
+    /* Warning (e.g. a disabled mandatory course) */
+    --warning: #a85b06;
+    --warning-soft: #fdf1dc;
+
+    /* Course kinds */
+    --kind-mandatory: #a9b3f2;
+    --kind-optional: #3d4fd6;
+    --kind-extra: #98a1b3;
+
+    --radius-lg: 14px;
+    --radius-md: 10px;
+    --radius-sm: 7px;
+
+    --shadow-pop: 0 14px 34px rgba(21, 27, 38, 0.18);
+
+    font-family: var(--font-sans);
+    line-height: 1.4;
     font-weight: 400;
-    color: #1f2937;
-    background: #f3f4f6;
+    color: var(--ink);
+    background: var(--bg);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+html {
+    overscroll-behavior: none;
 }
 
 * {
@@ -12,34 +75,157 @@
     user-select: none;
 }
 
+input,
+select {
+    user-select: text;
+}
+
 body {
+    margin: 0;
+    min-width: 320px;
+    background: var(--bg);
+    overscroll-behavior: none;
+}
+
+button,
+input,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+p {
     margin: 0;
 }
 
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Shell: fixed sidebar + scrolling content
+   ========================================================================== */
+
 #app {
-    max-width: 1320px;
-    margin: 0 auto;
-    padding: 24px;
+    padding: 0;
 }
 
 .app-shell {
     display: grid;
-    grid-template-columns: 220px minmax(0, 1fr);
-    gap: 20px;
+    grid-template-columns: 232px minmax(0, 1fr);
+    min-height: 100vh;
     align-items: start;
 }
 
 .app-sidebar {
     position: sticky;
-    top: 24px;
+    top: 0;
     align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 20px 14px;
+    background: var(--side-bg);
+    border-right: 1px solid var(--side-line);
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 2px 8px 0;
+}
+
+.sidebar-brand-mark {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 4px 12px rgba(61, 79, 214, 0.35);
+}
+
+.sidebar-brand-mark svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar-brand-copy {
     display: grid;
-    gap: 12px;
-    padding: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-    background: #ffffff;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    color: var(--side-ink-strong);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    gap: 3px;
+}
+
+.sidebar-brand-copy strong {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.sidebar-brand-copy span {
+    color: var(--side-ink);
+    font-size: 0.76rem;
+}
+
+.app-sidebar-nav {
+    display: grid;
+    gap: 4px;
+}
+
+.sidebar-tab {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-height: 42px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--side-ink);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: left;
+    transition: background-color 120ms ease, color 120ms ease;
+}
+
+.sidebar-tab i {
+    width: 18px;
+    text-align: center;
+    color: #7f8aa0;
+}
+
+.sidebar-tab:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--side-ink-strong);
+}
+
+.sidebar-tab.active {
+    background: var(--side-active);
+    color: var(--side-ink-strong);
+    box-shadow: inset 3px 0 0 #8b98ff;
+}
+
+.sidebar-tab.active i {
+    color: #aab4ff;
+}
+
+.sidebar-note {
+    margin-top: auto;
+    padding: 0 10px;
+    color: #7f8aa0;
+    font-size: 0.74rem;
+    line-height: 1.45;
 }
 
 .sidebar-toggle {
@@ -47,31 +233,20 @@ body {
     align-items: center;
     gap: 8px;
     padding: 8px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    background: #ffffff;
-    color: #0f172a;
-    font-size: 0.9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    font-size: 0.86rem;
     font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
-}
-
-.sidebar-toggle i {
-    font-size: 1rem;
-}
-
-.sidebar-toggle-label {
-    line-height: 1;
 }
 
 .app-sidebar-backdrop {
     position: fixed;
     inset: 0;
-    border: none;
+    border: 0;
     padding: 0;
     margin: 0;
-    background: rgba(15, 23, 42, 0.4);
+    background: rgba(21, 27, 38, 0.45);
     opacity: 0;
     pointer-events: none;
     transition: opacity 160ms ease;
@@ -85,824 +260,277 @@ body {
 
 .app-content {
     min-width: 0;
-}
-
-h1 {
-    margin: 0 0 6px;
-    font-size: 1.8rem;
-}
-
-.subtitle {
-    margin: 0 0 18px;
-    color: #4b5563;
+    padding: 28px 32px 40px;
+    max-width: 1680px;
 }
 
 .timetable-widget {
     display: grid;
-    gap: 12px;
+    gap: 20px;
 }
+
+/* ==========================================================================
+   Top bar
+   ========================================================================== */
 
 .timetable-topbar {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.timetable-topbar .timetable-heading {
-    margin-right: auto;
-}
-
-.timetable-tab-panel {
-    display: grid;
-    gap: 12px;
-    padding: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-    background: #ffffff;
-}
-
-.timetable-tab-title {
-    margin: 0;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #0f172a;
-}
-
-.timetable-tab-selection {
-    display: grid;
-    gap: 8px;
-}
-
-.timetable-tab-selection-row {
-    display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding: 8px 10px;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    background: #f8fafc;
+    gap: 14px 20px;
 }
 
-.timetable-tab-selection-label {
-    font-size: 0.82rem;
-    color: #1f2937;
-}
-
-.timetable-tab-selection-remove {
-    border: 1px solid #fecaca;
-    border-radius: 8px;
-    background: #fff1f2;
-    color: #b91c1c;
-    font-size: 0.72rem;
-    padding: 4px 10px;
-    cursor: pointer;
-}
-
-.timetable-tab-empty {
-    font-size: 0.82rem;
-    color: #6b7280;
-}
-
-.semester-selector-row {
-    display: flex;
-    justify-content: flex-start;
-}
-
-.curriculum-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 12px;
-}
-
-.curriculum-panel {
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    gap: 10px;
-    padding: 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 12px;
-    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-    height: 340px;
-    overflow: hidden;
-}
-
-.curriculum-panel-title {
-    margin: 0;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #0f172a;
-    justify-content: flex-start;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-summary.curriculum-panel-title {
-    list-style: none;
-    cursor: pointer;
-    justify-content: space-between;
-}
-
-summary.curriculum-panel-title::-webkit-details-marker {
-    display: none;
-}
-
-summary.curriculum-panel-title::after {
-    content: "▾";
-    font-size: 0.82rem;
-    color: #6b7280;
-    transition: transform 120ms ease;
-}
-
-.curriculum-panel:not([open]) summary.curriculum-panel-title::after {
-    transform: rotate(-90deg);
-}
-
-.curriculum-panel-body {
-    display: grid;
-    gap: 10px;
-    min-height: 0;
-    height: 100%;
-    overflow: auto;
-    overscroll-behavior: contain;
-}
-
-.curriculum-placeholder {
-    margin: 0;
-    align-self: center;
-    justify-self: center;
-    color: #6b7280;
-    font-size: 0.86rem;
-    text-align: center;
-}
-
-.mandatory-courses-grid {
-    display: grid;
-    gap: 2px;
-    align-content: start;
-    min-height: auto;
-    max-height: none;
-    overflow: visible;
-    padding: 0 2px;
-}
-
-.mandatory-semester-group {
-    display: grid;
-    gap: 0;
-    border: none;
-    border-bottom: 1px solid #e2e8f0;
-    border-radius: 0;
-    background: transparent;
-    padding: 0;
-}
-
-.mandatory-semester-title {
-    margin: 0;
-    font-size: 0.78rem;
-    font-weight: 800;
-    color: #475569;
-    letter-spacing: 0.05em;
-    list-style: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-transform: uppercase;
-    border: none;
-    border-radius: 0;
-    padding: 8px 2px;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    background: #ffffff;
-}
-
-.mandatory-semester-title::-webkit-details-marker {
-    display: none;
-}
-
-.mandatory-semester-title::after {
-    content: "▾";
-    font-size: 0.7rem;
-    color: #6b7280;
-    transition: transform 120ms ease;
-}
-
-.mandatory-semester-group:not([open]) .mandatory-semester-title::after {
-    transform: rotate(-90deg);
-}
-
-.mandatory-semester-cards {
-    display: grid;
-    gap: 6px;
-    padding: 2px 0 8px;
-}
-
-.mandatory-course-card {
-    display: grid;
-    gap: 3px;
-    border: none;
-    border-left: 2px solid #2563eb;
-    border-radius: 0;
-    padding: 4px 0 4px 8px;
-    background: transparent;
-}
-
-.mandatory-course-card.clickable {
-    cursor: pointer;
-    transition: background-color 100ms ease;
-}
-
-.mandatory-course-card.clickable:hover {
-    background: #f8fafc;
-}
-
-.mandatory-course-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.mandatory-course-abbreviation {
-    font-weight: 700;
-    font-size: 0.82rem;
-    color: #1f2937;
-}
-
-.mandatory-course-credits {
-    font-size: 0.7rem;
-    color: #1d4ed8;
-    background: transparent;
-    border-radius: 999px;
-    padding: 0;
-}
-
-.mandatory-course-name {
-    font-size: 0.8rem;
-    color: #111827;
-    line-height: 1.25;
-}
-
-.mandatory-course-meta {
-    font-size: 0.72rem;
-    color: #475569;
-}
-
-.optional-courses-grid {
-    display: grid;
-    gap: 2px;
-    align-content: start;
-    min-height: auto;
-    max-height: none;
-    overflow: visible;
-    padding: 0 2px;
-}
-
-.optional-group {
-    display: grid;
-    gap: 0;
-    border: none;
-    border-bottom: 1px solid #e2e8f0;
-    border-radius: 0;
-    background: transparent;
-    padding: 0;
-}
-
-.optional-group-title {
-    margin: 0;
-    font-size: 0.78rem;
-    font-weight: 800;
-    color: #475569;
-    letter-spacing: 0.04em;
-    list-style: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
-    border: none;
-    border-radius: 0;
-    padding: 8px 2px;
-    text-transform: none;
-    background-color: transparent;
-}
-
-.optional-group-title-text {
-    flex: 1;
+.timetable-heading {
+    flex: 1 1 280px;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.optional-group-selected-credits {
-    font-size: 0.68rem;
-    color: #475569;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.optional-group-title::-webkit-details-marker {
-    display: none;
-}
-
-.optional-group-title::after {
-    content: "▾";
-    font-size: 0.7rem;
-    color: #6b7280;
-    margin-left: 2px;
-    transition: transform 120ms ease;
-}
-
-.optional-group:not([open]) .optional-group-title::after {
-    transform: rotate(-90deg);
-}
-
-.optional-group-cards {
-    display: grid;
-    gap: 6px;
-    padding: 2px 0 8px;
-}
-
-.optional-course-card {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: flex-start;
-    gap: 8px;
-    width: 100%;
-    border: none;
-    border-left: 2px solid #94a3b8;
-    border-radius: 0;
-    padding: 4px 0 4px 8px;
-    background: transparent;
-    color: inherit;
-}
-
-.optional-course-card:hover {
-    background: #f8fafc;
-}
-
-.optional-course-card.selected {
-    border-left-color: #2563eb;
-    background: #eff6ff;
-}
-
-.optional-course-toggle {
-    margin-top: 2px;
-}
-
-.optional-course-content {
-    display: grid;
-    gap: 3px;
-    width: 100%;
-    border: none;
-    background: transparent;
-    text-align: left;
-    color: inherit;
-    cursor: pointer;
-    padding: 0;
-}
-
-.optional-course-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.optional-course-abbreviation {
-    font-weight: 700;
-    font-size: 0.82rem;
-    color: #1f2937;
-}
-
-.optional-course-credits {
-    font-size: 0.7rem;
-    color: #1d4ed8;
-}
-
-.optional-course-name {
-    font-size: 0.8rem;
-    color: #111827;
-    line-height: 1.25;
-}
-
-.optional-course-meta {
-    font-size: 0.72rem;
-    color: #475569;
-}
-
-.app-sidebar-nav {
-    display: grid;
-    gap: 8px;
-}
-
-.sidebar-tab {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    border: 1px solid transparent;
-    border-radius: 10px;
-    background: #f8fafc;
-    color: #0f172a;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
-}
-
-.sidebar-tab:hover {
-    background: #eef2ff;
-    border-color: #c7d2fe;
-}
-
-.sidebar-tab.active {
-    background: #e0e7ff;
-    border-color: #6366f1;
-    color: #312e81;
-}
-
-.sidebar-tab-label {
-    line-height: 1.1;
-}
-
-.app-panels {
-    display: grid;
-    gap: 12px;
-}
-
-.app-panels.in-sidebar {
-    margin-top: 12px;
-    max-height: calc(100vh - 160px);
-    overflow: auto;
-    padding-right: 4px;
 }
 
 .timetable-heading-title {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    font-size: clamp(1.4rem, 2vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
 }
 
 .timetable-heading-icon {
-    font-size: 1.3rem;
-    color: #4f46e5;
-}
-
-.timetable-tab-title,
-.curriculum-panel-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.panel-title-icon {
-    color: #6366f1;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
     font-size: 0.95rem;
 }
 
-.extra-curriculum-content {
-    display: grid;
-    gap: 8px;
-    min-height: 0;
-}
-
-.extra-curriculum-add-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    height: min-content;
-    position: sticky;
-    top: 0;
-    z-index: 3;
-    background: #ffffff;
-    padding-bottom: 4px;
-}
-
-.extra-curriculum-add-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: #475569;
-    white-space: nowrap;
-}
-
-.extra-curriculum-combobox {
-    position: relative;
-    flex: 1;
-    min-width: 0;
-    overflow: visible;
-}
-
-.extra-curriculum-dropdown {
-    flex: none;
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    padding: 7px 9px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #111827;
-}
-
-.extra-curriculum-options {
-    display: none;
-    position: fixed;
-    top: calc(100% + 4px);
-    left: 0;
-    right: auto;
-    max-height: 220px;
-    overflow: auto;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    background: #ffffff;
-    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15);
-    z-index: 1400;
-}
-
-.extra-curriculum-options.open {
-    display: grid;
-}
-
-.extra-curriculum-option-group {
-    padding: 6px 10px 4px;
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: #64748b;
-    background: #f8fafc;
-}
-
-.extra-curriculum-option {
-    border: none;
-    background: transparent;
-    text-align: left;
-    padding: 7px 10px;
-    font-size: 0.78rem;
-    color: #111827;
-    cursor: pointer;
-}
-
-.extra-curriculum-option:hover,
-.extra-curriculum-option.active {
-    background: #eef2ff;
-}
-
-.extra-curriculum-option-empty {
-    padding: 10px;
-    font-size: 0.76rem;
-    color: #6b7280;
-}
-
-.extra-curriculum-groups {
-    display: grid;
-    gap: 8px;
-    min-height: auto;
-    overflow: visible;
-}
-
-.extra-curriculum-group {
-    display: grid;
-    gap: 4px;
-    border-bottom: 1px solid #e2e8f0;
-    padding-bottom: 6px;
-}
-
-.extra-curriculum-group-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.extra-curriculum-group-title {
-    font-size: 0.76rem;
-    font-weight: 800;
-    color: #475569;
-    letter-spacing: 0.04em;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.extra-curriculum-group-remove {
-    border: 1px solid #fecaca;
-    border-radius: 8px;
-    background: #fff1f2;
-    color: #b91c1c;
-    font-size: 0.68rem;
-    padding: 2px 8px;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.extra-curriculum-courses {
-    display: grid;
-    gap: 5px;
-}
-
-.extra-curriculum-course {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: flex-start;
-    gap: 8px;
-    width: 100%;
-    border: none;
-    border-left: 2px solid #94a3b8;
-    padding: 3px 0 3px 8px;
-    background: transparent;
-    color: inherit;
-}
-
-.extra-curriculum-course:hover {
-    background: #f8fafc;
-}
-
-.extra-curriculum-course.disabled {
-    opacity: 0.55;
-}
-
-.extra-curriculum-course.selected {
-    border-left-color: #2563eb;
-    background: #eff6ff;
-}
-
-.extra-curriculum-course-toggle {
-    margin-top: 2px;
-}
-
-.extra-curriculum-course-content {
-    display: grid;
-    gap: 2px;
-    width: 100%;
-    border: none;
-    background: transparent;
-    text-align: left;
-    color: inherit;
-    cursor: pointer;
-    padding: 0;
-}
-
-.extra-curriculum-course-content:disabled {
-    cursor: default;
-}
-
-.extra-curriculum-course-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.extra-curriculum-course-abbreviation {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #1f2937;
-}
-
-.extra-curriculum-course-credits {
-    font-size: 0.7rem;
-    color: #1d4ed8;
-}
-
-.extra-curriculum-course-name {
-    font-size: 0.78rem;
-    color: #111827;
-    line-height: 1.2;
-}
-
-.extra-curriculum-course-meta {
-    font-size: 0.72rem;
-    color: #475569;
-}
-
-.study-plan-selector {
-    display: grid;
-    gap: 8px;
-    padding: 12px;
-    border: 1px solid #d5d5db;
-    border-radius: 10px;
-    background: #ffffff;
+.subtitle {
+    margin: 4px 0 0 48px;
+    color: var(--ink-3);
+    font-size: 0.86rem;
 }
 
 .main-study-picker {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    padding: 6px 8px 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
 }
 
 .main-study-label {
-    font-size: 0.9rem;
+    color: var(--ink-3);
+    font-size: 0.78rem;
     font-weight: 600;
-    color: #1f2937;
+    white-space: nowrap;
 }
 
 .main-study-dropdown {
-    min-width: 160px;
+    min-width: 200px;
     max-width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #111827;
+    padding: 7px 8px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--surface-muted);
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   Summary strip: four readings in one panel, divided by rules
+   ========================================================================== */
+
+.summary-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+}
+
+.summary-item {
+    display: grid;
+    gap: 4px;
+    padding: 16px 20px;
+    min-width: 0;
+}
+
+.summary-item + .summary-item {
+    border-left: 1px solid var(--line);
+}
+
+.summary-label {
+    color: var(--ink-3);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.summary-figure {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    margin: 0;
+    min-width: 0;
+}
+
+.summary-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+}
+
+.summary-unit {
+    color: var(--ink-3);
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+
+.summary-item.has-conflict .summary-value {
+    color: var(--danger);
+}
+
+/* ==========================================================================
+   Workspace: schedule (main) + course panel (side)
+   ========================================================================== */
+
+.workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 20px;
+    align-items: start;
+}
+
+.workspace-main,
+.workspace-side {
+    min-width: 0;
+}
+
+.workspace-side {
+    position: sticky;
+    top: 20px;
+}
+
+.schedule-card,
+.side-panel {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+}
+
+.schedule-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    overflow: hidden;
+}
+
+.schedule-card-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+    padding: 14px 16px 14px 20px;
+    border-bottom: 1px solid var(--line);
+}
+
+.schedule-card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
 .semester-tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 2px;
+    padding: 3px;
+    border-radius: var(--radius-md);
+    background: var(--surface-muted);
+    border: 1px solid var(--line);
 }
 
 .semester-tab {
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    padding: 6px 10px;
-    background: #f8fafc;
-    color: #0f172a;
-    font-size: 0.84rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    padding: 6px 11px;
+    background: transparent;
+    color: var(--ink-3);
+    font-size: 0.78rem;
     font-weight: 600;
-    cursor: pointer;
-    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+    transition: background-color 120ms ease, color 120ms ease;
 }
 
 .semester-tab:hover {
-    background: #eef2ff;
-    border-color: #a5b4fc;
+    color: var(--ink);
 }
 
 .semester-tab.active {
-    background: #e0e7ff;
-    border-color: #6366f1;
-    color: #312e81;
+    background: var(--surface);
+    color: var(--accent-ink);
+    box-shadow: 0 0 0 1px var(--line-strong);
 }
 
-@media (max-width: 960px) {
-    #app {
-        padding: 16px;
-    }
+/* Legend */
 
-    .app-shell {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .app-sidebar {
-        position: fixed;
-        top: 16px;
-        bottom: 16px;
-        left: 16px;
-        width: min(280px, 86vw);
-        transform: translateX(calc(-100% - 24px));
-        transition: transform 160ms ease;
-        z-index: 1000;
-        overflow: auto;
-    }
-
-    .app-shell.sidebar-open .app-sidebar {
-        transform: translateX(0);
-    }
-
-    .sidebar-toggle {
-        display: inline-flex;
-    }
-
-    .timetable-topbar {
-        align-items: center;
-    }
+.schedule-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 18px;
+    margin: 0;
+    padding: 12px 20px;
+    border-top: 1px solid var(--line);
+    list-style: none;
+    color: var(--ink-2);
+    font-size: 0.78rem;
 }
 
-@media (max-width: 720px) {
-    .curriculum-panel {
-        height: auto;
-        min-height: 240px;
-    }
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
 }
 
-@media (max-width: 900px) {
-    .timetable {
-        --time-column-width: 80px;
-        --day-column-min-width: 120px;
-        --header-row-height: 42px;
-        --period-row-height: 64px;
-    }
+.legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    border: 1px solid rgba(21, 27, 38, 0.18);
 }
 
-@media (max-width: 640px) {
-    .timetable {
-        --time-column-width: 70px;
-        --day-column-min-width: 105px;
-        --header-row-height: 40px;
-        --period-row-height: 58px;
-    }
+.legend-swatch.course {
+    background: var(--type-course);
 }
+
+.legend-swatch.exercise {
+    background: var(--type-exercise);
+}
+
+.legend-swatch.lab {
+    background: var(--type-lab);
+}
+
+.legend-swatch.conflict {
+    border: 1px dashed var(--danger);
+    background: repeating-linear-gradient(135deg, rgba(210, 59, 59, 0.3) 0 3px, rgba(210, 59, 59, 0.08) 3px 6px);
+}
+
+.legend-note {
+    margin-left: auto;
+    color: var(--ink-3);
+}
+
+/* ==========================================================================
+   Timetable grid
+   ========================================================================== */
 
 .timetable-scroll {
     width: 100%;
@@ -915,60 +543,84 @@ summary.curriculum-panel-title::after {
 .timetable {
     position: relative;
     display: grid;
-    grid-template-columns: var(--time-column-width, 110px)
-    repeat(var(--day-count, 5), minmax(var(--day-column-min-width, 140px), 1fr));
-    grid-template-rows: var(--header-row-height, 46px)
-    repeat(var(--period-count, 11), var(--period-row-height, 72px));
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    overflow: hidden;
-    background: #ffffff;
-    box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+    grid-template-columns: var(--time-column-width, 110px) repeat(var(--day-count, 5), minmax(var(--day-column-min-width, 140px), 1fr));
+    grid-template-rows: var(--header-row-height, 46px) repeat(var(--period-count, 11), var(--period-row-height, 72px));
     width: 100%;
     min-width: 0;
+    background: var(--surface);
 }
 
 .cell {
-    border-right: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
     padding: 8px;
 }
 
 .cell:last-child {
-    border-right: none;
+    border-right: 0;
 }
 
 .header {
-    font-weight: 600;
-    text-align: center;
-    align-content: center;
-    background: #f9fafb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--surface-muted);
+    color: var(--ink-2);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.day-load {
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-size: 0.68rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
 }
 
 .time-cell {
-    font-size: 0.82rem;
-    color: #4b5563;
-    align-content: center;
-    text-align: center;
-    background: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    background: var(--surface-muted);
+    font-variant-numeric: tabular-nums;
 }
+
+.time-start {
+    color: var(--ink-2);
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+.time-end {
+    color: var(--ink-3);
+    font-size: 0.68rem;
+}
+
+/* Lecture blocks. Lane maths positions overlapping lectures side by side. */
 
 .lecture {
     --lecture-gap: 4px;
     --lecture-lane-index: 0;
     --lecture-lane-count: 1;
-    --plan-color: #9ca3af;
+    --plan-color: #98a1b3;
     --plan-border: var(--plan-color);
-    margin: var(--lecture-gap);
-    padding: 8px 10px;
-    border-radius: 8px;
-    color: #111827;
+
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
+    margin: var(--lecture-gap);
+    padding: 7px 10px 7px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(21, 27, 38, 0.12);
+    color: var(--ink);
     overflow: hidden;
-    border: 1px solid rgba(17, 24, 39, 0.15);
     width: calc((100% - (var(--lecture-lane-count) + 1) * var(--lecture-gap)) / var(--lecture-lane-count));
     margin-left: calc(
             var(--lecture-gap) + var(--lecture-lane-index) *
@@ -977,14 +629,16 @@ summary.curriculum-panel-title::after {
     z-index: 2;
 }
 
-.lecture:hover,
-.lecture:focus-within,
-.lecture.overlay-active {
-    z-index: 20;
+.lecture.course {
+    background: var(--type-course);
 }
 
-.lecture.clickable {
-    cursor: pointer;
+.lecture.exercise {
+    background: var(--type-exercise);
+}
+
+.lecture.lab {
+    background: var(--type-lab);
 }
 
 .lecture::before {
@@ -1002,74 +656,1264 @@ summary.curriculum-panel-title::after {
     z-index: 1;
 }
 
-.lecture.compact {
-    padding: 6px 8px;
-    gap: 2px;
+.lecture:hover,
+.lecture:focus-within,
+.lecture.overlay-active {
+    z-index: 20;
 }
 
-.lecture.single-period {
-    padding: 6px 8px;
-    gap: 2px;
+.lecture.clickable {
+    cursor: pointer;
+}
+
+.lecture.clickable:hover {
+    border-color: rgba(21, 27, 38, 0.3);
 }
 
 .lecture.merged {
     border-style: dashed;
 }
 
+.lecture.compact,
+.lecture.single-period {
+    padding: 5px 8px 5px 12px;
+    gap: 1px;
+}
+
 .lecture-abbreviation {
-    font-size: 0.86rem;
-    font-weight: 700;
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.84rem;
+    font-weight: 700;
 }
 
 .lecture-name {
-    font-size: 0.78rem;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: clip;
-    line-height: 1.2;
-    word-break: break-word;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-size: 0.76rem;
+    line-height: 1.2;
+    color: var(--ink-2);
+    word-break: break-word;
+}
+
+.lecture-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2px 8px;
+    margin-top: auto;
+    min-width: 0;
+    font-size: 0.68rem;
+    color: var(--ink-2);
 }
 
 .lecture-type {
-    margin-top: auto;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #374151;
+    font-weight: 700;
+    text-transform: capitalize;
 }
 
-.lecture.compact .lecture-abbreviation {
+.lecture-room {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+}
+
+.lecture.compact .lecture-abbreviation,
+.lecture.single-period .lecture-abbreviation {
     font-size: 0.78rem;
 }
 
-.lecture.compact .lecture-name {
-    font-size: 0.7rem;
+.lecture.compact .lecture-name,
+.lecture.single-period .lecture-name {
     -webkit-line-clamp: 1;
+    font-size: 0.7rem;
 }
 
-.lecture.compact .lecture-type {
-    font-size: 0.64rem;
+.lecture.compact .lecture-room,
+.lecture.single-period .lecture-room {
+    display: none;
 }
 
-.lecture.single-period .lecture-abbreviation {
+.conflict-slot-overlay {
+    margin: 2px;
+    border: 2px dashed var(--danger);
+    border-radius: 6px;
+    background-image: repeating-linear-gradient(
+            135deg,
+            rgba(210, 59, 59, 0.22) 0,
+            rgba(210, 59, 59, 0.22) 8px,
+            rgba(210, 59, 59, 0.07) 8px,
+            rgba(210, 59, 59, 0.07) 16px
+    );
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* ==========================================================================
+   Side panel: course selection (planner) and catalog (timetable tab)
+   ========================================================================== */
+
+.side-panel {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    max-height: calc(100vh - 40px);
+    overflow: hidden;
+}
+
+.curriculum-tabs {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    border-bottom: 1px solid var(--line);
+}
+
+.curriculum-tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 14px 8px 12px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    background: transparent;
+    color: var(--ink-3);
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: color 120ms ease;
+}
+
+.curriculum-tab:hover {
+    color: var(--ink);
+}
+
+.curriculum-tab.active {
+    border-bottom-color: var(--accent);
+    color: var(--ink);
+}
+
+.curriculum-tab-count {
+    min-width: 20px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--surface-muted);
+    border: 1px solid var(--line);
+    color: var(--ink-2);
+    font-size: 0.68rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+
+.curriculum-tab.active .curriculum-tab-count {
+    background: var(--accent-soft);
+    border-color: transparent;
+    color: var(--accent-ink);
+}
+
+.curriculum-panel-body {
+    min-height: 0;
+    overflow: hidden auto;
+    overscroll-behavior: contain;
+    padding: 6px 16px 14px;
+}
+
+.curriculum-placeholder {
+    padding: 28px 12px;
+    color: var(--ink-3);
+    font-size: 0.84rem;
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* Grouped lists (semesters, optional groups, extra plans) */
+
+.mandatory-courses-grid,
+.optional-courses-grid,
+.extra-curriculum-groups {
+    display: grid;
+    align-content: start;
+    gap: 0;
+}
+
+.mandatory-semester-group,
+.optional-group {
+    border-bottom: 1px solid var(--line);
+}
+
+.mandatory-semester-group:last-child,
+.optional-group:last-child {
+    border-bottom: 0;
+}
+
+.mandatory-semester-title,
+.optional-group-title {
+    position: sticky;
+    top: -6px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 12px 2px 8px;
+    background: var(--surface);
+    color: var(--ink-2);
+    font-size: 0.78rem;
+    font-weight: 700;
+    list-style: none;
+    cursor: pointer;
+}
+
+.mandatory-semester-title::-webkit-details-marker,
+.optional-group-title::-webkit-details-marker {
+    display: none;
+}
+
+.mandatory-semester-title::after,
+.optional-group-title::after {
+    content: "\25BE";
+    margin-left: 4px;
+    color: var(--ink-3);
+    font-size: 0.7rem;
+    transition: transform 120ms ease;
+}
+
+.mandatory-semester-group:not([open]) .mandatory-semester-title::after,
+.optional-group:not([open]) .optional-group-title::after {
+    transform: rotate(-90deg);
+}
+
+.optional-group-title-text {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.optional-group-selected-credits {
+    color: var(--ink-3);
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.mandatory-semester-cards,
+.optional-group-cards,
+.extra-curriculum-courses {
+    display: grid;
+    gap: 2px;
+    padding: 0 0 10px;
+}
+
+/* Course rows */
+
+.mandatory-course-card,
+.optional-course-card,
+.extra-curriculum-course {
+    border: 0;
+    border-left: 3px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: inherit;
+}
+
+.mandatory-course-card {
+    display: grid;
+    gap: 2px;
+    padding: 7px 8px 7px 10px;
+    border-left-color: #a9b3f2;
+}
+
+.mandatory-course-card.clickable {
+    cursor: pointer;
+}
+
+.mandatory-course-card.clickable:hover,
+.optional-course-card:hover,
+.extra-curriculum-course:hover {
+    background: var(--surface-muted);
+}
+
+.optional-course-card,
+.extra-curriculum-course {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 9px;
+    width: 100%;
+    padding: 7px 8px 7px 10px;
+}
+
+.optional-course-card.selected,
+.extra-curriculum-course.selected {
+    border-left-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.extra-curriculum-course.disabled {
+    opacity: 0.5;
+}
+
+.optional-course-toggle,
+.extra-curriculum-course-toggle {
+    margin: 2px 0 0;
+    accent-color: var(--accent);
+}
+
+.optional-course-content,
+.extra-curriculum-course-content {
+    display: grid;
+    gap: 2px;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    text-align: left;
+}
+
+.extra-curriculum-course-content:disabled {
+    cursor: default;
+}
+
+.mandatory-course-header,
+.optional-course-header,
+.extra-curriculum-course-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.mandatory-course-abbreviation,
+.optional-course-abbreviation,
+.extra-curriculum-course-abbreviation {
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.mandatory-course-credits,
+.optional-course-credits,
+.extra-curriculum-course-credits {
+    color: var(--ink-3);
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.mandatory-course-name,
+.optional-course-name,
+.extra-curriculum-course-name {
+    font-size: 0.8rem;
+    line-height: 1.25;
+}
+
+.mandatory-course-meta,
+.optional-course-meta {
+    color: var(--ink-3);
+    font-size: 0.72rem;
+}
+
+/* Extra-curriculum: add row + plan groups */
+
+.extra-curriculum-content {
+    display: grid;
+    gap: 10px;
+    min-height: 0;
+}
+
+.extra-curriculum-add-row,
+.timetable-tab-panel .extra-curriculum-add-row {
+    display: grid;
+    gap: 6px;
+    position: sticky;
+    top: -6px;
+    z-index: 3;
+    padding: 10px 0 8px;
+    background: var(--surface);
+}
+
+.extra-curriculum-add-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--ink-2);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.extra-curriculum-combobox {
+    position: relative;
+    min-width: 0;
+}
+
+.extra-curriculum-dropdown {
+    width: 100%;
+    min-width: 0;
+    padding: 9px 11px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface-muted);
+    font-size: 0.84rem;
+    outline: none;
+}
+
+.extra-curriculum-dropdown::placeholder {
+    color: var(--ink-3);
+}
+
+.extra-curriculum-dropdown:focus {
+    border-color: var(--accent);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.extra-curriculum-options {
+    display: none;
+    position: fixed;
+    max-height: 260px;
+    overflow: auto;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    box-shadow: var(--shadow-pop);
+    z-index: 1400;
+}
+
+.extra-curriculum-options.open {
+    display: grid;
+    align-content: start;
+}
+
+.extra-curriculum-option-group {
+    padding: 8px 12px 4px;
+    background: var(--surface-muted);
+    color: var(--ink-3);
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.extra-curriculum-option {
+    padding: 8px 12px;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font-size: 0.8rem;
+    text-align: left;
+}
+
+.extra-curriculum-option:hover,
+.extra-curriculum-option.active {
+    background: var(--accent-soft);
+}
+
+.extra-curriculum-option-empty {
+    padding: 12px;
+    color: var(--ink-3);
     font-size: 0.8rem;
 }
 
-.lecture.single-period .lecture-name {
-    font-size: 0.68rem;
-    -webkit-line-clamp: 1;
+.extra-curriculum-group {
+    display: grid;
+    gap: 2px;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 0 4px;
 }
 
-.lecture.single-period .lecture-type {
-    margin-top: auto;
-    font-size: 0.66rem;
+.extra-curriculum-group:last-child {
+    border-bottom: 0;
 }
+
+.extra-curriculum-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-bottom: 6px;
+}
+
+.extra-curriculum-group-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    color: var(--ink-2);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.extra-curriculum-group-dot {
+    flex: none;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+
+.extra-curriculum-group-title-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.extra-curriculum-group-remove,
+.timetable-tab-selection-remove {
+    flex: none;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink-2);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.extra-curriculum-group-remove:hover,
+.timetable-tab-selection-remove:hover {
+    border-color: #efb5b5;
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+/* Timetable tab: catalog panel */
+
+.timetable-tab-panel {
+    display: grid;
+    grid-template-rows: none;
+    align-content: start;
+    gap: 6px;
+    padding: 16px;
+    overflow: auto;
+}
+
+.timetable-tab-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.panel-title-icon {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.72rem;
+}
+
+.timetable-tab-selection {
+    display: grid;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.timetable-tab-selection-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 8px 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface-muted);
+}
+
+.timetable-tab-selection-label {
+    min-width: 0;
+    font-size: 0.8rem;
+    line-height: 1.3;
+}
+
+.timetable-tab-selection-remove {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+}
+
+.timetable-tab-empty {
+    padding: 22px 6px;
+    color: var(--ink-3);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* ==========================================================================
+   Plan board: courses placed per semester, draggable between valid semesters
+   ========================================================================== */
+
+/* Semester tabs double as drop targets while a course is dragged. */
+.semester-tab.empty:not(.active) {
+    color: #a7aebb;
+}
+
+.semester-tab.drop-valid {
+    box-shadow: inset 0 0 0 1px var(--accent);
+    color: var(--accent-ink);
+}
+
+.semester-tab.drop-invalid {
+    opacity: 0.35;
+}
+
+.semester-tab.drag-over {
+    background: var(--accent-soft);
+}
+
+.lecture-kind {
+    padding: 0 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.lecture-kind.kind-optional {
+    color: var(--accent-ink);
+}
+
+.lecture-kind.kind-extra {
+    color: var(--ink-2);
+}
+
+.lecture.compact .lecture-kind,
+.lecture.single-period .lecture-kind {
+    display: none;
+}
+
+.plan-board-card {
+    display: grid;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    overflow: hidden;
+}
+
+.plan-board-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+    padding: 14px 16px 14px 20px;
+    border-bottom: 1px solid var(--line);
+}
+
+.plan-board-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--ink-2);
+    font-size: 0.74rem;
+}
+
+.plan-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.plan-legend-item::before {
+    content: "";
+    width: 3px;
+    height: 13px;
+    border-radius: 2px;
+    background: var(--kind-mandatory);
+}
+
+.plan-legend-item.kind-optional::before {
+    background: var(--kind-optional);
+}
+
+.plan-legend-item.kind-extra::before {
+    background: linear-gradient(180deg, #2563eb 0 33%, #059669 33% 66%, #d97706 66%);
+}
+
+/* Years are rows; autumn (odd) and spring (even) semesters are columns. */
+.plan-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 14px;
+    padding: 6px 16px 18px;
+    background: var(--surface-muted);
+}
+
+.plan-season-head {
+    padding: 10px 4px 0;
+    color: var(--ink-3);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.plan-year-label {
+    grid-column: 1 / -1;
+    padding: 16px 4px 6px;
+    color: var(--ink-2);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.plan-semester {
+    display: grid;
+    align-content: start;
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    transition: background-color 120ms ease, box-shadow 120ms ease, opacity 120ms ease, border-color 120ms ease;
+}
+
+.plan-semester.empty {
+    background: transparent;
+    border-style: dashed;
+}
+
+body.course-dragging .plan-semester.drop-valid {
+    border-color: var(--accent);
+    border-style: dashed;
+}
+
+body.course-dragging .plan-semester.drop-invalid {
+    opacity: 0.4;
+}
+
+.plan-semester.drag-over {
+    background: var(--accent-soft);
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+.plan-semester-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 10px 8px 12px;
+    color: var(--ink-2);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.plan-semester-name {
+    color: var(--ink);
+    font-size: 0.9rem;
+}
+
+.plan-semester-meta {
+    flex: 1;
+    color: var(--ink-3);
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.plan-semester-warning {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--warning-soft);
+    color: var(--warning);
+    font-size: 0.68rem;
+}
+
+.plan-semester-view {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 26px;
+    padding: 0 8px;
+    font-weight: 600;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink-3);
+    font-size: 0.74rem;
+}
+
+.plan-semester-view:hover {
+    border-color: var(--accent);
+    color: var(--accent-ink);
+}
+
+/* Plan <-> schedule links */
+.view-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 11px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--accent-ink);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.view-link:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+/* Briefly marks the semester or course the user just jumped to. */
+.plan-semester.flash,
+.plan-course-card.flash {
+    animation: focus-flash 1.8s ease-out;
+}
+
+@keyframes focus-flash {
+    0%, 35% {
+        background: var(--accent-soft);
+        box-shadow: 0 0 0 2px var(--accent);
+    }
+    100% {
+        box-shadow: 0 0 0 2px transparent;
+    }
+}
+
+.plan-semester-cards {
+    display: grid;
+    gap: 2px;
+    padding: 0 6px 8px;
+}
+
+.plan-semester-drop-hint {
+    padding: 10px;
+    color: var(--ink-3);
+    font-size: 0.74rem;
+    text-align: center;
+}
+
+.semester-courses-panel .plan-semester-cards {
+    padding: 8px 0 4px;
+}
+
+/* Course card (used on the plan board and in the extra pane) */
+
+.plan-course-card {
+    --plan-color: var(--kind-extra);
+
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 9px;
+    padding: 7px 6px 7px 10px;
+    border-left: 3px solid var(--kind-mandatory);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    transition: background-color 120ms ease, opacity 120ms ease;
+}
+
+.plan-course-card.kind-optional {
+    border-left-color: var(--kind-optional);
+}
+
+.plan-course-card.kind-extra {
+    border-left-color: var(--plan-color);
+}
+
+.plan-course-card:hover {
+    background: var(--surface-muted);
+}
+
+.plan-course-card.draggable {
+    cursor: grab;
+}
+
+.plan-course-card.dragging {
+    opacity: 0.35;
+}
+
+.plan-course-card.disabled .plan-course-body {
+    opacity: 0.55;
+}
+
+.plan-course-card.disabled .plan-course-name {
+    text-decoration: line-through;
+    text-decoration-color: var(--ink-3);
+}
+
+.plan-course-toggle {
+    margin: 2px 0 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.plan-course-body {
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+}
+
+.plan-course-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.plan-course-abbreviation {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-align: left;
+}
+
+.plan-course-abbreviation:not(:disabled):hover {
+    color: var(--accent-ink);
+    text-decoration: underline;
+}
+
+.plan-course-abbreviation:disabled {
+    cursor: inherit;
+}
+
+.plan-course-credits {
+    color: var(--ink-3);
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.plan-course-name {
+    font-size: 0.8rem;
+    line-height: 1.25;
+}
+
+/* Merged section variants: the name line becomes a dropdown of sections. */
+.plan-course-variant {
+    width: 100%;
+    min-width: 0;
+    padding: 1px 2px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.8rem;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.plan-course-variant:hover,
+.plan-course-variant:focus {
+    border-color: var(--accent);
+    border-style: solid;
+    outline: none;
+}
+
+.plan-course-warning {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+    padding: 3px 7px;
+    border-radius: var(--radius-sm);
+    background: var(--warning-soft);
+    color: var(--warning);
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.plan-course-actions {
+    display: grid;
+    justify-items: end;
+    gap: 4px;
+}
+
+.plan-course-semester {
+    padding: 2px 4px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink-2);
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.plan-course-remove {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--ink-3);
+    font-size: 0.74rem;
+}
+
+.plan-course-remove:hover {
+    border-color: var(--danger-soft);
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+/* Bachelor / master switch at the top of the plan board */
+
+.cycle-switch {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface-muted);
+}
+
+.cycle-switch-option {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 7px 14px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--ink-3);
+    font-size: 0.86rem;
+    font-weight: 700;
+    transition: background-color 120ms ease, color 120ms ease;
+}
+
+.cycle-switch-option:hover {
+    color: var(--ink);
+}
+
+.cycle-switch-option.active {
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: 0 0 0 1px var(--line-strong);
+}
+
+.cycle-switch-meta {
+    color: var(--ink-3);
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.cycle-switch-option.active .cycle-switch-meta {
+    color: var(--accent-ink);
+}
+
+.panel-hint {
+    margin: 8px 0 4px;
+    color: var(--ink-3);
+    font-size: 0.72rem;
+    line-height: 1.4;
+}
+
+/* Optional courses: semester sections, then group sub-headings */
+
+.optional-semester .optional-group-title {
+    color: var(--ink);
+    font-size: 0.82rem;
+}
+
+.optional-subgroup {
+    display: grid;
+    gap: 2px;
+    padding: 0 0 8px;
+}
+
+.optional-subgroup-title {
+    overflow: hidden;
+    padding: 4px 2px 2px;
+    color: var(--ink-3);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.optional-course-card.draggable {
+    cursor: grab;
+}
+
+.optional-course-card.dragging {
+    opacity: 0.35;
+}
+
+/* Loaded plans: boxes holding courses until they are dragged into a semester */
+
+.plan-box {
+    border-radius: var(--radius-sm);
+    transition: background-color 120ms ease, box-shadow 120ms ease;
+}
+
+.plan-box-drop-hint {
+    display: none;
+    margin: 4px 0 6px;
+    padding: 10px;
+    border: 1px dashed var(--accent);
+    border-radius: var(--radius-sm);
+    color: var(--accent-ink);
+    font-size: 0.74rem;
+    text-align: center;
+}
+
+body.course-dragging .plan-box.drop-valid .plan-box-drop-hint {
+    display: block;
+}
+
+.plan-box.drag-over {
+    background: var(--accent-soft);
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+.plan-course-card.unplaced {
+    border-left-style: dashed;
+    background: var(--surface-muted);
+}
+
+.plan-course-grip {
+    display: inline-grid;
+    place-items: center;
+    width: 13px;
+    margin-top: 2px;
+    color: var(--ink-3);
+    font-size: 0.78rem;
+}
+
+.course-tag.placed {
+    background: var(--accent-soft);
+    border-color: transparent;
+    color: var(--accent-ink);
+}
+
+.course-tag.placed.waiting {
+    background: var(--warning-soft);
+    color: var(--warning);
+}
+
+/* Compact cards on the plan board: one-line name, group shown in the tooltip. */
+.plan-course-card.compact {
+    gap: 8px;
+    padding: 6px 4px 6px 8px;
+}
+
+.plan-course-card.compact .plan-course-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.plan-course-card.compact .course-tag.group {
+    display: none;
+}
+
+.plan-course-card.compact .plan-course-actions {
+    grid-auto-flow: column;
+    align-items: center;
+}
+
+/* Course tags: kind, group, weekly lecture mix */
+
+.course-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px 4px;
+    min-width: 0;
+}
+
+.course-tag {
+    max-width: 100%;
+    overflow: hidden;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--surface-muted);
+    border: 1px solid var(--line);
+    color: var(--ink-2);
+    font-size: 0.66rem;
+    font-weight: 600;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.course-tag.group {
+    max-width: 160px;
+    font-weight: 500;
+}
+
+.course-tag.mix {
+    border-style: dashed;
+    font-weight: 500;
+}
+
+.course-tag.kind-mandatory {
+    background: #eef0fd;
+    border-color: transparent;
+    color: #4450a8;
+}
+
+.course-tag.kind-optional {
+    background: var(--accent-soft);
+    border-color: transparent;
+    color: var(--accent-ink);
+}
+
+.course-tag.kind-extra {
+    background: #eef0f3;
+    border-color: transparent;
+    color: var(--ink-2);
+}
+
+.course-tag.moved {
+    background: var(--warning-soft);
+    border-color: transparent;
+    color: var(--warning);
+}
+
+.course-tag.origin {
+    border-color: var(--plan-color, var(--line));
+}
+
+.optional-course-content .course-tags {
+    margin-top: 2px;
+}
+
+.extra-curriculum-group-count {
+    flex: none;
+    color: var(--ink-3);
+    font-size: 0.7rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   Hover card and course modal
+   ========================================================================== */
 
 .lecture-course-overlay {
     --overlay-left: 12px;
@@ -1077,15 +1921,15 @@ summary.curriculum-panel-title::after {
     position: fixed;
     left: var(--overlay-left);
     top: var(--overlay-top);
-    width: min(300px, calc(100vw - 24px));
     display: grid;
     gap: 6px;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid #cbd5e1;
-    background: #ffffff;
-    box-shadow: 0 16px 35px rgba(15, 23, 42, 0.22);
-    color: #111827;
+    width: min(300px, calc(100vw - 24px));
+    padding: 12px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    box-shadow: var(--shadow-pop);
+    color: var(--ink);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -1103,18 +1947,19 @@ summary.curriculum-panel-title::after {
 }
 
 .lecture-course-overlay-title {
-    font-size: 0.82rem;
+    font-size: 0.84rem;
     font-weight: 700;
 }
 
 .lecture-course-overlay-row {
-    font-size: 0.76rem;
-    color: #1f2937;
+    color: var(--ink-2);
+    font-size: 0.78rem;
 }
 
 .lecture-course-overlay-link {
-    font-size: 0.76rem;
-    color: #1d4ed8;
+    color: var(--accent-ink);
+    font-size: 0.78rem;
+    font-weight: 600;
     text-decoration: none;
 }
 
@@ -1128,7 +1973,7 @@ summary.curriculum-panel-title::after {
     display: grid;
     place-items: center;
     padding: 24px;
-    background: rgba(15, 23, 42, 0.45);
+    background: rgba(21, 27, 38, 0.5);
     opacity: 0;
     transition: opacity 180ms ease;
     z-index: 1200;
@@ -1139,15 +1984,15 @@ summary.curriculum-panel-title::after {
 }
 
 .course-link-modal {
-    width: min(1100px, calc(100vw - 48px));
-    height: min(760px, calc(100vh - 64px));
     display: grid;
     grid-template-rows: auto 1fr;
-    border-radius: 12px;
-    border: 1px solid #cbd5e1;
-    background: #ffffff;
+    width: min(1100px, calc(100vw - 48px));
+    height: min(760px, calc(100vh - 64px));
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
     overflow: hidden;
-    box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
+    box-shadow: 0 25px 60px rgba(21, 27, 38, 0.35);
 }
 
 .course-link-modal-header {
@@ -1155,60 +2000,2713 @@ summary.curriculum-panel-title::after {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 10px 12px;
-    border-bottom: 1px solid #e2e8f0;
-    background: #f8fafc;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface-muted);
 }
 
 .course-link-modal-title {
-    margin: 0;
     font-size: 0.92rem;
-    color: #0f172a;
+    font-weight: 700;
 }
 
 .course-link-modal-close {
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #0f172a;
+    padding: 6px 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
     font-size: 0.78rem;
-    padding: 6px 10px;
-    cursor: pointer;
+    font-weight: 600;
+}
+
+.course-link-modal-close:hover {
+    background: var(--surface-muted);
 }
 
 .course-link-modal-frame {
     width: 100%;
     height: 100%;
-    border: none;
-    background: #ffffff;
+    border: 0;
+    background: var(--surface);
 }
 
-.conflict-slot-overlay {
-    margin: 2px;
-    border: 2px dashed #ef4444;
-    border-radius: 6px;
-    background-image: repeating-linear-gradient(
-            135deg,
-            rgba(239, 68, 68, 0.22) 0,
-            rgba(239, 68, 68, 0.22) 8px,
-            rgba(239, 68, 68, 0.08) 8px,
-            rgba(239, 68, 68, 0.08) 16px
-    );
+/* ==========================================================================
+   Course editor: manual corrections of outdated scraped data
+   ========================================================================== */
+
+.course-edit-button {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--ink-3);
+    font-size: 0.68rem;
+}
+
+.course-edit-button:hover {
+    border-color: var(--line-strong);
+    background: var(--surface);
+    color: var(--accent-ink);
+}
+
+/* Only show the pencil on the hovered card to keep the lists calm. */
+.plan-course-card .course-edit-button,
+.optional-course-card .course-edit-button {
+    opacity: 0;
+    transition: opacity 120ms ease;
+}
+
+.plan-course-card:hover .course-edit-button,
+.plan-course-card:focus-within .course-edit-button,
+.optional-course-card:hover .course-edit-button,
+.optional-course-card:focus-within .course-edit-button {
+    opacity: 1;
+}
+
+@media (hover: none) {
+    .plan-course-card .course-edit-button,
+    .optional-course-card .course-edit-button {
+        opacity: 1;
+    }
+}
+
+.optional-course-card {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.course-edit-button.labelled {
+    width: auto;
+    padding: 2px 8px;
+    gap: 4px;
+    grid-auto-flow: column;
+    border-color: var(--line-strong);
+    color: var(--accent-ink);
+    font-size: 0.74rem;
+    font-weight: 600;
+}
+
+.lecture-course-overlay-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.course-tag.choice {
+    background: #f3ebfb;
+    border-color: transparent;
+    color: #6b3fa0;
+}
+
+.course-tag.outdated {
+    border-style: dashed;
+    color: var(--ink-3);
+    font-weight: 500;
+}
+
+.course-tag.edited {
+    background: #e6f4ea;
+    border-color: transparent;
+    color: #1e6b3a;
+}
+
+.course-edit-modal {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    width: min(760px, calc(100vw - 32px));
+    max-height: calc(100vh - 48px);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(21, 27, 38, 0.35);
+}
+
+.course-edit-status {
+    margin: 2px 0 0;
+    color: var(--ink-3);
+    font-size: 0.74rem;
+}
+
+.course-edit-scope {
+    margin: 6px 0 0;
+    color: var(--ink-2);
+    font-size: 0.74rem;
+    line-height: 1.4;
+}
+
+.course-edit-body {
+    display: grid;
+    gap: 18px;
+    padding: 16px 18px;
+    overflow: auto;
+}
+
+.course-edit-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 14px;
+}
+
+.course-edit-field {
+    display: grid;
+    gap: 4px;
+    color: var(--ink-2);
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+.course-edit-field.wide,
+.course-edit-check.wide {
+    grid-column: 1 / -1;
+}
+
+.course-edit-modal input[type="text"],
+.course-edit-modal input[type="number"],
+.course-edit-modal select {
+    min-width: 0;
+    padding: 7px 9px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 400;
+}
+
+.course-edit-modal input:focus,
+.course-edit-modal select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    outline: none;
+}
+
+.course-edit-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    color: var(--ink-2);
+    font-size: 0.78rem;
+}
+
+.course-edit-check input {
+    margin-top: 2px;
+    accent-color: var(--accent);
+}
+
+.course-edit-slots {
+    display: grid;
+    gap: 8px;
+}
+
+.course-edit-slots-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.course-edit-slots-header h4 {
+    margin: 0;
+    font-size: 0.84rem;
+}
+
+.course-edit-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--accent-ink);
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+.course-edit-add:hover {
+    border-color: var(--accent);
+}
+
+.course-edit-slot-rows {
+    display: grid;
+    gap: 6px;
+}
+
+.course-edit-slot {
+    display: grid;
+    grid-template-columns: 100px 110px 78px auto 78px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px;
+}
+
+.course-edit-dash {
+    color: var(--ink-3);
+}
+
+.course-edit-empty {
+    margin: 0;
+    padding: 12px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-sm);
+    color: var(--ink-3);
+    font-size: 0.78rem;
+    text-align: center;
+}
+
+.course-edit-source {
+    justify-self: start;
+    color: var(--accent-ink);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.course-edit-source:hover {
+    text-decoration: underline;
+}
+
+.course-edit-error {
+    margin: 0;
+    color: var(--danger);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.course-edit-error:empty {
+    display: none;
+}
+
+.course-edit-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 12px 18px;
+    border-top: 1px solid var(--line);
+    background: var(--surface-muted);
+}
+
+.course-edit-reset {
+    margin-right: auto;
+    padding: 6px 12px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--danger);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.course-edit-reset:hover {
+    border-color: var(--danger-soft);
+    background: var(--danger-soft);
+}
+
+.course-edit-save {
+    padding: 6px 14px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.course-edit-save:hover {
+    background: var(--accent-ink);
+}
+
+@media (max-width: 640px) {
+    .course-edit-fields {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .course-edit-slot {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .course-edit-dash {
+        display: none;
+    }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 1280px) {
+    .workspace {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .workspace-side {
+        position: static;
+    }
+
+    .side-panel {
+        max-height: 440px;
+    }
+}
+
+@media (max-width: 960px) {
+    .app-shell {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .app-sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: min(268px, 86vw);
+        height: auto;
+        transform: translateX(-100%);
+        transition: transform 160ms ease;
+        z-index: 1000;
+        overflow: auto;
+    }
+
+    .app-shell.sidebar-open .app-sidebar {
+        transform: translateX(0);
+    }
+
+    .sidebar-toggle {
+        display: inline-flex;
+    }
+
+    .app-content {
+        padding: 18px 16px 32px;
+    }
+
+    .timetable-heading {
+        flex-basis: calc(100% - 110px);
+    }
+
+    .main-study-picker {
+        flex: 1 1 100%;
+    }
+
+    .main-study-dropdown {
+        flex: 1;
+    }
+
+    .legend-note {
+        margin-left: 0;
+        flex-basis: 100%;
+    }
+}
+
+@media (max-width: 900px) {
+    .timetable {
+        --time-column-width: 76px;
+        --day-column-min-width: 120px;
+        --header-row-height: 44px;
+        --period-row-height: 64px;
+    }
+}
+
+@media (max-width: 720px) {
+    .summary-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .summary-item:nth-child(3) {
+        border-left: 0;
+    }
+
+    .summary-item:nth-child(n + 3) {
+        border-top: 1px solid var(--line);
+    }
+}
+
+@media (max-width: 640px) {
+    .app-content {
+        padding: 14px 10px 28px;
+    }
+
+    .timetable-widget {
+        gap: 14px;
+    }
+
+    .subtitle {
+        margin-left: 0;
+    }
+
+    .timetable {
+        --time-column-width: 64px;
+        --day-column-min-width: 108px;
+        --header-row-height: 42px;
+        --period-row-height: 58px;
+    }
+
+    .schedule-card-header {
+        padding: 12px;
+    }
+
+    .semester-tabs {
+        flex-wrap: nowrap;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .main-study-picker {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 2px;
+        padding: 8px 10px;
+    }
+
+    .summary-item {
+        padding: 12px 14px;
+    }
+
+    .summary-value {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 720px) {
+    .plan-grid {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 4px 10px 14px;
+    }
+
+    .plan-season-head {
+        display: none;
+    }
+
+    .plan-semester + .plan-semester {
+        margin-top: 8px;
+    }
+}
+
+/* ==========================================================================
+   Sidebar: "Your studies" settings
+   ========================================================================== */
+
+.sidebar-settings {
+    display: grid;
+    gap: 12px;
+    padding: 14px 12px;
+    border: 1px solid var(--side-line);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.sidebar-settings-title {
+    margin: 0;
+    color: var(--side-ink);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.sidebar-field {
+    display: grid;
+    gap: 5px;
+    color: var(--side-ink);
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+.sidebar-field-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.sidebar-year-value {
+    color: var(--side-ink-strong);
+    font-variant-numeric: tabular-nums;
+}
+
+.sidebar-select {
+    width: 100%;
+    min-width: 0;
+    padding: 7px 9px;
+    border: 1px solid var(--side-line);
+    border-radius: var(--radius-sm);
+    background: var(--side-active);
+    color: var(--side-ink-strong);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.sidebar-select:focus,
+.sidebar-slider:focus-visible {
+    outline: 2px solid #7f8cf5;
+    outline-offset: 1px;
+}
+
+.sidebar-slider {
+    width: 100%;
+    margin: 4px 0 0;
+    accent-color: #7f8cf5;
+}
+
+.sidebar-slider-ticks {
+    display: flex;
+    justify-content: space-between;
+    color: #6f7a8f;
+    font-size: 0.66rem;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   Planner: study plan / weekly schedule switch
+   ========================================================================== */
+
+.view-switch {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+}
+
+.view-switch button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 13px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--ink-3);
+    font-size: 0.84rem;
+    font-weight: 700;
+    transition: background-color 120ms ease, color 120ms ease;
+}
+
+.view-switch button:hover {
+    color: var(--ink);
+}
+
+.view-switch button.active {
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+}
+
+/* ==========================================================================
+   My studies dashboard
+   ========================================================================== */
+
+.workspace.workspace-single {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.studies-dashboard {
+    display: grid;
+    gap: 20px;
+}
+
+.studies-hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 24px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, #3d4fd6, #2b39a8);
+    color: #ffffff;
+}
+
+.studies-hero-eyebrow {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.studies-hero-title {
+    margin: 4px 0 2px;
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+}
+
+.studies-hero-detail {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.92rem;
+}
+
+.studies-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.studies-hero .view-link {
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+.studies-hero .view-link:hover {
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.studies-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+
+.studies-column {
+    display: grid;
+    gap: 20px;
+}
+
+.studies-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+}
+
+.studies-card-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.studies-card-title i {
+    color: var(--accent);
+}
+
+.studies-card-body {
+    display: grid;
+    gap: 10px;
+    padding: 12px 18px 16px;
+}
+
+.studies-note {
+    margin: 0;
+    color: var(--ink-3);
+    font-size: 0.74rem;
+    line-height: 1.4;
+}
+
+/* Today */
+.studies-agenda {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.studies-agenda-item {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 2px 12px;
+    padding: 9px 12px;
+    border-left: 4px solid var(--kind-mandatory);
+    border-radius: var(--radius-sm);
+    background: var(--type-course);
+}
+
+.studies-agenda-item.exercise {
+    background: var(--type-exercise);
+}
+
+.studies-agenda-item.lab {
+    background: var(--type-lab);
+}
+
+.studies-agenda-time {
+    grid-row: span 2;
+    color: var(--ink-2);
+    font-size: 0.82rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.studies-agenda-what {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 8px;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font-size: 0.86rem;
+    text-align: left;
+}
+
+.studies-agenda-what:hover strong {
+    color: var(--accent-ink);
+    text-decoration: underline;
+}
+
+.studies-agenda-where {
+    color: var(--ink-3);
+    font-size: 0.76rem;
+}
+
+/* Courses */
+.studies-course-list {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.studies-course {
+    display: grid;
+    gap: 3px;
+    padding: 8px 10px;
+    border-left: 3px solid var(--kind-mandatory);
+    border-radius: var(--radius-sm);
+}
+
+.studies-course.kind-optional {
+    border-left-color: var(--kind-optional);
+}
+
+.studies-course.kind-extra {
+    border-left-color: var(--kind-extra);
+}
+
+.studies-course:hover {
+    background: var(--surface-muted);
+}
+
+.studies-course-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.studies-course-meta {
+    color: var(--ink-3);
+    font-size: 0.74rem;
+}
+
+/* Progress */
+.studies-progress {
+    display: grid;
+    gap: 6px;
+}
+
+.studies-progress-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.84rem;
+}
+
+.studies-progress-label span {
+    color: var(--ink-2);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.studies-progress-bar {
+    display: flex;
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--surface-muted);
+    box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.studies-progress-segment.done {
+    background: var(--accent);
+}
+
+.studies-progress-segment.now {
+    background: #8c97ef;
+}
+
+.studies-progress-segment.later {
+    background: repeating-linear-gradient(135deg, #cfd4f7 0 4px, #e3e6fb 4px 8px);
+}
+
+.studies-progress-legend {
+    color: var(--ink-3);
+    font-size: 0.72rem;
+}
+
+/* Heads-up */
+.studies-headsup {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.studies-headsup li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 10px;
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    background: var(--warning-soft);
+    color: var(--warning);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.studies-headsup-action {
+    padding: 4px 10px;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: inherit;
+    font-size: 0.74rem;
+    font-weight: 700;
+}
+
+.studies-all-clear {
+    margin: 0;
+    color: #1e6b3a;
+    font-size: 0.84rem;
+    font-weight: 600;
+}
+
+@media (max-width: 960px) {
+    .studies-columns {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 720px) {
+    .studies-hero {
+        padding: 18px;
+    }
+
+    .studies-hero-title {
+        font-size: 2rem;
+    }
+
+    .studies-agenda-item {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .studies-agenda-time {
+        grid-row: auto;
+    }
+
+    .view-switch {
+        display: flex;
+        width: 100%;
+    }
+
+    .view-switch button {
+        flex: 1;
+        justify-content: center;
+        padding: 8px 6px;
+    }
+}
+
+/* ==========================================================================
+   Agenda: series, labs, exams and notes week by week
+   ========================================================================== */
+
+.agenda-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+}
+
+.workspace-side .agenda-card + .agenda-card {
+    margin-top: 20px;
+}
+
+.agenda-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+}
+
+.agenda-nav {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink-2);
+}
+
+.agenda-nav:hover {
+    border-color: var(--accent);
+    color: var(--accent-ink);
+}
+
+.agenda-plan-semester {
+    margin-left: auto;
+    color: var(--ink-3);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.agenda-weeks {
+    display: grid;
+    gap: 6px;
+    padding: 10px;
+}
+
+.agenda-week {
+    --week-accent: var(--line-strong);
+
+    padding: 10px 12px 12px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    transition: background-color 120ms ease;
+}
+
+.agenda-week.current {
+    --week-accent: var(--accent);
+
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+    background: linear-gradient(180deg, var(--accent-soft), color-mix(in srgb, var(--accent-soft) 30%, var(--surface)) 70%);
+    box-shadow: 0 6px 18px rgba(61, 79, 214, 0.1);
+}
+
+.agenda-week-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.agenda-week:has(.agenda-items, .agenda-week-off, .agenda-week-empty) .agenda-week-header {
+    margin-bottom: 10px;
+}
+
+.agenda-week-badge {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    align-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: var(--surface-muted);
+    box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+
+.agenda-week-badge small {
+    margin-bottom: 2px;
+    color: var(--ink-3);
+    font-size: 0.52rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.agenda-week-badge i {
+    color: var(--ink-3);
+    font-size: 0.9rem;
+}
+
+.agenda-week.current .agenda-week-badge {
+    background: var(--accent);
+    box-shadow: 0 4px 10px rgba(61, 79, 214, 0.3);
+    color: #ffffff;
+}
+
+.agenda-week.current .agenda-week-badge small {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.agenda-week-heading {
+    display: grid;
+    flex: 1;
+    gap: 1px;
+    min-width: 0;
+}
+
+.agenda-week-heading strong {
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.agenda-week-range {
+    overflow: hidden;
+    color: var(--ink-3);
+    font-size: 0.74rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.agenda-week-now {
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.agenda-week-count {
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--surface-muted);
+    box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--ink-2);
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.agenda-week-count.clear {
+    background: #e6f4ea;
+    box-shadow: none;
+    color: #1e6b3a;
+}
+
+/* Past weeks fade back; break weeks are a quiet line. */
+.agenda-week.past:not(:hover) .agenda-week-heading,
+.agenda-week.past:not(:hover) .agenda-week-badge {
+    opacity: 0.7;
+}
+
+.agenda-week.break {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.agenda-week.break .agenda-week-badge {
+    width: 32px;
+    height: 32px;
+    margin: 0 4px;
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.agenda-week.break .agenda-week-heading strong {
+    color: var(--ink-3);
+    font-weight: 600;
+}
+
+.agenda-week-off {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0 0 8px 52px;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    background: var(--warning-soft);
+    color: var(--warning);
+    font-size: 0.74rem;
+    font-weight: 600;
+}
+
+.agenda-week-empty {
+    margin: 0 0 0 52px;
+    color: var(--ink-3);
+    font-size: 0.76rem;
+}
+
+.agenda-week > .agenda-items {
+    margin-left: 52px;
+}
+
+/* Items: one list per week, rows separated by hairlines */
+.agenda-items {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    list-style: none;
+}
+
+.agenda-item {
+    --course-color: #98a1b3;
+    --course-soft: color-mix(in srgb, var(--course-color) 12%, var(--surface));
+
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 10px 9px 12px;
+    transition: background-color 120ms ease;
+}
+
+.agenda-item + .agenda-item {
+    border-top: 1px solid var(--line);
+}
+
+.agenda-item:hover {
+    background: var(--surface-muted);
+}
+
+/* Course color as a thin bar on the left edge */
+.agenda-item::before {
+    content: "";
+    position: absolute;
+    top: 9px;
+    bottom: 9px;
+    left: 0;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--course-color);
+}
+
+.agenda-check {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 2px solid var(--line-strong);
+    border-radius: 50%;
+    background: var(--surface);
+    color: transparent;
+    font-size: 0.7rem;
+    transition: border-color 120ms ease, background-color 120ms ease, transform 120ms ease;
+}
+
+.agenda-check:hover {
+    border-color: var(--course-color);
+    color: var(--course-color);
+}
+
+.agenda-check:active {
+    transform: scale(0.9);
+}
+
+.agenda-check.done {
+    border-color: #2f9e5b;
+    background: #2f9e5b;
+    color: #ffffff;
+}
+
+.agenda-check.corrected {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 0.62rem;
+}
+
+.agenda-item.overdue .agenda-check {
+    border-color: var(--danger);
+}
+
+.agenda-type-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    background: var(--course-soft);
+    color: var(--course-color);
+    font-size: 0.72rem;
+}
+
+.agenda-item-body {
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+}
+
+.agenda-item-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px 8px;
+    min-width: 0;
+}
+
+.agenda-item-title {
+    min-width: 0;
+    font-size: 0.86rem;
+    font-weight: 650;
+}
+
+.agenda-course {
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: var(--course-soft);
+    color: var(--course-color);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+}
+
+.agenda-item-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 3px 10px;
+    color: var(--ink-3);
+    font-size: 0.74rem;
+}
+
+.agenda-item-meta i {
+    margin-right: 2px;
+    font-size: 0.7rem;
+}
+
+.agenda-due {
+    padding: 0 7px;
+    border-radius: 999px;
+    background: var(--surface-muted);
+    box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--ink-2);
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.agenda-due.soon {
+    background: var(--warning-soft);
+    box-shadow: none;
+    color: var(--warning);
+}
+
+.agenda-due.overdue {
+    background: var(--danger-soft);
+    box-shadow: none;
+    color: var(--danger);
+}
+
+.agenda-status-label {
+    font-weight: 700;
+}
+
+.agenda-status-label.done {
+    color: #2f9e5b;
+}
+
+.agenda-status-label.corrected {
+    color: var(--accent-ink);
+}
+
+.agenda-item-details {
+    overflow: hidden;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.agenda-item-details::before {
+    content: "\2014";
+    margin-right: 6px;
+    color: var(--line-strong);
+}
+
+.agenda-type {
+    color: var(--ink-3);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.agenda-item.finished .agenda-item-title {
+    color: var(--ink-3);
+    text-decoration: line-through;
+    text-decoration-color: var(--line-strong);
+}
+
+.agenda-item.finished .agenda-course,
+.agenda-item.finished .agenda-type {
+    opacity: 0.6;
+}
+
+/* Exams stand out; notes read as a banner across the week */
+.agenda-item.type-midterm,
+.agenda-item.type-final {
+    background: linear-gradient(90deg, #f4efff, var(--surface) 60%);
+}
+
+.agenda-item.type-midterm .agenda-type-icon,
+.agenda-item.type-final .agenda-type-icon {
+    background: #7c3aed;
+    color: #ffffff;
+}
+
+.agenda-item.type-midterm .agenda-type,
+.agenda-item.type-final .agenda-type {
+    color: #7c3aed;
+}
+
+.agenda-item.type-note {
+    background: var(--warning-soft);
+}
+
+.agenda-item.type-note .agenda-type-icon {
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--warning);
+}
+
+.agenda-item.type-note .agenda-item-title {
+    font-weight: 600;
+}
+
+.agenda-item-actions {
+    display: flex;
+    gap: 2px;
+}
+
+.agenda-item .agenda-item-actions {
+    opacity: 0;
+    transition: opacity 120ms ease;
+}
+
+.agenda-item:hover .agenda-item-actions,
+.agenda-item:focus-within .agenda-item-actions {
+    opacity: 1;
+}
+
+@media (hover: none) {
+    .agenda-item .agenda-item-actions {
+        opacity: 1;
+    }
+}
+
+/* Compact list on My studies: status can be ticked there, editing happens in the Agenda. */
+.agenda-items.compact {
+    margin: 0;
+}
+
+.agenda-items.compact .agenda-item-actions,
+.agenda-items.compact .agenda-type {
+    display: none;
+}
+
+.agenda-items.compact .agenda-item {
+    grid-template-columns: auto minmax(0, 1fr);
+}
+
+/* Form */
+.agenda-form {
+    display: grid;
+    gap: 12px;
+    padding: 14px 18px 16px;
+}
+
+.agenda-type-picker {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 3px;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface-muted);
+}
+
+.agenda-type-picker button {
+    padding: 6px 2px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--ink-3);
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+.agenda-type-picker button.active {
+    background: var(--surface);
+    color: var(--accent-ink);
+    box-shadow: 0 0 0 1px var(--line-strong);
+}
+
+.agenda-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.agenda-field {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    color: var(--ink-2);
+    font-size: 0.74rem;
+    font-weight: 600;
+}
+
+.agenda-field.wide {
+    grid-column: 1 / -1;
+}
+
+.agenda-field[hidden] {
+    display: none;
+}
+
+.agenda-field input,
+.agenda-field select {
+    min-width: 0;
+    padding: 7px 9px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 400;
+}
+
+.agenda-field input:focus,
+.agenda-field select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    outline: none;
+}
+
+.agenda-form-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.agenda-link {
+    justify-self: start;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--accent-ink);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.agenda-link:hover {
+    text-decoration: underline;
+}
+
+.workspace-main > .agenda-card + .agenda-card {
+    margin-top: 14px;
+}
+
+@media (max-width: 720px) {
+    .agenda-weeks {
+        padding: 6px;
+    }
+
+    .agenda-week {
+        padding: 10px 8px;
+    }
+
+    .agenda-week > .agenda-items,
+    .agenda-week-off,
+    .agenda-week-empty {
+        margin-left: 0;
+    }
+
+    .agenda-item {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 10px;
+    }
+
+    .agenda-item .agenda-type {
+        display: none;
+    }
+}
+
+/* Weeks / Courses switch in the agenda header */
+.agenda-card-header {
+    flex-wrap: wrap;
+}
+
+.agenda-view-switch {
+    margin-left: 4px;
+}
+
+.agenda-view-switch button {
+    flex: 1;
+    justify-content: center;
+    padding: 5px 11px;
+    font-size: 0.78rem;
+}
+
+/* Sidebar: the semester's courses */
+.agenda-course-list {
+    display: grid;
+    margin: 0;
+    padding: 6px 8px;
+    list-style: none;
+}
+
+.agenda-course-row {
+    --course-color: #98a1b3;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 6px;
+    border-radius: var(--radius-sm);
+}
+
+.agenda-course-row:hover {
+    background: var(--surface-muted);
+}
+
+.agenda-course-row-main {
+    position: relative;
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+    padding: 7px 8px 7px 24px;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    text-align: left;
+}
+
+.agenda-course-row-main::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 8px;
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+    background: var(--course-color);
+}
+
+.agenda-course-row-name {
+    overflow: hidden;
+    font-size: 0.8rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.agenda-course-row-name strong {
+    color: var(--course-color);
+}
+
+.agenda-course-row-summary {
+    color: var(--ink-3);
+    font-size: 0.72rem;
+}
+
+.agenda-course-row-count {
+    color: var(--ink-3);
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+}
+
+.agenda-course-row .agenda-course-row-add {
+    margin-right: 4px;
+    color: var(--accent-ink);
+}
+
+.agenda-share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 16px 14px;
+    border-top: 1px solid var(--line);
+}
+
+.agenda-share-actions .course-edit-button.labelled {
+    height: 30px;
+    font-size: 0.76rem;
+}
+
+.agenda-share-actions .course-edit-button:disabled {
+    opacity: 0.5;
     pointer-events: none;
-    z-index: 10;
 }
 
-.lecture.course {
-    background: #dbeafe;
+/* Calendar: one row per week, Monday to Sunday (weekends narrower) */
+.agenda-calendar-wrap {
+    display: grid;
+    gap: 14px;
+    padding: 14px 16px 16px;
 }
 
-.lecture.exercise {
-    background: #dcfce7;
+.agenda-calendar {
+    overflow: clip;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
 }
 
-.lecture.lab {
-    background: #fee2e2;
+.agenda-cal-row {
+    display: grid;
+    grid-template-columns: 46px repeat(5, minmax(0, 1fr)) repeat(2, minmax(0, 0.72fr));
 }
 
-/* Plan colors are now assigned dynamically via --plan-color based on add order. */
+.agenda-cal-head {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface-muted);
+}
 
+.agenda-cal-weekday {
+    padding: 8px 8px 7px;
+    color: var(--ink-2);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.agenda-cal-weekday.weekend {
+    color: var(--ink-3);
+}
+
+.agenda-cal-week + .agenda-cal-week {
+    border-top: 1px solid var(--line);
+}
+
+.agenda-cal-label {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 1px;
+    border-right: 1px solid var(--line);
+    background: var(--surface-muted);
+    color: var(--ink-2);
+    line-height: 1;
+}
+
+.agenda-cal-label small {
+    color: var(--ink-3);
+    font-size: 0.52rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.agenda-cal-label strong {
+    font-size: 0.98rem;
+    font-weight: 800;
+}
+
+.agenda-cal-label i {
+    color: var(--ink-3);
+    font-size: 0.8rem;
+}
+
+.agenda-cal-week.current .agenda-cal-label {
+    background: var(--accent);
+    color: #ffffff;
+}
+
+.agenda-cal-week.current .agenda-cal-label small {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.agenda-cal-week.exams .agenda-cal-label {
+    background: #f4efff;
+}
+
+.agenda-cal-week.exams .agenda-cal-label i {
+    color: #7c3aed;
+}
+
+.agenda-cal-day {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    min-height: 92px;
+    padding: 5px;
+    cursor: pointer;
+    transition: background-color 120ms ease;
+}
+
+.agenda-cal-day + .agenda-cal-day {
+    border-left: 1px solid var(--line);
+}
+
+.agenda-cal-day:hover {
+    background: var(--surface-muted);
+}
+
+.agenda-cal-day.weekend {
+    background: #fbfbfd;
+}
+
+.agenda-cal-day.weekend:hover {
+    background: var(--surface-muted);
+}
+
+/* Break weeks and bank holidays: hatched */
+.agenda-cal-day.off {
+    background: repeating-linear-gradient(135deg, var(--surface-muted) 0 6px, var(--surface) 6px 12px);
+}
+
+.agenda-cal-day.exam-day {
+    background: #faf7ff;
+}
+
+.agenda-cal-week.past .agenda-cal-day:not(:hover) .agenda-cal-date {
+    opacity: 0.55;
+}
+
+.agenda-cal-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    padding: 1px 2px 2px;
+}
+
+.agenda-cal-number {
+    flex: none;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 5px;
+    border-radius: 999px;
+    color: var(--ink-2);
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 22px;
+    text-align: center;
+}
+
+.agenda-cal-day.today .agenda-cal-number {
+    background: var(--accent);
+    color: #ffffff;
+}
+
+.agenda-cal-off {
+    overflow: hidden;
+    color: var(--warning);
+    font-size: 0.64rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Chips */
+.agenda-chip {
+    --course-color: #98a1b3;
+    --course-soft: color-mix(in srgb, var(--course-color) 13%, var(--surface));
+
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    min-width: 0;
+    padding: 4px 6px 4px 5px;
+    border-radius: 6px;
+    background: var(--course-soft);
+    box-shadow: inset 2px 0 0 var(--course-color);
+    color: var(--ink);
+    font-size: 0.7rem;
+    line-height: 1.25;
+    cursor: pointer;
+    transition: transform 100ms ease, box-shadow 100ms ease;
+}
+
+.agenda-chip:hover,
+.agenda-chip:focus-visible {
+    box-shadow: inset 2px 0 0 var(--course-color), 0 2px 6px rgba(21, 27, 38, 0.12);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+.agenda-chip-check {
+    display: inline-grid;
+    flex: none;
+    margin-top: 1px;
+    place-items: center;
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    border: 1.5px solid var(--course-color);
+    border-radius: 50%;
+    background: var(--surface);
+    color: transparent;
+    font-size: 0.5rem;
+}
+
+.agenda-chip-check:hover {
+    color: var(--course-color);
+}
+
+.agenda-chip-check.done {
+    border-color: #2f9e5b;
+    background: #2f9e5b;
+    color: #ffffff;
+}
+
+.agenda-chip-check.corrected {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 0.42rem;
+}
+
+.agenda-chip-icon {
+    flex: none;
+    margin-top: 2px;
+    width: 14px;
+    color: var(--course-color);
+    font-size: 0.66rem;
+    text-align: center;
+}
+
+.agenda-chip-text {
+    display: grid;
+    flex: 1;
+    min-width: 0;
+}
+
+.agenda-chip-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px;
+    min-width: 0;
+}
+
+.agenda-chip-line b,
+.agenda-chip-title {
+    overflow: hidden;
+    min-width: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.agenda-chip-text b {
+    color: var(--course-color);
+    font-weight: 800;
+}
+
+.agenda-chip-time {
+    flex: none;
+    color: var(--ink-3);
+    font-size: 0.62rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.agenda-chip.finished {
+    opacity: 0.55;
+}
+
+.agenda-chip.finished .agenda-chip-title {
+    text-decoration: line-through;
+}
+
+.agenda-chip.overdue {
+    background: var(--danger-soft);
+    box-shadow: inset 2px 0 0 var(--danger);
+}
+
+.agenda-chip.overdue .agenda-chip-check {
+    border-color: var(--danger);
+}
+
+.agenda-chip.type-midterm,
+.agenda-chip.type-final {
+    background: #7c3aed;
+    box-shadow: none;
+    color: #ffffff;
+}
+
+.agenda-chip.type-midterm .agenda-chip-icon,
+.agenda-chip.type-final .agenda-chip-icon,
+.agenda-chip.type-midterm .agenda-chip-text b,
+.agenda-chip.type-final .agenda-chip-text b,
+.agenda-chip.type-midterm .agenda-chip-time,
+.agenda-chip.type-final .agenda-chip-time {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.agenda-chip.type-note {
+    background: var(--warning-soft);
+    box-shadow: inset 2px 0 0 var(--warning);
+}
+
+.agenda-chip.type-note .agenda-chip-icon {
+    color: var(--warning);
+}
+
+/* Day panel (phones) and unscheduled items */
+.agenda-day-panel {
+    display: grid;
+    gap: 8px;
+}
+
+.agenda-day-panel > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.88rem;
+}
+
+.agenda-day-panel .agenda-week-off,
+.agenda-day-panel .agenda-week-empty {
+    margin: 0;
+}
+
+.agenda-day-panel.inline {
+    padding: 10px;
+    border-top: 1px solid var(--line);
+    background: var(--surface-muted);
+    box-shadow: inset 0 6px 8px -8px rgba(21, 27, 38, 0.25);
+}
+
+.agenda-unscheduled > header {
+    color: var(--ink-2);
+    font-size: 0.8rem;
+}
+
+@media (max-width: 720px) {
+    .agenda-calendar-wrap {
+        padding: 10px;
+    }
+
+    .agenda-cal-row {
+        grid-template-columns: 30px repeat(7, minmax(0, 1fr));
+    }
+
+    .agenda-cal-weekday {
+        padding: 6px 0;
+        text-align: center;
+    }
+
+    .agenda-cal-label strong {
+        font-size: 0.8rem;
+    }
+
+    .agenda-cal-day {
+        align-items: center;
+        gap: 2px;
+        min-height: 46px;
+        padding: 3px 0;
+    }
+
+    .agenda-cal-date {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .agenda-cal-number {
+        min-width: 24px;
+        height: 24px;
+        padding: 0;
+        line-height: 24px;
+    }
+
+    .agenda-cal-day.selected .agenda-cal-number {
+        box-shadow: inset 0 0 0 2px var(--accent);
+        color: var(--accent-ink);
+    }
+
+    .agenda-cal-day.today.selected .agenda-cal-number {
+        color: #ffffff;
+    }
+
+    .agenda-cal-dots {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2px;
+        max-width: 30px;
+    }
+
+    .agenda-cal-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--course-color);
+    }
+
+    .agenda-cal-dot.finished {
+        background: transparent;
+        box-shadow: inset 0 0 0 1.5px var(--course-color);
+        opacity: 0.6;
+    }
+
+    .agenda-cal-dot.exam {
+        border-radius: 1px;
+        background: #7c3aed;
+    }
+}
+
+/* Courses view */
+/* Masonry-like columns, so a short card doesn't leave a hole next to a long one. */
+.agenda-courses {
+    columns: 2 380px;
+    column-gap: 14px;
+    padding: 16px;
+}
+
+.agenda-courses > .agenda-course-card {
+    margin-bottom: 14px;
+    break-inside: avoid;
+}
+
+.agenda-course-card {
+    --course-color: #98a1b3;
+    --course-soft: color-mix(in srgb, var(--course-color) 12%, var(--surface));
+
+    display: grid;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: 0 1px 2px rgba(21, 27, 38, 0.04);
+    scroll-margin-top: 16px;
+    transition: box-shadow 300ms ease, border-color 300ms ease;
+}
+
+.agenda-course-card:hover {
+    box-shadow: 0 6px 18px rgba(21, 27, 38, 0.07);
+}
+
+.agenda-course-card.flash {
+    border-color: var(--course-color);
+    box-shadow: 0 0 0 4px var(--course-soft);
+}
+
+.agenda-course-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.agenda-course-tile {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--course-color);
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--course-color) 30%, transparent);
+    color: #ffffff;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.agenda-course-card-name {
+    display: grid;
+    flex: 1;
+    gap: 3px;
+    min-width: 0;
+}
+
+.agenda-course-card-name strong {
+    overflow: hidden;
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.agenda-course-card-name > span {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px 8px;
+    color: var(--ink-3);
+    font-size: 0.74rem;
+}
+
+.agenda-course-card-name .agenda-course {
+    --course-soft: color-mix(in srgb, var(--course-color) 12%, var(--surface));
+}
+
+.agenda-course-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.agenda-course-card-actions .course-edit-button.labelled {
+    height: 28px;
+    padding: 0 10px;
+    border-color: transparent;
+    background: var(--course-soft);
+    color: var(--course-color);
+    font-weight: 700;
+}
+
+.agenda-course-card-actions .course-edit-button.labelled:hover {
+    background: var(--course-color);
+    color: #ffffff;
+}
+
+.agenda-progress-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.agenda-progress {
+    flex: 1;
+    height: 6px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--course-soft);
+}
+
+.agenda-progress span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--course-color);
+    transition: width 300ms ease;
+}
+
+.agenda-progress-label {
+    color: var(--ink-3);
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.agenda-course-card > .agenda-week-empty {
+    margin: 0;
+    padding: 12px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+/* Inside a course card the course is known: no course chip, color bar or repeated type */
+.agenda-course-card .agenda-item::before {
+    display: none;
+}
+
+.agenda-course-card .agenda-group .agenda-type {
+    display: none;
+}
+
+/* A recurring group: one line, unfolds into its items */
+.agenda-group {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+}
+
+.agenda-group summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    cursor: pointer;
+    list-style: none;
+    transition: background-color 120ms ease;
+}
+
+.agenda-group summary:hover {
+    background: var(--surface-muted);
+}
+
+.agenda-group summary::-webkit-details-marker {
+    display: none;
+}
+
+.agenda-group summary::after {
+    content: "\25BE";
+    order: 10;
+    color: var(--ink-3);
+    transform: rotate(-90deg);
+    transition: transform 120ms ease;
+}
+
+.agenda-group[open] summary::after {
+    transform: none;
+}
+
+.agenda-group[open] summary {
+    border-bottom: 1px solid var(--line);
+}
+
+.agenda-group-icon {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: var(--course-soft);
+    color: var(--course-color);
+    font-size: 0.78rem;
+}
+
+.agenda-group-text {
+    display: grid;
+    flex: 1;
+    gap: 1px;
+    min-width: 0;
+    font-size: 0.84rem;
+}
+
+.agenda-group-text span {
+    color: var(--ink-3);
+    font-size: 0.73rem;
+}
+
+.agenda-group .agenda-course-row-count {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--course-soft);
+    color: var(--course-color);
+}
+
+.agenda-group-actions {
+    display: flex;
+    gap: 2px;
+}
+
+.agenda-group > .agenda-items {
+    max-height: 340px;
+    overflow-y: auto;
+    border: 0;
+    border-radius: 0;
+}
+
+/* Agenda dialogs */
+.agenda-modal {
+    width: min(560px, calc(100vw - 32px));
+}
+
+.agenda-modal .course-edit-body {
+    align-content: start;
+    gap: 12px;
+}
+
+.agenda-modal .agenda-form-grid .agenda-field:nth-child(n) {
+    grid-column: auto;
+}
+
+.agenda-modal .agenda-form-grid .agenda-field.wide {
+    grid-column: 1 / -1;
+}
+
+.agenda-footer-link {
+    color: var(--accent-ink);
+}
+
+.agenda-footer-link:hover {
+    border-color: var(--accent-soft);
+    background: var(--accent-soft);
+}
+
+.agenda-week-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+    gap: 6px;
+    margin: 0;
+    padding: 10px 12px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+}
+
+.agenda-week-picker legend {
+    padding: 0 4px;
+    color: var(--ink-2);
+    font-size: 0.74rem;
+    font-weight: 600;
+}
+
+.agenda-week-picker label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 4px 0;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.agenda-week-picker label:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+}
+
+.agenda-week-picker input {
+    margin: 0;
+}
+
+.agenda-week-picker-shortcuts {
+    display: flex;
+    grid-column: 1 / -1;
+    gap: 12px;
+}
+
+.agenda-share-text {
+    width: 100%;
+    min-height: 0;
+    padding: 8px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface-muted);
+    color: var(--ink);
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: 0.74rem;
+    resize: vertical;
+}
+
+.agenda-share-text:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    outline: none;
+}
+
+.agenda-import-file {
+    font-size: 0.8rem;
+}
+
+.agenda-import-preview {
+    display: grid;
+    gap: 10px;
+}
+
+.agenda-import-preview:empty {
+    display: none;
+}
+
+.agenda-import-note {
+    margin: 0;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-size: 0.76rem;
+}
+
+.agenda-import-list {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.agenda-import-list .course-edit-check {
+    align-items: flex-start;
+}
+
+.agenda-import-list small {
+    display: block;
+    color: var(--ink-3);
+    font-size: 0.72rem;
+    font-weight: 400;
+}
+
+@media (max-width: 720px) {
+    .agenda-view-switch {
+        flex-basis: 100%;
+        margin-left: 0;
+    }
+
+    .agenda-courses {
+        padding: 10px;
+    }
+
+    .agenda-course-card {
+        padding: 10px;
+    }
+
+    .agenda-course-card-header {
+        flex-wrap: wrap;
+    }
+}
+
+/* ==========================================================================
+   Phones (keep in sync with COMPACT_SCREEN_QUERY in timetableWidget.ts)
+   ========================================================================== */
+
+@media (max-width: 720px) {
+    /* Top bar: icon-only menu button, no subtitle */
+    .timetable-topbar {
+        gap: 10px;
+    }
+
+    .sidebar-toggle {
+        padding: 9px 11px;
+    }
+
+    .sidebar-toggle-label,
+    .subtitle {
+        display: none;
+    }
+
+    .timetable-heading {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .timetable-heading-title {
+        font-size: 1.3rem;
+    }
+
+    .summary-item {
+        padding: 10px 12px;
+    }
+
+    .summary-label {
+        font-size: 0.7rem;
+    }
+
+    .summary-value {
+        font-size: 1.25rem;
+    }
+
+    /* Study plan: semesters and the course catalog are two panes */
+    .mobile-pane-switch {
+        position: sticky;
+        top: 8px;
+        z-index: 30;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 3px;
+        padding: 3px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--surface-muted);
+        box-shadow: 0 6px 16px rgba(21, 27, 38, 0.08);
+    }
+
+    .mobile-pane-switch button {
+        padding: 9px 6px;
+        border: 0;
+        border-radius: var(--radius-sm);
+        background: transparent;
+        color: var(--ink-3);
+        font-size: 0.84rem;
+        font-weight: 700;
+    }
+
+    .mobile-pane-switch button.active {
+        background: var(--surface);
+        color: var(--ink);
+        box-shadow: 0 0 0 1px var(--line-strong);
+    }
+
+    .workspace.mobile-show-main .workspace-side,
+    .workspace.mobile-show-side .workspace-main {
+        display: none;
+    }
+
+    /* Side panels grow with their content and the page scrolls (no scroll inside a scroll). */
+    .workspace-side .side-panel {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .workspace-side .curriculum-panel-body {
+        overflow: visible;
+    }
+
+    .extra-curriculum-add-row,
+    .timetable-tab-panel .extra-curriculum-add-row {
+        top: 52px;
+    }
+
+    .plan-board-header {
+        padding: 12px;
+    }
+
+    .cycle-switch {
+        display: flex;
+        width: 100%;
+    }
+
+    .cycle-switch-option {
+        flex: 1;
+        justify-content: center;
+    }
+
+    /* Touch targets */
+    .plan-course-card {
+        gap: 10px;
+        padding: 8px 4px 8px 10px;
+    }
+
+    .plan-course-toggle,
+    .optional-course-toggle {
+        width: 18px;
+        height: 18px;
+    }
+
+    .plan-course-semester {
+        padding: 5px 6px;
+        font-size: 0.78rem;
+    }
+
+    .plan-course-remove,
+    .course-edit-button {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+
+    .plan-semester-view {
+        height: 30px;
+    }
+
+    /* Nothing to drag on phones */
+    .plan-course-grip {
+        display: none;
+    }
+
+    /* Schedule: one day at a time */
+    .day-chips {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 4px;
+        width: 100%;
+    }
+
+    .day-chip {
+        display: grid;
+        justify-items: center;
+        gap: 1px;
+        padding: 6px 0;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        background: var(--surface);
+        color: var(--ink-2);
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .day-chip small {
+        color: var(--ink-3);
+        font-size: 0.64rem;
+        font-weight: 600;
+    }
+
+    .day-chip.active {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+        color: var(--accent-ink);
+    }
+
+    .day-chip.active small {
+        color: var(--accent-ink);
+    }
+
+    .schedule-card-header .view-link {
+        margin-left: auto;
+    }
+
+    .timetable {
+        --day-column-min-width: 0px;
+    }
+
+    /* One period is short: code and name share a line (the single day column is wide enough). */
+    .lecture.single-period {
+        flex-flow: row wrap;
+        align-content: flex-start;
+        align-items: baseline;
+        column-gap: 8px;
+    }
+
+    .lecture.single-period .lecture-name {
+        flex: 1 1 0;
+        min-width: 0;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .lecture.single-period .lecture-meta {
+        flex-basis: 100%;
+    }
+
+    .timetable.empty-day::after {
+        content: "No classes this day";
+        grid-column: 2;
+        grid-row: 2 / span 3;
+        align-self: center;
+        color: var(--ink-3);
+        font-size: 0.84rem;
+        text-align: center;
+    }
+
+    /* Tapping a lecture opens its details as a bottom sheet */
+    .lecture-course-overlay.sheet {
+        top: auto;
+        right: 8px;
+        bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+        left: 8px;
+        width: auto;
+        gap: 8px;
+        padding: 16px;
+        border-radius: var(--radius-lg);
+        transform: none;
+    }
+
+    .lecture-course-overlay.sheet .lecture-course-overlay-title {
+        font-size: 0.95rem;
+    }
+
+    .lecture-course-overlay.sheet .lecture-course-overlay-actions {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 8px;
+        padding-top: 4px;
+    }
+
+    .lecture-course-overlay.sheet .course-edit-button.labelled {
+        height: 34px;
+        padding: 0 12px;
+    }
+
+    /* Modals take the whole screen */
+    .course-link-modal-backdrop {
+        padding: 0;
+    }
+
+    .course-link-modal,
+    .course-edit-modal {
+        width: 100vw;
+        height: 100dvh;
+        max-height: 100dvh;
+        border: 0;
+        border-radius: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+    }
+}

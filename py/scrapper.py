@@ -19,33 +19,66 @@ HEADERS = {
 DOMAIN_SEMESTERS = {
     "propedeutique": ["BA1", "BA2"],
     "bachelor": ["BA3", "BA4", "BA5", "BA6"],
+    "master": ["MA1", "MA2", "MA3", "MA4"]
 }
 
-ODD_SEMESTERS = {"BA1", "BA3", "BA5"}
+ODD_SEMESTERS = {"BA1", "BA3", "BA5", "MA1", "MA3"}
 
 TARGETS = [
-    ("propedeutique", "informatique"),
-    ("propedeutique", "mathematiques"),
-    ("propedeutique", "chimie-et-genie-chimique"),
-    ("propedeutique", "genie-civil"),
-    ("propedeutique", "genie-mecanique"),
-    ("propedeutique", "genie-electrique-et-electronique"),
-    ("propedeutique", "ingenierie-des-sciences-du-vivant"),
-    ("propedeutique", "microtechnique"),
-    ("propedeutique", "physique"),
-    ("propedeutique", "science-et-genie-des-materiaux"),
-    ("propedeutique", "systemes-de-communication"),
-    ("bachelor", "informatique"),
-    ("bachelor", "mathematiques"),
-    ("bachelor", "chimie-et-genie-chimique"),
-    ("bachelor", "genie-civil"),
-    ("bachelor", "genie-mecanique"),
-    ("bachelor", "genie-electrique-et-electronique"),
-    ("bachelor", "ingenierie-des-sciences-du-vivant"),
-    ("bachelor", "microtechnique"),
-    ("bachelor", "physique"),
-    ("bachelor", "science-et-genie-des-materiaux"),
-    ("bachelor", "systemes-de-communication"),
+    # ("propedeutique", "informatique"),
+    # ("propedeutique", "mathematiques"),
+    # ("propedeutique", "chimie-et-genie-chimique"),
+    # ("propedeutique", "genie-civil"),
+    # ("propedeutique", "genie-mecanique"),
+    # ("propedeutique", "genie-electrique-et-electronique"),
+    # ("propedeutique", "ingenierie-des-sciences-du-vivant"),
+    # ("propedeutique", "microtechnique"),
+    # ("propedeutique", "physique"),
+    # ("propedeutique", "science-et-genie-des-materiaux"),
+    # ("propedeutique", "systemes-de-communication"),
+    # ("bachelor", "informatique"),
+    # ("bachelor", "mathematiques"),
+    # ("bachelor", "chimie-et-genie-chimique"),
+    # ("bachelor", "genie-civil"),
+    # ("bachelor", "genie-mecanique"),
+    # ("bachelor", "genie-electrique-et-electronique"),
+    # ("bachelor", "ingenierie-des-sciences-du-vivant"),
+    # ("bachelor", "microtechnique"),
+    # ("bachelor", "physique"),
+    # ("bachelor", "science-et-genie-des-materiaux"),
+    # ("bachelor", "systemes-de-communication"),
+    ("master", "architecture"),
+    ("master", "chimie-moleculaire-et-biologique"),
+    ("master", "data-science"),
+    ("master", "genie-chimique-et-biotechnologie"),
+    ("master", "genie-civil"),
+    ("master", "genie-mecanique"),
+    ("master", "genie-nucleaire"),
+    ("master", "genie-electrique-et-electronique"),
+    ("master", "humanites-digitales"),
+    ("master", "informatique"),
+    ("master", "informatique-cybersecurity"),
+    ("master", "ingenierie-des-sciences-du-vivant"),
+    ("master", "ingenierie-financiere"),
+    ("master", "ingenierie-mathematique"),
+    ("master", "ingenierie-physique"),
+    ("master", "management-durable-et-technologie"),
+    ("master", "management-technologie-et-entrepreneuriat"),
+    ("master", "mathematiques-master"),
+    ("master", "micro-and-nanotechnologies-for-integrated-systems"),
+    ("master", "microtechnique"),
+    ("master", "neuro-x"),
+    ("master", "physique-master"),
+    ("master", "programme-sciences-humaines-et-sociales"),
+    ("master", "robotique"),
+    ("master", "science-et-genie-des-materiaux"),
+    ("master", "science-et-ingenierie-computationnelles"),
+    ("master", "science-et-ingenierie-quantiques"),
+    ("master", "science-et-technologie-de-l-energie"),
+    ("master", "sciences-et-ingenierie-de-l-environnement"),
+    ("master", "statistique"),
+    ("master", "systemes-de-communication-master"),
+    ("master", "systemes-urbains"),
 ]
 
 SHORT_NAME = {
@@ -214,7 +247,7 @@ if __name__ == "__main__":
     output = []
 
     # Load existing data and build a lookup: (semester, abbreviation) -> old lectures
-    output_file = "epfl_courses.json"
+    output_file = "epfl_courses_2.json"
     old_lectures: dict = {}
     existing_entries = []
     try:
@@ -240,12 +273,12 @@ if __name__ == "__main__":
         try:
             courses_by_semester = scrape_page(domain, name)
             for semester, courses in courses_by_semester.items():
-                entry_key = (semester.lower(), SHORT_NAME[name])
+                entry_key = (semester.lower(), SHORT_NAME.get(name, name))
                 entry = entry_index.get(entry_key)
                 if entry is None:
                     entry = {
                         "semester": semester.lower(),
-                        "name": SHORT_NAME[name],
+                        "name": SHORT_NAME.get(name, name),
                         "courses": [],
                     }
                     existing_entries.append(entry)
