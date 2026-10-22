@@ -277,6 +277,87 @@ const describeAgendaGroup = (items: AgendaItem[], weeks: AgendaWeek[]): { title:
   return { title, when: [weeksText, `${day}${time}`].filter(Boolean).join(" · ") };
 };
 
+const LONG_PRESS_MS = 500;
+const LONG_PRESS_SLOP_PX = 10;
+
+/**
+ * Click (or tap) runs `onClick`; right click, a long press on touch screens or the keyboard's menu key runs
+ * `onMenu`. Clicks inside an element marked `data-press-ignore` (its own buttons) are left alone.
+ */
+const bindPress = (element: HTMLElement, onClick: () => void, onMenu: () => void): void => {
+  let timer: number | null = null;
+  let start: { x: number; y: number } | null = null;
+  // When the menu last opened: the click (or contextmenu) that ends a long press must not act again.
+  let menuAt = 0;
+  const ignored = (target: EventTarget | null): boolean =>
+    target instanceof Element && target.closest("[data-press-ignore]") !== null && element.contains(target.closest("[data-press-ignore]"));
+  const cancel = (): void => {
+    if (timer !== null) {
+      window.clearTimeout(timer);
+      timer = null;
+    }
+    start = null;
+  };
+  const openMenu = (): void => {
+    cancel();
+    if (Date.now() - menuAt < 800) {
+      return;
+    }
+    menuAt = Date.now();
+    onMenu();
+  };
+
+  element.addEventListener("pointerdown", (event) => {
+    // Mice use the right button; touch and pens get the long press.
+    if (event.pointerType === "mouse" || event.button !== 0 || ignored(event.target)) {
+      return;
+    }
+    cancel();
+    start = { x: event.clientX, y: event.clientY };
+    timer = window.setTimeout(() => {
+      timer = null;
+      navigator.vibrate?.(12);
+      // Lifting the finger sends a click to whatever is now under it (the dialog that just opened): drop it.
+      const swallow = (click: Event): void => {
+        click.stopPropagation();
+        click.preventDefault();
+      };
+      window.addEventListener("click", swallow, { capture: true, once: true });
+      window.setTimeout(() => window.removeEventListener("click", swallow, { capture: true }), 1000);
+      openMenu();
+    }, LONG_PRESS_MS);
+  });
+  element.addEventListener("pointermove", (event) => {
+    if (start && Math.hypot(event.clientX - start.x, event.clientY - start.y) > LONG_PRESS_SLOP_PX) {
+      cancel();
+    }
+  });
+  ["pointerup", "pointercancel", "pointerleave"].forEach((type) => element.addEventListener(type, () => {
+    if (timer !== null) {
+      window.clearTimeout(timer);
+      timer = null;
+    }
+  }));
+  element.addEventListener("contextmenu", (event) => {
+    if (ignored(event.target)) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    openMenu();
+  });
+  element.addEventListener("click", (event) => {
+    if (ignored(event.target)) {
+      return;
+    }
+    event.stopPropagation();
+    if (Date.now() - menuAt < 800) {
+      return;
+    }
+    onClick();
+  });
+};
+
 /** "Mon 5 Oct" (or "5 Oct" without the weekday). */
 const formatDay = (iso: string, withWeekday = true): string =>
   fromIsoDate(iso).toLocaleDateString(undefined, withWeekday ? { weekday: "short", day: "numeric", month: "short" } : { day: "numeric", month: "short" });
@@ -2331,23 +2412,24 @@ export class TimetableWidget {
     chip.classList.toggle("finished", hasStatus(item.type) && item.status !== "todo");
     chip.setAttribute("role", "button");
     chip.tabIndex = 0;
+    const tracked = hasStatus(item.type);
+    const statusLabels: Record<AgendaStatus, string> = { todo: "to do", done: item.type === "lab" ? "submitted" : "done", corrected: "corrected" };
+    const next = statusLabels[statusCycle(item.type, item.status)];
     chip.title = [
       `${AGENDA_TYPE_LABELS[item.type]}: ${item.title}`,
       item.courseCode ? `${item.courseCode} – ${item.courseName}` : "",
       describeAgendaWhen(item, this.data.agenda.layout.weeks),
       item.details,
+      tracked ? `Click: mark ${next} · Right click or long press: edit` : "Click: edit",
     ].filter(Boolean).join("\n");
+    chip.setAttribute("aria-label", tracked
+      ? `${item.title}, ${item.courseCode}: ${statusLabels[item.status]}. Press to mark ${next}; menu key to edit.`
+      : `${AGENDA_TYPE_LABELS[item.type]}: ${item.title}. Press to edit.`);
 
-    if (hasStatus(item.type)) {
-      const check = document.createElement("button");
-      check.type = "button";
+    if (tracked) {
+      const check = document.createElement("span");
       check.className = `agenda-chip-check ${item.status}`;
       check.innerHTML = `<i class="fa-solid ${item.status === "corrected" ? "fa-check-double" : "fa-check"}" aria-hidden="true"></i>`;
-      check.setAttribute("aria-label", `Mark ${item.title} as ${statusCycle(item.type, item.status)}`);
-      check.addEventListener("click", (event) => {
-        event.stopPropagation();
-        this.data.onAgendaUpdate(item.id, { status: statusCycle(item.type, item.status) });
-      });
       chip.appendChild(check);
     } else {
       const icon = document.createElement("i");
@@ -2377,15 +2459,13 @@ export class TimetableWidget {
     titleLine.textContent = item.title;
     text.appendChild(titleLine);
     chip.appendChild(text);
-    const open = (): void => this.openAgendaItemModal(item.courseCode, item);
-    chip.addEventListener("click", (event) => {
-      event.stopPropagation();
-      open();
-    });
+    const edit = (): void => this.openAgendaItemModal(item.courseCode, item);
+    const press = (): void => (tracked ? this.data.onAgendaUpdate(item.id, { status: statusCycle(item.type, item.status) }) : edit());
+    bindPress(chip, press, edit);
     chip.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        open();
+        press();
       }
     });
     return chip;
@@ -2419,7 +2499,7 @@ export class TimetableWidget {
       const next = statusLabels[statusCycle(item.type, item.status)];
       check.title = `${statusLabels[item.status]} · click to mark "${next}"`;
       check.setAttribute("aria-label", `${item.title}: ${statusLabels[item.status]}. Mark as ${next}`);
-      check.addEventListener("click", () => this.data.onAgendaUpdate(item.id, { status: statusCycle(item.type, item.status) }));
+      // The row's click toggles; the check is the keyboard way to do it (its click bubbles to the row).
       row.appendChild(check);
     } else {
       const icon = document.createElement("span");
@@ -2484,6 +2564,7 @@ export class TimetableWidget {
 
     const actions = document.createElement("div");
     actions.className = "agenda-item-actions";
+    actions.dataset.pressIgnore = "";
     const editButton = document.createElement("button");
     editButton.type = "button";
     editButton.className = "course-edit-button";
@@ -2504,6 +2585,11 @@ export class TimetableWidget {
     });
     actions.append(editButton, remove);
     row.appendChild(actions);
+
+    // Click toggles series and labs (opens exams and notes); right click or long press edits.
+    const edit = (): void => this.openAgendaItemModal(item.courseCode, item);
+    bindPress(row, () => (hasStatus(item.type) ? this.data.onAgendaUpdate(item.id, { status: statusCycle(item.type, item.status) }) : edit()), edit);
+    row.title = hasStatus(item.type) ? "Click: tick off · Right click or long press: edit" : "Click: edit";
     return row;
   }
 

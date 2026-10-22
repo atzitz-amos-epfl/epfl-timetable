@@ -3952,6 +3952,18 @@ body.course-dragging .plan-box.drop-valid .plan-box-drop-hint {
     color: var(--warning);
 }
 
+/* Chips and rows toggle on click and edit on long press: no text selection or callout while pressing */
+.agenda-chip,
+.agenda-item {
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
+    user-select: none;
+}
+
+.agenda-item {
+    cursor: pointer;
+}
+
 /* Day panel (phones) and unscheduled items */
 .agenda-day-panel {
     display: grid;
